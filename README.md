@@ -12,6 +12,10 @@ Team number: 19
 | Yanchen Zhao | yzhao47  |
 | Xiaohan Liu  | xliu74   |
 
+### Iteration Worksheet
+
+- [WORKSHEET](./WORKSHEET.md)
+
 ### Milestones
 
 - [DESIGN](./DESIGN.md)
