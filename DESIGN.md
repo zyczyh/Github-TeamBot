@@ -16,44 +16,44 @@ Our bot is a TeamBot that serves as a mediator between the workflow management, 
 Our bot not only presents a user interface, but also communicate with team members through Mattermost. For that reason, we present TeamBot as a kind of Chat-Dev Bot. The TeamBot  acts as the mediator that facilitates the team members to overlook the entire dynamic of the team. It posts team updates through Mattermost through its own channel, so the programmers can easily track and review the history of the code updates. We would tagline our bot as “Excellent Team Management and Control Service Provider”.
 
 ## Use Cases
-###Use Case 1: GitHub organization manager keeps a team monitored
-####1.1 Preconditions
+### Use Case 1: GitHub organization manager keeps a team monitored
+#### 1.1 Preconditions
 The GitHub organization manager has Mattermost installed, and has the TeamBot in Mattermost as his/her bot contact.
-####1.2 Main Flow
+#### 1.2 Main Flow
 The organization manager is the person who creates the GitHub organization. The use case starts when the organization manager sends a message to the TeamBot about his needs to start a new monitor. After that, the TeamBot sends the organization manager a link. The manager can go to the link, specify his authentication token, the team members he has in his organization, and each team member's GitHub repository that he/she is or will be working on. After that, the TeamBot is on the track of keeping the team monitored. The use case ends when the team manager closes the GitHub organization, or notify the TeamBot that he wants to stop the service.
-####1.3 Subflows
-#####S1:Check progress
+#### 1.3 Subflows
+##### S1:Check progress
 The TeamBot includes three functionalities: 1) displaying a user interface that shows the team’s dynamics; 2) offering a chatting functionalities that responds to users’ specific needs. 3) sending updates, warning and summaries of the team. The manager checks the team’s longitudinal and cross-member dynamics through the three methods listed.
-#####S2: Receive warnings for red flags
+##### S2: Receive warnings for red flags
 When the team encounters one of the following kinds of anomalies: 1) One or more of the team members keeps being idle during the project; 2) One team member writes all the commits and the codes; 3) The team experiences a dropping rate of commits compared to the time beforehand. In the above three kinds of situations, the TeamBot sends the team manager a warning through Mattermost. It also sends the link to the user interface, that the manager can visit to check the team’s current problems and progress.
-#####S3: Receive weekly summaries
+##### S3: Receive weekly summaries
 Every week, the TeamBot sends a summary of updates to the team manager through Mattermost, and a link to the summarized team progress on the user interface.
 The weekly summary contains the following information:
 Commits and lines of codes that each team member contribute, as well as the entire team’s contribution throughout the week;
 The comparison between this week’s team performance, and the past weeks’ performance
 Links to each team’s information, and performance metrics that the team manager can click to view and check in detail.
-#####S4: Interact with the TeamBot
+##### S4: Interact with the TeamBot
 Apart from receiving updates and warnings from Mattermost, the team manager can also simply ask the TeamBot about what he needs. For example, he can send the TeamBot a message: “Hey, can you check how many lines of code has our team committed from Monday till now?”. And the TeamBot replies by offering the manager the information he needs. If the information is too hard for the TeamBot to understand, he will simply send the manager the link to the user interface and ask the manager to check on his or her own.
 
-###Use Case 2: Team members keep themselves on the track
-####1.1 Preconditions
+### Use Case 2: Team members keep themselves on the track
+#### 1.1 Preconditions
 Each of the team members has Mattermost installed, and has the TeamBot in Mattermost as his bot contact.
-####1.2 Main Flow
+#### 1.2 Main Flow
 Team members are the members the organization manager specifies as part of his/her organizations to the TeamBot.
 The use case starts when the organization manager specifies in the TeamBot’s UI the github ID of the team members, and the one or more repositories each of them is or will be working on. After that, the TeamBot is on the track of keeping the team monitored. The use case ends when the team manager closes the GitHub organization, or notify the TeamBot that he wants to stop the service.
-####1.3 Subflows
-#####S1:Check progress
+#### 1.3 Subflows
+##### S1:Check progress
 The TeamBot present the team's progress to the team members from these following three functionalities: 1) displaying a user interface that shows the team’s dynamics; 2) offering chatting services that responds to users’ specific needs. 3) sending updates, warning, and summaries of the team. The team member checks the his/her progress or other information through the three methods listed.
-#####S2: Receive warnings for red flags
+##### S2: Receive warnings for red flags
 When the team member is experiencing one or more of the following kinds of anomalies or efficiencies: 1) being idle for a long time; 2) commits less and less along the time, the TeamBot sends the team member a warning through Mattermost. It also sends a link that re-directs to the user interface. Clicking that link, the member can visit, view and check the details of his/her current progress.
-#####S3: Receive weekly summaries
+##### S3: Receive weekly summaries
 Everyweek, TeamBot sends a summary of updates to each team member through Mattermost, and a link to the summarized team progress on the user interface.
 The weekly summary contains the following information:
 - Commits and lines of codes that the team member has committed
 - The detailed comparison between this week’s performance, and the past weeks’ performance
 - A detailed performance metric
 
-#####S4: Interact with the TeamBot
+##### S4: Interact with the TeamBot
 Apart from receiving updates and warnings from Mattermost, the team member can also simply ask the TeamBot about what he needs. For example, he can send the TeamBot a message: “Hey, can you check how many lines of code have I committed from this Monday till now?”. And the TeamBot replies by offering the member the information he needs. If the information is too hard for the TeamBot to understand, the TeamBot simply sends the member a link to the user interface and ask the team member to check on his or her own.
 
 
