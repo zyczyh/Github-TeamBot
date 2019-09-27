@@ -1,10 +1,6 @@
-<<<<<<< HEAD
-## Problem Statement
-=======
 # Team Bot Design
 
-### Problem Statement
->>>>>>> 2ed7e688244831a1eedd9e35cdd551406c035b52
+## Problem Statement
 
 In today’s world of software engineering, we need a huge amount of teamwork. Team members collaborate to various different extents: sometimes the collaboration is extremely effective: high-performing teams usually include active and responsible team members, who kept committing codes, helping other team members, and pay attention to what’s going on in the entire team. While each member completes separated and related goals; they share responsibility between different members of the team. On the other hand, ineffective or low-performing team collaboration usually entails one team member taking over the entire team project, or the team members all focus on his or her own codes, without maintaining the updates within the entire team. Or that the team doesn’t start working until the last minute Teamwork is usually managed by having a project manager observing, supervising and helping the entire team. However, subtle changes are neglectable(For example, less and less commits along the time the project goes), but might still be chronically detrimental to the entire team’s performance and dynamics. 
 
