@@ -40,8 +40,26 @@ The following sequence diagram simply dipicts interaction between the objects me
 
 As we know the different objects and services should have different lifelines in the software. In the team bot, when a bot is initialized, each part should be actived so that it can run successfully. That's why all parts start at the same time.
 
-### Contraints
+### Contraints  
+1. 	The bot should provide proper messages to users when errors occur. E.g. When the monitored repo is deleted, the bot should notify the user.
+2. 	The bot should include role control: only the manager could get access to report of the whole team, other employees can only see his/her own report.
+3. 	All data used to generate weekly reports should only be obtained from database, in order to decouple git and website.
+4. 	The URL provide to user should be use REST API
 
-### Guidelines
+### Guidelines  
 
-### Design Patterns
+1. 	The bot should decouple website end, git end and user end. In order to easily adapt when requirements change, or new features are needed.
+2. 	The whole project is based on Node.js, using MySQL as a persistence layer to store GitHub repository data. Use REST API to communicate inside the bot and provide information to users.
+
+### Design Patterns  
+
+1. 	Singleton Pattern, 
+For one GitHub organization, there should be only one manager. Using singleton pattern could make sure at any time, there is only one manager in any particular GitHub organization.
+![](https://media.github.ncsu.edu/user/10626/files/e78d2480-e0b5-11e9-8d3d-e1bd2a0b213d)
+2. 	Factory Pattern，
+The report for manager, well performed and poor performed employee should be similar, so the report could generate from a template. By using factory pattern, the backend of TeamBot doesn’t need to care about the logic of creating the report, just provide the information needed, and the report can generated from it. 
+![](https://media.github.ncsu.edu/user/10626/files/e78d2480-e0b5-11e9-9109-6e7dc6d9af3f)
+3. 	MVC Pattern
+The development follows MVC architecture to provide testability, maintainability and scalability to the project.
+By decoupling frontend, backend and model, it’s easy to change any part of the project, and allowing for code reuse and parallel development.
+![](https://media.github.ncsu.edu/user/10626/files/e78d2480-e0b5-11e9-8a2a-3aea056d6428)
