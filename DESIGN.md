@@ -20,19 +20,36 @@ We present TeamBot as a kind of Chat-Dev Bot. While it is not categorized as eit
 ## Design Sketches
 
 ### Wireframe Mockup
+
+1.  Team manager create github monitor on Mattermost
+
 ![Mockup1](https://media.github.ncsu.edu/user/10692/files/b35a4800-e137-11e9-95d2-713f93d59b55)
+
+2.  Team manager set up Github organization on set up page
 
 ![Mockup2](https://media.github.ncsu.edu/user/10692/files/b35a4800-e137-11e9-8943-4c95023f0aa3)
 
+3.  TeamBot send weekly report to good performance team member
+
 ![Mockup3](https://media.github.ncsu.edu/user/10692/files/b35a4800-e137-11e9-8b40-33cd9a34e420)
+
+4.  Detailed weekly report for good performance team member
 
 ![Mockup4](https://media.github.ncsu.edu/user/10692/files/b35a4800-e137-11e9-8ca1-0a2a062e670e)
 
+5.  TeamBot send weekly report to bad performance team member
+
 ![Mockup5](https://media.github.ncsu.edu/user/10692/files/b35a4800-e137-11e9-98e2-5871ea1468dd)
+
+6.  Detailed weekly report for bad performance team member
 
 ![Mockup6](https://media.github.ncsu.edu/user/10692/files/b3f2de80-e137-11e9-99be-1285fc53723d)
 
+7.  TeamBot send team weekly report to team manager
+
 ![Mockup7](https://media.github.ncsu.edu/user/10692/files/b3f2de80-e137-11e9-8756-3c6cd5c7f21d)
+
+8.  Detailed team weekly report for team manager
 
 ![Mockup8](https://media.github.ncsu.edu/user/10692/files/b3f2de80-e137-11e9-9ff6-6307eebd90a3)
 
