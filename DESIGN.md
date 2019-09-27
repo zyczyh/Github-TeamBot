@@ -19,6 +19,23 @@ We present TeamBot as a kind of Chat-Dev Bot. While it is not categorized as eit
 
 ## Design Sketches
 
+### Wireframe Mockup
+![Mockup1](https://media.github.ncsu.edu/user/10692/files/b35a4800-e137-11e9-95d2-713f93d59b55)
+
+![Mockup2](https://media.github.ncsu.edu/user/10692/files/b35a4800-e137-11e9-8943-4c95023f0aa3)
+
+![Mockup3](https://media.github.ncsu.edu/user/10692/files/b35a4800-e137-11e9-8b40-33cd9a34e420)
+
+![Mockup4](https://media.github.ncsu.edu/user/10692/files/b35a4800-e137-11e9-8ca1-0a2a062e670e)
+
+![Mockup5](https://media.github.ncsu.edu/user/10692/files/b35a4800-e137-11e9-98e2-5871ea1468dd)
+
+![Mockup6](https://media.github.ncsu.edu/user/10692/files/b3f2de80-e137-11e9-99be-1285fc53723d)
+
+![Mockup7](https://media.github.ncsu.edu/user/10692/files/b3f2de80-e137-11e9-8756-3c6cd5c7f21d)
+
+![Mockup8](https://media.github.ncsu.edu/user/10692/files/b3f2de80-e137-11e9-9ff6-6307eebd90a3)
+
 ## Architecture Design
 
 ### Architecture Components
