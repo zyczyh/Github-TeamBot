@@ -95,6 +95,11 @@ Apart from receiving updates and warnings from Mattermost, the team member can a
 
 ![Mockup8](https://media.github.ncsu.edu/user/10692/files/b3f2de80-e137-11e9-9ff6-6307eebd90a3)
 
+### Storyboard
+
+![Storyboard](https://media.github.ncsu.edu/user/14814/files/58dedd00-e173-11e9-8ad7-f609acda5e86)
+
+
 ## Architecture Design
 
 ### Architecture Components
