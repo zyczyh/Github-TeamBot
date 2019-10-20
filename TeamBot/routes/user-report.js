@@ -5,8 +5,9 @@ var router = express.Router();
 GET authentication page
  */
 
-router.get('/', (req, res) => {
-    res.render('user-report');
+router.get('/:id', (req, res) => {
+    // res.render('user-report');
+    res.send(req.params);
 });
 
 // router.post('/', (req, res) => {

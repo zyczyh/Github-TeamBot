@@ -3,7 +3,12 @@
   <component name="ChangeListManager">
     <list default="true" id="a199dcb1-e4b8-4f5a-9ccf-1f73dcec39a9" name="Default Changelist" comment="">
       <change afterPath="$PROJECT_DIR$/../.idea/CSC510-19.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../.idea/modules.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../.idea/workspace.xml" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Controller/userReportController.js" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/routes/manager-report.js" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/routes/user-report.js" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/views/manager-report.jade" afterDir="false" />
@@ -70,7 +75,7 @@
       <updated>1571278782022</updated>
       <workItem from="1571278784356" duration="7840000" />
       <workItem from="1571357746387" duration="5642000" />
-      <workItem from="1571599983869" duration="2390000" />
+      <workItem from="1571599983869" duration="3406000" />
     </task>
     <servers />
   </component>
