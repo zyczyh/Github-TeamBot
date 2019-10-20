@@ -19,6 +19,4 @@ var report = require('./reportController');
 function weeklyReport(repoName, db, report) {
     report.anaylsis(db);
 
-
-
 }
