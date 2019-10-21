@@ -3,7 +3,6 @@ var express = require('express');
 var db = require('../test/mock/mock');
 
 function analysis() {
-    console.log('in analysis');
     var AC = db.getAllCommits;
 
     var commitsWithUserList = userCommitCounts(AC);
