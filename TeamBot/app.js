@@ -10,6 +10,8 @@ var gitHubRouter = require('./routes/github');
 var managerReportRouter = require('./routes/manager-report');
 var userReportRouter = require('./routes/user-report');
 var testRouter = require('./routes/test');
+var missionTriggerRouter = require('./routes/mission-trigger');
+
 
 
 var app = express();
