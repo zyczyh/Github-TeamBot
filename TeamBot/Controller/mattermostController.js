@@ -17,3 +17,14 @@ function sendReport() {
     // get report from reportController -- mock
 
 }
+
+function postReports(hostURL, data) {
+    request.post(hostURL, JSON.stringify(data), function (error, res, body) {
+            if (!error && res.statusCode == 200) {
+                console.log(body);
+            }
+        }
+    );
+}
+
+exports.postReports = postReports;
