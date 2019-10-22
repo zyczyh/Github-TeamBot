@@ -1,5 +1,5 @@
 var express = require('express');
-
+// var request = require('request');
 /*
 
  */
@@ -17,3 +17,21 @@ function sendReport() {
     // get report from reportController -- mock
 
 }
+
+function postReports(hostURL, data) {
+    var options = {
+        url: hostURL,
+        method: "POST"
+    };
+    new Promise(function (resolve, reject) {
+        var requestSendLink = request(options, function (error, res, body) {
+            resolve(res.statusCode);
+        });
+        requestSendLink.write(JSON.stringify(data));
+        requestSendLink.end();
+    });
+}
+
+
+
+exports.postReports = postReports;
