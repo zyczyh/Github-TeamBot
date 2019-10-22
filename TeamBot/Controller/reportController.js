@@ -8,6 +8,11 @@ var config = require('../config');
 var mngrReportLinkHead = host + "/manager-report";
 var userReportLinkHead = host + "/user-report";
 
+/**
+ * generate report links for both mngr and user
+ * @return {username: link}
+ * @return eg: {'mngr1': 'host+/manager-report/mngr1/2019-10-28'}
+ */
 function generateReportLinks() {
     var today = formatDate(new Date());
     var mngrs = db.getAllMngrs();
@@ -23,6 +28,11 @@ function generateReportLinks() {
     return links;
 }
 
+/**
+ * helper function to calculate start and end date of week of {date}
+ * @param date set default to today
+ * @returns {[any | Date, any | Date]}
+ */
 function weekDate(date = new Date()) {
     var year = date.getFullYear();
     var month = date.getMonth();
@@ -49,6 +59,8 @@ function formatDate(date) {
     return (myyear + "-" + mymonth + "-" + myweekday);
 }
 
+// End of helper functions
+
 function allCommitCounts(AC) {
     commits = {};
 
@@ -67,11 +79,14 @@ function allCommitCounts(AC) {
     return [users, commits];
 }
 
-function getReportData(name, date) {
-    /**
-     * generate all reports here
-     * return a dict {@username: reportURL}
-     */
+/**
+ * generate all data for front end to present manager's report
+ * @param name
+ * @param date
+ * @returns {[*, *]}
+ */
+function mngrReportDate(name, date) {
+
     var AC = db.getAllCommits();
 
     var commitsWithUserList = allCommitCounts(AC);
@@ -105,6 +120,10 @@ function userReportData(username, date) {
     };
 }
 
+/**
+ * help functions for generate user's report
+ * @returns {boolean}
+ */
 function checkRedFlag() {
     return false;
 }
@@ -113,10 +132,9 @@ function generateMessage() {
     return "Good Job keep going";
 }
 
-function userCommits(AC, username, date) {
+// End of helper functions
 
-}
 
 exports.generateReportLinks = generateReportLinks;
 exports.userReportData = userReportData;
-exports.getReportData = getReportData;
+exports.getReportData = mngrReportDate;

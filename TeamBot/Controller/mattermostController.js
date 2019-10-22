@@ -1,4 +1,3 @@
-var express = require('express');
 var request = require('request');
 
 function newTeamBot() {
@@ -32,11 +31,10 @@ function postReports(incomingHookLink, user, link) {
 }
 
 function getDefaultOptions(incomingHookLink, method) {
-    var options = {
+    return {
         url: incomingHookLink,
         method: method,
     };
-    return options;
 }
 
 exports.postReports = postReports;

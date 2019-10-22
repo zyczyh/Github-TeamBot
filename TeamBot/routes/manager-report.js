@@ -1,6 +1,9 @@
 var express = require('express');
 var router = express.Router();
 var report = require('../Controller/reportController');
+/**
+ * manager report link: host/manager-report/
+ */
 
 router.get('/:name/:date', (req, res) => {
     var name = req.params.name;

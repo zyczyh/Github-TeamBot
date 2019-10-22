@@ -1,8 +1,8 @@
 var express = require('express');
 var router = express.Router();
 var report = require('../Controller/reportController');
-/*
-GET authentication page
+/**
+ * user report link: host/user-report/
  */
 
 router.get('/:name/:date', (req, res) => {
