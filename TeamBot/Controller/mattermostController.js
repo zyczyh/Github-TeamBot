@@ -1,5 +1,5 @@
 var express = require('express');
-
+var request = require('request');
 /*
 
  */
@@ -19,12 +19,19 @@ function sendReport() {
 }
 
 function postReports(hostURL, data) {
-    request.post(hostURL, JSON.stringify(data), function (error, res, body) {
-            if (!error && res.statusCode == 200) {
-                console.log(body);
-            }
-        }
-    );
+    var options = {
+        url: hostURL,
+        method: "POST"
+    };
+    new Promise(function (resolve, reject) {
+        var requestSendLink = request(options, function (error, res, body) {
+            resolve(res.statusCode);
+        });
+        requestSendLink.write(JSON.stringify(data));
+        requestSendLink.end();
+    });
 }
+
+
 
 exports.postReports = postReports;

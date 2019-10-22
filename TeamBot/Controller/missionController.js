@@ -2,7 +2,6 @@ var express = require('express');
 // var db = require('./databaseController');
 var dbController = require('../test/mock/mock');
 var report = require('./reportController');
-var request = require('request');
 var mattermost = require('./mattermostController');
 
 /**
@@ -20,6 +19,9 @@ function weeklyReport(repoName) {
     report.analysis();
 
     var hostURL = 'https://csc510-mattermost-19.herokuapp.com/hooks/9o3owumwgtgiiez9h496ijwd4o';
-    var data = {text: 'this is a test string'};
+    var data = {"text": "this is a test string"};
     mattermost.postReports(hostURL, data);
 }
+
+
+exports.weeklyReport = weeklyReport;
