@@ -23,6 +23,7 @@ function postReports(hostURL, data) {
         url: hostURL,
         method: "POST"
     };
+    console.log('laskdhf');
     new Promise(function (resolve, reject) {
         var requestSendLink = request(options, function (error, res, body) {
             resolve(res.statusCode);
