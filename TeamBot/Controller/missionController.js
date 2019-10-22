@@ -22,10 +22,11 @@ function weeklyReport(repoName) {
     github.fetchData();
 
     // generate all weekly reports
-    var reports = report.generatALLReport();
+    var reportLinks = report.generateReportLinks();
+    console.log(reportLinks);
 
-    for (var user in reports) {
-        mattermost.postReports(incomingHookLink, user, reports[user]);
+    for (var user in reportLinks) {
+        mattermost.postReports(incomingHookLink, '@' + user, reportLinks[user]);
     }
 }
 

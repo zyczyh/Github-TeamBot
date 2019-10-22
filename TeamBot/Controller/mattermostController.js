@@ -8,13 +8,6 @@ function newTeamBot() {
     // cal authenController.js
 }
 
-function sendReport() {
-    // TODO call webhook
-
-    // get report from reportController -- mock
-
-}
-
 function postReports(incomingHookLink, user, link) {
     /**
      * send weekly report link to particular user
@@ -26,7 +19,8 @@ function postReports(incomingHookLink, user, link) {
 
     var options = getDefaultOptions(incomingHookLink, 'POST');
 
-    var data = {"channel": user, "text": "Here is your weekly report, check it out <" + link + ">"};
+    var data = {"channel": user, "text": "Your weekly report is ready, check it out <" + link + "|here>"};
+    console.log(data);
 
     new Promise(function (resolve, reject) {
         var requestSendLink = request(options, function (error, res, body) {

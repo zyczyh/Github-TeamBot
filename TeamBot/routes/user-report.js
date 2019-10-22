@@ -9,7 +9,7 @@ router.get('/:name/:date', (req, res) => {
     var name = req.params.name;
     var date = req.params.date;
 
-    var data = report.userReportData(name);
+    var data = report.userReportData(name, date);
 
     res.render('user-report');
 });
