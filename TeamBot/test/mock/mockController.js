@@ -16,16 +16,14 @@ exports.getAllMngrs = function () {
 exports.getUserCommitsInAWeek = function (user, startDate, endDate) {
     var AC = exports.getAllCommits();
     var commitsTime = [];
+    console.log(startDate);
 
     for (var commit of AC) {
         if (commit.commit.author.name === user) {
             var commitTime = new Date(commit.commit.author.date);
-            console.log(commitTime);
-            if (commitTime.getTime() < endDate.getTime()) {
+            console.log(commitTime.getTime());
+            if (commitTime.getTime() < endDate.getTime() && commitTime.getTime() > startDate.getTime()) {
                 commitsTime.push(commitTime);
-            }
-            if (commitTime.getTime() < startDate.getTime()) {
-                break;
             }
         }
     }

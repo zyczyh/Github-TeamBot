@@ -106,12 +106,19 @@ function mngrReportDate(name, date) {
  * }
  */
 function userReportData(username, date) {
-    var currentWeekCommits = db.getUserCommitsInAWeek(username, weekDate()[0], weekDate()[1]);
+    date = new Date(date);
+    var currentWeekCommits = db.getUserCommitsInAWeek(username, new Date(weekDate(date)[0]), new Date(weekDate(date)[1]));
     var today = new Date();
     var lastWeek = new Date(date.getFullYear(), date.getMonth(), date.getDay() - 7);
-    var lastWeekCommits = db.getUserCommitsInAWeek(username, weekDate(lastWeek)[0], weekDate(lastWeek)[1]);
+    var lastWeekCommits = db.getUserCommitsInAWeek(username, new Date(weekDate(lastWeek)[0]), new Date(weekDate(lastWeek)[1]));
     var redFlag = checkRedFlag();
     var message = generateMessage();
+    console.log({
+        currentCommits: currentWeekCommits,
+        lastWeekCommits: lastWeekCommits,
+        redFlag: redFlag,
+        message: message
+    });
     return {
         currentCommits: currentWeekCommits,
         lastWeekCommits: lastWeekCommits,
