@@ -49,9 +49,6 @@ function formatDate(date) {
     return (myyear + "-" + mymonth + "-" + myweekday);
 }
 
-
-
-
 function allCommitCounts(AC) {
     commits = {};
 
@@ -64,7 +61,9 @@ function allCommitCounts(AC) {
         }
     }
 
-    var users = Object.keys(commits).sort(function(a, b){return commits[a] - commits[b]});
+    var users = Object.keys(commits).sort(function (a, b) {
+        return commits[a] - commits[b]
+    });
     return [users, commits];
 }
 
@@ -79,20 +78,39 @@ function getReportData(name, date) {
 
     return commitsWithUserList;
 }
+
 /**
  * generate all data for front end to present user's report
  * @param username username
  * @param date query date
- * @return {currentCommits: array(list of time),
+ * @return {
+ *          currentCommits: array(list of time),
  *          lastWeekCommits: array(list of time),
  *          redFlag: boolean,
- *          message: String}
+ *          message: String
+ * }
  */
 function userReportData(username, date) {
-    var data = {};
+    var currentWeekCommits = db.getUserCommitsInAWeek(username, weekDate()[0], weekDate()[1]);
+    var today = new Date();
+    var lastWeek = new Date(date.getFullYear(), date.getMonth(), date.getDay() - 7);
+    var lastWeekCommits = db.getUserCommitsInAWeek(username, weekDate(lastWeek)[0], weekDate(lastWeek)[1]);
+    var redFlag = checkRedFlag();
+    var message = generateMessage();
+    return {
+        currentCommits: currentWeekCommits,
+        lastWeekCommits: lastWeekCommits,
+        redFlag: redFlag,
+        message: message
+    };
+}
 
+function checkRedFlag() {
+    return false;
+}
 
-    return data;
+function generateMessage() {
+    return "Good Job keep going";
 }
 
 function userCommits(AC, username, date) {

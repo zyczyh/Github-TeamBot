@@ -11,13 +11,7 @@ router.get('/:name/:date', (req, res) => {
 
     var data = report.userReportData(name, date);
 
-    res.render('user-report');
+    res.render('user-report', {data: data});
 });
-
-// router.post('/', (req, res) => {
-//     var token = req.body.token;
-//     var orgName = req.body.orgName;
-//     console.log('token: ', token, '\norgName: ', orgName);
-// });
 
 module.exports = router;
