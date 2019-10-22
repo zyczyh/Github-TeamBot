@@ -2,16 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="a199dcb1-e4b8-4f5a-9ccf-1f73dcec39a9" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/routes/mission-trigger.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/views/test/mission-trigger.jade" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/app.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routes/manager-report.js" beforeDir="false" afterPath="$PROJECT_DIR$/routes/manager-report.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routes/test.js" beforeDir="false" afterPath="$PROJECT_DIR$/routes/test.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/mock/mockController.js" beforeDir="false" afterPath="$PROJECT_DIR$/test/mock/mockController.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/views/missionTrigger.jade" beforeDir="false" afterPath="$PROJECT_DIR$/Controller/reportController.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -70,10 +61,22 @@
       <updated>1571278782022</updated>
       <workItem from="1571278784356" duration="7840000" />
       <workItem from="1571357746387" duration="5642000" />
+      <workItem from="1571703363383" duration="294000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
 </project>
