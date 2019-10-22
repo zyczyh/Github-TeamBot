@@ -53,16 +53,37 @@ html(lang='en')
                     h4
                         small RECENT POSTS
                     hr
-                    h2 I Love Food
+                    h2 Recent Commits
                     h5
-                        span.glyphicon.glyphicon-time
-                        |  Post by Jane Dane, Sep 27, 2015.
-                    h5
-                        span.label.label-danger Food
-                        span.label.label-primary Ipsum
+                        //span.label.label-danger Food
+                        //span.label.label-primary Ipsum
                     br
-                    p
-                        | Food is my passion. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                    #piechart
+                    script(type='text/javascript', src='https://www.gstatic.com/charts/loader.js')
+                    script(type='text/javascript').
+                        // Load google charts
+                        google.charts.load('current', {'packages': ['corechart']});
+                        google.charts.setOnLoadCallback(drawChart);
+                        // Draw the chart and set the chart values
+                        function drawChart() {
+                            var commit_dict = (!{JSON.stringify(commit_dict)});
+                            var commit_users = (!{JSON.stringify(commit_users)});
+                            commit_array = [["User", "Commits"]];
+                            var i;
+                            for (i = 0; i < commit_users.length; i++) {
+                                commit_array.push([commit_users[i],commit_dict[commit_users[i]]]);
+                            }
+                            console.log(commit_array)
+                            var data = google.visualization.arrayToDataTable(
+                                commit_array
+                            );
+                            // Optional; add a title and set the width and height of the chart
+                            var options = {'title': '', 'width': 550, 'height': 400};
+                            // Display the chart inside the <div> element with id="piechart"
+                            var chart = new google.visualization.PieChart(document.getElementById('piechart'));
+                            chart.draw(data, options);
+                        }
+
                     br
                     br
                     h4

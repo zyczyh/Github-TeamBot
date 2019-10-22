@@ -1,39 +1,16 @@
 var express = require('express');
 var router = express.Router();
+var report = require('../Controller/reportController');
+var manager_report =  require('../Controller/mangerReportController');
 
-/*
-GET authentication page
- */
-// var findUserByUsername = function (username, callback) {
-//     // Perform database query that calls callback when it's done
-//     // This is our fake database
-//     if (!users[username])
-//         return callback(new Error(
-//             'No user matching '
-//             + username
-//             )
-//         );
-//     return callback(null, users[username]);
-// };
-//
-// app.get('/v1/users/:username', function(request, response, next) {
-//     var username = request.params.username;
-//     findUserByUsername(username, function(error, user) {
-//         if (error) return next(error);
-//         return response.render('user', user);
-//     });
-// });
-//
-// app.get('/v1/admin/:username', function(request, response, next) {
-//     var username = request.params.username;
-//     findUserByUsername(username, function(error, user) {
-//         if (error) return next(error);
-//         return response.render('admin', user);
-//     });
-// });
 router.get('/', (req, res) => {
-    res.render('manager-report');
+    var commit_users = manager_report.analysis()[0];
+    var user_count = commit_users.length;
+    var commit_dict = manager_report.analysis()[1];
+    res.render('manager-report', {commit_users: commit_users, user_count:user_count, commit_dict:commit_dict});
 });
+
+
 
 // router.post('/', (req, res) => {
 //     var token = req.body.token;
