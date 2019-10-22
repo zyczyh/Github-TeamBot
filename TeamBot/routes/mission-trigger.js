@@ -3,7 +3,7 @@ var router = express.Router();
 var report = require('../Controller/reportController');
 var jade = require('jade'),
     fs = require('fs');
-var app = express()
+var mission = require('../Controller/missionController');
 
 // var reportController = require('reportController');
 // var upload = multer();
@@ -11,14 +11,15 @@ var app = express()
 // router.get('/', (req, res) => {
 // });
 
-app.use(express.urlencoded())
-app.get('/mission-trigger', (req, res) => {
+// app.use(express.urlencoded());
+router.get('/mission-trigger', (req, res) => {
     res.render('test/mission-trigger');
-})
+});
 
-app.post('/submit-form', (req, res) => {
-    report.analysis();
-})
+router.post('/submit-form', (req, res) => {
+    console.log('get post request');
+    mission.weeklyReport();
+});
 
 
 module.exports = router;

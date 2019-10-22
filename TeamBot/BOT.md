@@ -1,4 +1,3 @@
-
 ## user case 1
 1. mock mattermost: new team bot request
 

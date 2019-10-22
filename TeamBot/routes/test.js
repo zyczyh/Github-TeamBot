@@ -1,6 +1,8 @@
 var express = require('express');
 var router = express.Router();
 var report = require('../Controller/reportController');
+var mission = require('../Controller/missionController');
+
 /* GET home page. */
 router.get('/', function(req, res, next) {
     var data = report.analysis();
@@ -16,6 +18,7 @@ router.get('/mission-trigger', function (req, res, next) {
 });
 
 router.post('/mission-trigger', function (req, res, next) {
-    report.analysis();
+    mission.weeklyReport();
 });
+
 module.exports = router;
