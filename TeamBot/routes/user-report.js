@@ -1,11 +1,16 @@
 var express = require('express');
 var router = express.Router();
-
+var report = require('../Controller/reportController');
 /*
 GET authentication page
  */
 
-router.get('/', (req, res) => {
+router.get('/:name/:date', (req, res) => {
+    var name = req.params.name;
+    var date = req.params.date;
+
+    var data = report.userReportData(name);
+
     res.render('user-report');
 });
 
