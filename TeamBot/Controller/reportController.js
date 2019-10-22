@@ -2,13 +2,18 @@ var express = require('express');
 // var db = require('./databaseController');
 var db = require('../test/mock/mock');
 
-function analysis() {
+function generatALLReport() {
+    /**
+     * generate all reports here
+     * return a dict {@username: reportURL}
+     */
     var AC = db.getAllCommits;
 
     var commitsWithUserList = userCommitCounts(AC);
 
     return commitsWithUserList;
 }
+
 
 function userCommitCounts(AC) {
     commits = {};
@@ -26,4 +31,4 @@ function userCommitCounts(AC) {
     return [users, commits];
 }
 
-exports.analysis = analysis;
+exports.generatALLReport = generatALLReport;

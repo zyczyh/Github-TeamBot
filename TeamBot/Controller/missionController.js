@@ -1,8 +1,10 @@
 var express = require('express');
 // var db = require('./databaseController');
 var dbController = require('../test/mock/mock');
+var github = require('../Controller/githubController');
 var report = require('./reportController');
 var mattermost = require('./mattermostController');
+var incomingHookLink = 'https://csc510-mattermost-19.herokuapp.com/hooks/9o3owumwgtgiiez9h496ijwd4o';
 
 /**
  . listen to timer
@@ -16,11 +18,15 @@ var mattermost = require('./mattermostController');
  * @param repoName
  */
 function weeklyReport(repoName) {
-    report.analysis();
+    // fetch data from github and store into db
+    github.fetchData();
 
-    var hostURL = 'https://csc510-mattermost-19.herokuapp.com/hooks/9o3owumwgtgiiez9h496ijwd4o';
-    var data = {"text": "this is a test string"};
-    mattermost.postReports(hostURL, data);
+    // generate all weekly reports
+    var reports = report.generatALLReport();
+
+    for (var user in reports) {
+        mattermost.postReports(incomingHookLink, user, reports[user]);
+    }
 }
 
 
