@@ -1,18 +1,17 @@
 var express = require('express');
 var router = express.Router();
-
-/*
-GET authentication page
+var report = require('../Controller/reportController');
+/**
+ * user report link: host/user-report/
  */
 
-router.get('/', (req, res) => {
-    res.render('user-report');
-});
+router.get('/:name/:date', (req, res) => {
+    var name = req.params.name;
+    var date = req.params.date;
 
-// router.post('/', (req, res) => {
-//     var token = req.body.token;
-//     var orgName = req.body.orgName;
-//     console.log('token: ', token, '\norgName: ', orgName);
-// });
+    var data = report.userReportData(name, date);
+
+    res.render('user-report', {data: data});
+});
 
 module.exports = router;

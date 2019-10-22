@@ -8,13 +8,9 @@ router.get('/', function(req, res, next) {
     var data = report.analysis();
     res.render('test', { data: data});
 });
-// router.get('/', (req, res) => {
-//     res.render('missionTrigger');
-// });
 
 router.get('/mission-trigger', function (req, res, next) {
     res.render('test/mission-trigger');
-    
 });
 
 router.post('/mission-trigger', function (req, res, next) {
