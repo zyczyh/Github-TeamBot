@@ -3,15 +3,15 @@
  */
 var express = require('express');
 // var db = require('./databaseController');
-var db = require('../test/mock/mock');
+var db = require('../test/mock/mockController');
 var config = require('../config');
 var mngrReportLinkHead = host + "/manager-report";
 var userReportLinkHead = host + "/user-report";
 
 function generateReportLinks() {
     var today = formatDate(new Date());
-    var mngrs = db.getAllMngrs;
-    var users = db.getAllUsers;
+    var mngrs = db.getAllMngrs();
+    var users = db.getAllUsers();
     var links = {};
     for (var mngr of mngrs) {
         links[mngr] = mngrReportLinkHead + '/' + mngr + '/' + today;
@@ -73,7 +73,7 @@ function getReportData(name, date) {
      * generate all reports here
      * return a dict {@username: reportURL}
      */
-    var AC = db.getAllCommits;
+    var AC = db.getAllCommits();
 
     var commitsWithUserList = allCommitCounts(AC);
 

@@ -1,6 +1,4 @@
 var express = require('express');
-// var db = require('./databaseController');
-var dbController = require('../test/mock/mock');
 var github = require('../Controller/githubController');
 var report = require('./reportController');
 var mattermost = require('./mattermostController');

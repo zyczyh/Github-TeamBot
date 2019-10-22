@@ -1,5 +1,5 @@
 var express = require('express');
-var dbController = require('./databaseController');
+var db = require('./databaseController');
 
 function fetchData() {
     /**
