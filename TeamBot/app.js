@@ -11,7 +11,6 @@ var managerReportRouter = require('./routes/manager-report');
 var userReportRouter = require('./routes/user-report');
 var testRouter = require('./routes/test');
 var missionTriggerRouter = require('./routes/mission-trigger');
-var mattermostRouter = require('./routes/mattermost');
 
 var app = express();
 
@@ -28,7 +27,6 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', indexRouter);
 app.use('/authen', authenRouter);
 app.use('/github', gitHubRouter);
-app.use('/mattermost', mattermostRouter);
 
 app.use('/manager-report', managerReportRouter);
 app.use('/user-report', userReportRouter);
