@@ -118,11 +118,42 @@ function userReportData(username, date) {
         return currentWeekCommits[key];
     });
     var i;
-    date_commit_array =[["Date"]];
-    // for (i = 0; i < times.length; i++) {
-    //     date_commit_array.push(times[i].parse())
-    // }
 
+    function getLastWeek(date) {
+
+        var lastWeek = new Date(date.getFullYear(), date.getMonth(), date.getDate() - 7);
+        return lastWeek;
+    }
+    var today = new Date();
+    var lastWeek = getLastWeek(today);
+    Date.prototype.addDays = function(days) {
+        var date = new Date(this.valueOf());
+        date.setDate(date.getDate() + days);
+        return date;
+    }
+
+    function getDates(startDate, stopDate) {
+        var dateArray = new Array();
+        var currentDate = startDate;
+        while (currentDate <= stopDate) {
+            dateArray.push(new Date (currentDate));
+            currentDate = currentDate.addDays(1);
+        }
+        return dateArray;
+    }
+    lastWeekArray = getDates(lastWeek, today);
+    lastLastWeek = getLastWeek(lastWeek);
+    lastLastWeekArray = getDates(lastLastWeek, lastWeek);
+    date_commit_array =[["Date", "Commits"]];
+    for (i = 0; i < lastWeekArray.length; i++) {
+        count = 0;
+        for (j = 0; j < currentWeekCommits.length; j++) {
+            if (lastWeekArray[i].getDate() == currentWeekCommits[j].getDate()){
+                count+=1;
+            }
+        }
+        date_commit_array.push([lastWeekArray[i], count]);
+    }
 
     console.log({
         currentCommits: currentWeekCommits,
@@ -135,7 +166,10 @@ function userReportData(username, date) {
         lastWeekCommits: lastWeekCommits,
         redFlag: redFlag,
         message: message,
-        times: times
+        times: times,
+        lastWeekArray: lastWeekArray,
+        lastLastWeekArray: lastLastWeekArray,
+        date_commit_array: date_commit_array
     };
 }
 

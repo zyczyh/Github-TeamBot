@@ -13,7 +13,8 @@ router.get('/:name/:date', (req, res) => {
     var generateReportLinks =  exports.generateReportLinks;
     var userReportData = exports.userReportData;
     // exports.getReportData = mngrReportDate;
-    res.render('user-report', {data: data, userReportData: userReportData});
+    var date_commit_array = data.date_commit_array;
+    res.render('user-report', {data: data, date_commit_array: date_commit_array});
 });
 
 module.exports = router;
