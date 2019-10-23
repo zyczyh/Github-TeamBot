@@ -5,7 +5,7 @@ var mission = require('../Controller/missionController');
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-    var data = report.analysis();
+    // var data = report.analysis();
     res.render('test', { data: data});
 });
 
@@ -15,6 +15,7 @@ router.get('/mission-trigger', function (req, res, next) {
 
 router.post('/mission-trigger', function (req, res, next) {
     mission.weeklyReport();
+    res.render('test/mission-trigger');
 });
 
 module.exports = router;
