@@ -14,6 +14,11 @@ const puppeteer = require('puppeteer');
     await mattermost_page.goto('https://csc510-mattermost-19.herokuapp.com');
     await mattermost_page.waitFor(5000);
     await mattermost_page.screenshot({path: 'mission_trigger.png'});
+
+    const aElementsWithHi = await mattermost_page.$x("//a[contains(., 'here')]");
+    await aElementsWithHi[0].click();
+    await mattermost_page.waitFor(5000);
+    await mattermost_page.screenshot({path: 'user-report.png'});
     // await browser.close();
 })().catch(function(e) {
     console.log(e);
