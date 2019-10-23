@@ -135,8 +135,7 @@ function userReportData(username, date) {
         lastWeekCommits: lastWeekCommits,
         redFlag: redFlag,
         message: message,
-        times: times,
-        lastWeekDisplay: lastWeekDisplay
+        times: times
     };
 }
 
