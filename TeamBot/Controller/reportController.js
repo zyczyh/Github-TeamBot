@@ -109,21 +109,34 @@ function userReportData(username, date) {
     date = new Date(date);
     var currentWeekCommits = db.getUserCommitsInAWeek(username, new Date(weekDate(date)[0]), new Date(weekDate(date)[1]));
     var today = new Date();
-    var lastWeek = new Date(date.getFullYear(), date.getMonth(), date.getDay() - 7);
+    var lastWeek = new Date(date.getFullYear(), date.getMonth()+1, date.getDay() - 7);
     var lastWeekCommits = db.getUserCommitsInAWeek(username, new Date(weekDate(lastWeek)[0]), new Date(weekDate(lastWeek)[1]));
     var redFlag = checkRedFlag();
     var message = generateMessage();
+
+    var times = Object.keys(currentWeekCommits).map(function(key){
+        return currentWeekCommits[key];
+    });
+    var i;
+    date_commit_array =[["Date"]];
+    // for (i = 0; i < times.length; i++) {
+    //     date_commit_array.push(times[i].parse())
+    // }
+
+
     console.log({
         currentCommits: currentWeekCommits,
         lastWeekCommits: lastWeekCommits,
         redFlag: redFlag,
-        message: message
+        message: message,
     });
     return {
         currentCommits: currentWeekCommits,
         lastWeekCommits: lastWeekCommits,
         redFlag: redFlag,
-        message: message
+        message: message,
+        times: times,
+        lastWeekDisplay: lastWeekDisplay
     };
 }
 
@@ -142,6 +155,6 @@ function generateMessage() {
 // End of helper functions
 
 
-exports.generateReportLinks = generateReportLinks;
-exports.userReportData = userReportData;
-exports.getReportData = mngrReportDate;
+            exports.generateReportLinks = generateReportLinks;
+            exports.userReportData = userReportData;
+            exports.getReportData = mngrReportDate;

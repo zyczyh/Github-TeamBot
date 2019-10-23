@@ -10,8 +10,10 @@ router.get('/:name/:date', (req, res) => {
     var date = req.params.date;
 
     var data = report.userReportData(name, date);
-
-    res.render('user-report', {data: data});
+    var generateReportLinks =  exports.generateReportLinks;
+    var userReportData = exports.userReportData;
+    // exports.getReportData = mngrReportDate;
+    res.render('user-report', {data: data, userReportData: userReportData});
 });
 
 module.exports = router;
