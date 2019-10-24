@@ -10,7 +10,6 @@ var gitHubRouter = require('./routes/github');
 var managerReportRouter = require('./routes/manager-report');
 var userReportRouter = require('./routes/user-report');
 var testRouter = require('./routes/test');
-var missionTriggerRouter = require('./routes/mission-trigger');
 
 var app = express();
 
@@ -32,7 +31,6 @@ app.use('/manager-report', managerReportRouter);
 app.use('/user-report', userReportRouter);
 
 app.use('/test', testRouter);
-
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
