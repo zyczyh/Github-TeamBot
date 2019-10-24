@@ -2,9 +2,16 @@ const puppeteer = require('puppeteer-core');
 
 (async () => {
     const browser = await puppeteer.connect({
-        "browserWSEndpoint": "ws://localhost:9222/devtools/browser/8fbce3f5-ee42-4c75-9621-1a7f56b70f82"
+        "browserWSEndpoint": "ws://localhost:9222/devtools/browser/2a337e0a-d418-4028-919e-55bc0e4e7553"
     });
+
     const page = await browser.newPage();
+    await page.waitFor(5000);
+    await page.setViewport({
+        width: 1800,
+        height: 960,
+        deviceScaleFactor: 1,
+      });
     await page.goto("http://192.168.6.130:8065/csc510/channels/town-square");
 
     const textSelector = "#post_textbox";
@@ -13,7 +20,7 @@ const puppeteer = require('puppeteer-core');
     await page.keyboard.press("Enter");
 
     await page.waitFor(2000);
-    await page.type(textSelector, "yes");
+    await page.type(textSelector, "@teambot yes");
     await page.keyboard.press("Enter");
 
     // bot id selector
@@ -50,6 +57,9 @@ const puppeteer = require('puppeteer-core');
     await authen.click('body > form > div.actions > input[type=submit]');
     await authen.waitFor(2000);
     await authen.close();
+    
+    await page.click("#sidebarItem_cti4a6q8kfrr5cfe6adtjimxao__wzrhj8qy7tnrxgfuc1k3be64sc");
+    await page.waitFor(3000);
 
     // failed
     await page.click('#sidebarItem_town-square');
