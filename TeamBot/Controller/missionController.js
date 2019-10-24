@@ -23,3 +23,9 @@ exports.weeklyReport = function (repoName) {
         mattermost.postReports(incomingHookLink, '@' + user, reportLinks[user]);
     }
 };
+
+exports.logout = function logOut() {
+    $.post("/logout").then(function(data) {
+        window.location = data.redirectUrl;
+    });
+};
