@@ -1,4 +1,5 @@
 var express = require('express');
+var config = require('../config.json');
 var router = express.Router();
 var mattermostController = require('../Controller/mattermostController');
 
@@ -12,8 +13,8 @@ router.post('/mattermost', async function(req, res, next) {
     res.send({'status': 'OK'});
 });
 router.post('/authen', async function(req, res, next) {
-    var iurl = 'http://localhost:8065/hooks/jrmosxrretg43ki5et4sqsdgqa';
-    var team_id = 'dtziu37n17dmpr59unppw4fmry';
+    var iurl = config.incoming_webhook_url;
+    var team_id = config.team_id;
     await mattermostController.sendToAllTeamMembers(team_id, iurl);
     res.send({'status': 'OK'});
 });

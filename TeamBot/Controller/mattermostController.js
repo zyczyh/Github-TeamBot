@@ -2,6 +2,7 @@ var express = require('express');
 var request = require('request');
 var mattermost_api = require('../mattermost_api');
 var mock_data = require('../test/mock/mock.json');
+var config = require('../config.json');
 
 /*
 
@@ -51,12 +52,12 @@ function respondToUser(post, username) {
     // https://docs.mattermost.com/developer/integration-faq.html
     // deal with user posts from outgoing webhook
     // cal authenController.js
-    var iurl = 'http://localhost:8065/hooks/jrmosxrretg43ki5et4sqsdgqa';
-    var authen_link = 'http://192.168.163.177:3000/authen';
+    var iurl = config.incoming_webhook_url;
+    var authen_link = 'http://'+ config.ip +':3000/authen';
     var text = '';
     var org = mock_data.organizationUsers;
     var org_users = [];
-    var team_id = 'dtziu37n17dmpr59unppw4fmry';
+    var team_id = config.team_id;
     post = post.toLowerCase().replace('@teambot', '').trim();
     for (var i = 0; i < org.length; i = i + 1) {
         org_users[i] = org[i].login;
