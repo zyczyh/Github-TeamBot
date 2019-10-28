@@ -1,5 +1,5 @@
 var request = require('request');
-var config = require('config.json');
+var config = require('./config.json');
 
 var urlRoot = config.url_root;
 var token = config.admin_token;
