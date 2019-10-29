@@ -53,7 +53,7 @@ function respondToUser(post, username) {
     // deal with user posts from outgoing webhook
     // cal authenController.js
     var iurl = config.incoming_webhook_url;
-    var authen_link = 'http://'+ config.ip +':3000/authen';
+    var authen_link = config.teambot_url +'/authen';
     var text = '';
     var org = mock_data.organizationUsers;
     var org_users = [];

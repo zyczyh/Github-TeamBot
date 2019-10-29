@@ -1,8 +1,10 @@
 {
-    "admin_token": "",
-    "bot_token": "",
-    "incoming_webhook_url": "",
-    "team_id": "",
-    "ip": "",
-    "url_root": ""
+    "admin_token": "x8xpn1qhtprw8rwoejdwisdebc",
+    "bot_token": "gpr7p67ojtn68d1qfb3i9xm6or",
+    "incoming_webhook_url": "https://csc510-mattermost-19.herokuapp.com/hooks/bkx9samofpf78fxkpmf3aok7zh",
+    "team_id": "mxgxnws7k3ya5m3trbsxshh6cc",
+    "teambot_url": "https://csc510-19.herokuapp.com",
+    "url_root": "https://csc510-mattermost-19.herokuapp.com/api/v4"
 }
+
+
