@@ -1,7 +1,7 @@
 var github = require('../Controller/githubController');
 var report = require('./reportController');
 var mattermost = require('./mattermostController');
-var incomingHookLink = 'https://csc510-mattermost-19.herokuapp.com/hooks/9o3owumwgtgiiez9h496ijwd4o';
+var config = require('../config');
 
 /**
  * run weekly mission
@@ -20,7 +20,7 @@ exports.weeklyReport = function (repoName) {
 
     // Send report links
     for (var user in reportLinks) {
-        mattermost.postReports(incomingHookLink, '@' + user, reportLinks[user]);
+        mattermost.postReports(config.incoming_webhook_url, '@' + user, reportLinks[user]);
     }
 };
 
