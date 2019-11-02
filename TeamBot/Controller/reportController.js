@@ -5,8 +5,8 @@ var express = require('express');
 // var db = require('./databaseController');
 var db = require('../test/mock/mockController');
 var config = require('../config');
-var mngrReportLinkHead = host + "/manager-report";
-var userReportLinkHead = host + "/user-report";
+var mngrReportLinkHead = config.host + "/manager-report";
+var userReportLinkHead = config.host + "/user-report";
 
 /**
  * generate report links for both mngr and user

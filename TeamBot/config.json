@@ -1,4 +1,5 @@
 {
+  "host": "localhost:3000",
   "admin_token": "x8xpn1qhtprw8rwoejdwisdebc",
   "bot_token": "gpr7p67ojtn68d1qfb3i9xm6or",
   "incoming_webhook_url": "https://csc510-mattermost-19.herokuapp.com/hooks/9o3owumwgtgiiez9h496ijwd4o",
