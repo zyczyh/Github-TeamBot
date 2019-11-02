@@ -20,3 +20,5 @@ function test() {
 
     connection.end();
 }
+
+test();
