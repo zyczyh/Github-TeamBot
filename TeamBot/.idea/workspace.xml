@@ -3,8 +3,11 @@
   <component name="ChangeListManager">
     <list default="true" id="a199dcb1-e4b8-4f5a-9ccf-1f73dcec39a9" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routes/test.js" beforeDir="false" afterPath="$PROJECT_DIR$/routes/test.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/selenium_test/test_mission_trigger.js" beforeDir="false" afterPath="$PROJECT_DIR$/selenium_test/test_mission_trigger.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Controller/reportController.js" beforeDir="false" afterPath="$PROJECT_DIR$/Controller/reportController.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routes/user-report.js" beforeDir="false" afterPath="$PROJECT_DIR$/routes/user-report.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/mock/mock.json" beforeDir="false" afterPath="$PROJECT_DIR$/test/mock/mock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/views/manager-report.jade" beforeDir="false" afterPath="$PROJECT_DIR$/views/manager-report.jade" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/views/user-report.jade" beforeDir="false" afterPath="$PROJECT_DIR$/views/user-report.jade" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -63,7 +66,7 @@
       <updated>1571278782022</updated>
       <workItem from="1571278784356" duration="7840000" />
       <workItem from="1571357746387" duration="5642000" />
-      <workItem from="1571784042091" duration="13065000" />
+      <workItem from="1571784042091" duration="10824000" />
     </task>
     <servers />
   </component>
