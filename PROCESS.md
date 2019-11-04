@@ -9,17 +9,17 @@
 #### Oct 25
 - Discuss tasks and setup kanban board
 
-The main task now is some modules related to databases, including to design database schemas, create databases and connect to database from the teambot server.
+  The main task now is some modules related to databases, including to design database schemas, create databases and connect to database from the teambot server.
 
-We need to put all configuration fields to a conifg file so that it's easy to change and deploy, like mattermost inhook link, some tokens and hostname. Next we should deploy both mattermost server and teambot to Heroku for testing.
+  We need to put all configuration fields to a conifg file so that it's easy to change and deploy, like mattermost inhook link, some tokens and hostname. Next we should deploy both mattermost server and teambot to Heroku for testing.
 
-We are starting to develop some modules to fetch data from github by API, then process the data and store them into database. In the first iteration, we could implement some functions to call API.
+  We are starting to develop some modules to fetch data from github by API, then process the data and store them into database. In the first iteration, we could implement some functions to call API.
 
-The report pages are simple. We need to add more contents to enrich it.
+  The report pages are simple. We need to add more contents to enrich it.
 
 - Assign tasks to members
 
-Details in [github Kanban board](https://github.ncsu.edu/csc510-fall2019/CSC510-19/projects/1).
+  Details in [github Kanban board](https://github.ncsu.edu/csc510-fall2019/CSC510-19/projects/1).
 
 #### Oct 26
 Hold a meeting to discuss database schemas and reports details.
@@ -40,9 +40,9 @@ Hold a meeting to discuss database schemas and reports details.
 - Xiaohan: 
 
 ### Iteration Review
-Most work on databases are done. Both teambot and mattermost servers are deployed on Heroku so that it can be tested easily for all members and be demoed to others. Optimization on configuration and interaction with mattermost are finished.
+  Most work on databases are done. Both teambot and mattermost servers are deployed on Heroku so that it can be tested easily for all members and be demoed to others. Optimization on configuration and interaction with mattermost are finished.
 
-Fetching data from github and pretty the front-end are incomplete because some functions of teambot can't find corresponding APIs on github, we are still doing research to see how to implement these features.
+  Fetching data from github and pretty the front-end are incomplete because some functions of teambot can't find corresponding APIs on github, we are still doing research to see how to implement these features.
 
 The Kanban board status is as follow:
 ![image](https://media.github.ncsu.edu/user/10593/files/caedd300-ff24-11e9-82c1-618640e0ff0c)
