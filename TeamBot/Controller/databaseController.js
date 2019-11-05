@@ -1,6 +1,7 @@
 var mysql = require('mysql');
 var config = require('../config');
 
+/*
 var connection = mysql.createConnection({
     host     : config.DB.host,
     user     : config.DB.user,
@@ -8,6 +9,7 @@ var connection = mysql.createConnection({
     database : config.DB.database,
     port     : config.DB.port
 });
+*/
 
 function test() {
     connection.connect();
@@ -21,4 +23,90 @@ function test() {
     connection.end();
 }
 
-test();
+//test();
+function createConnection()
+{
+    return mysql.createConnection({
+        host     : config.DB.host,
+        user     : config.DB.user,
+        password : config.DB.password,
+        database : config.DB.database,
+        port     : config.DB.port
+    });
+}
+
+async function getOrgInfoFromDb() 
+{
+    var connection = createConnection();
+    return new Promise(function(resolve, reject)
+    {
+        connection.query('SELECT * FROM Organization', function(err, result, fields) 
+        {
+            //connection.end();
+            if (err) 
+            {
+                console.log(error);
+                reject(error);
+                return;
+            }
+            resolve(result);
+        });
+        connection.end();
+    });
+}
+
+async function getUserInfoByOrgFromDb(org_id)
+{
+    var connection = createConnection();
+    var query = 'SELECT user_id, github_username FROM Users WHERE org_id = ?';
+    return new Promise(function(resolve, reject)
+    {
+        connection.query(query, [org_id], function(err, result, fields) 
+        {
+            //connection.end();
+            if (err) 
+            {
+                console.log(error);
+                reject(error);
+                return;
+            }
+            resolve(result);
+        });
+        connection.end();
+    });
+}
+
+async function insertRecordIntoGithubStatistics(record)
+{
+    var connection = createConnection();
+    var query = 'INSERT INTO GithubStatistics (org_id, user_id, repo_name, date_since, since_until, commits_number, pullrequest_number, codelines_change) VALUES (?,?,?,?,?,?,?,?)';
+    return new Promise(function(resolve, reject)
+    {
+        connection.query(query, record, function(err, result, fields) 
+        {
+            //connection.end();
+            if (err) 
+            {
+                console.log(error);
+                reject(error);
+                return;
+            }
+            resolve(result);
+        });
+        connection.end();
+    });
+} 
+/*
+(async () => {
+    //var x = await getOrgInfoFromDb(); 
+    //console.log(x);
+    var curr_date = new Date(Date.now());
+    var record = [1,1,"test",curr_date,curr_date,4,2,50];
+    var x = await insertRecordIntoGithubStatistics(record);
+    console.log(x);
+    //connection.end();
+})()
+*/
+module.exports.getOrgInfoFromDb = getOrgInfoFromDb;
+module.exports.getUserInfoByOrgFromDb = getUserInfoByOrgFromDb;
+module.exports.insertRecordIntoGithubStatistics = insertRecordIntoGithubStatistics;
