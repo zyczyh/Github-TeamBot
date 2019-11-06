@@ -2,15 +2,15 @@
  * provide data for manager report and user report
  */
 var express = require('express');
-// var db = require('./databaseController');
-var db = require('../test/mock/mockController');
+var db = require('./databaseController');
+// var db = require('../test/mock/mockController');
 var config = require('../config');
 var mngrReportLinkHead = config.host + "/manager-report";
 var userReportLinkHead = config.host + "/user-report";
 
 /**
  * generate report links for both mngr and user
- * @return {username: link}
+ * @return {mattermost_username: link}
  * @return eg: {'mngr1': 'host+/manager-report/mngr1/2019-10-28'}
  */
 function generateReportLinks() {
@@ -98,85 +98,114 @@ function mngrReportDate(name, date) {
  * generate all data for front end to present user's report
  * @param username username
  * @param date query date
- * @return {
- *          currentCommits: array(list of time),
- *          lastWeekCommits: array(list of time),
- *          redFlag: boolean,
- *          message: String
+ * @return User report data
+ * {
+ *     {double} outline: user_commits# / team_commits# this week
+ *
+ *     {arrayList} weekCommits: commits# in last 8 weeks
+ *     {int} lastMonthCommits: commits# in last 4 weeks
+ *     {int} monthCommitsDelta: lastMonthCommits# - theMonthBeforeCommits#
+ *
+ *     {arrayList} weekLineDelta: code line delta
+ *     {int} lastMonthLineDelta: sum(lineDelta#) in last 4 weeks
+ *     {int} monthLineDelta: lastMonthLineDelta - theMonthBeforeLineDelta
+ *
+ *     {arrayList} weekPullDelta: pull request # in last 8 weeks
+ *     {int} lastMonthPulls: pull request # in last 4 weeks
+ *     {int} monthPullsDelta: lastMonthPulls# - theMonthBeforeCommits#
+ *
+ *     {HashMap} CommitsByRepo: {repo1: #commits, repo2: #commits, … repo4: #commits}
+ *     {HashMap} LinesByRepo: {repo1: #codes, repo2: #codes, … repo4: #codes}
+ *     {HashMap} PullsByRepo: {repo1: #pull, repo2: #pull, … repo4: #pull}
  * }
  */
-function userReportData(username, date) {
-    date = new Date(date);
-    var currentWeekCommits = db.getUserCommitsInAWeek(username, new Date(weekDate(date)[0]), new Date(weekDate(date)[1]));
-    var today = new Date();
-    var lastWeek = new Date(date.getFullYear(), date.getMonth()+1, date.getDay() - 7);
-    var lastWeekCommits = db.getUserCommitsInAWeek(username, new Date(weekDate(lastWeek)[0]), new Date(weekDate(lastWeek)[1]));
-    var redFlag = checkRedFlag();
-    var message = generateMessage();
+function userReportData(userName, date) {
+    // date = new Date(date);
+    // var currentWeekCommits = db.getUserCommitsInAWeek(username, new Date(weekDate(date)[0]), new Date(weekDate(date)[1]));
+    // var today = new Date();
+    // var lastWeek = new Date(date.getFullYear(), date.getMonth()+1, date.getDay() - 7);
+    // var lastWeekCommits = db.getUserCommitsInAWeek(username, new Date(weekDate(lastWeek)[0]), new Date(weekDate(lastWeek)[1]));
+    // var redFlag = checkRedFlag();
+    // var message = generateMessage();
+    //
+    // var times = Object.keys(currentWeekCommits).map(function(key){
+    //     return currentWeekCommits[key];
+    // });
+    // var i;
+    //
+    // function getLastWeek(date) {
+    //
+    //     var lastWeek = new Date(date.getFullYear(), date.getMonth(), date.getDate() - 7);
+    //     return lastWeek;
+    // }
+    // var today = new Date();
+    // var lastWeek = getLastWeek(today);
+    // Date.prototype.addDays = function(days) {
+    //     var date = new Date(this.valueOf());
+    //     date.setDate(date.getDate() + days);
+    //     return date;
+    // }
+    //
+    // function getDates(startDate, stopDate) {
+    //     var dateArray = new Array();
+    //     var currentDate = startDate;
+    //     while (currentDate <= stopDate) {
+    //         dateArray.push(new Date (currentDate));
+    //         currentDate = currentDate.addDays(1);
+    //     }
+    //     return dateArray;
+    // }
+    // lastWeekArray = getDates(lastWeek, today);
+    // lastLastWeek = getLastWeek(lastWeek);
+    // lastLastWeekArray = getDates(lastLastWeek, lastWeek);
+    // date_commit_array =[["Date", "Commits"]];
+    // for (i = 0; i < lastWeekArray.length; i++) {
+    //     count = 0;
+    //     for (j = 0; j < currentWeekCommits.length; j++) {
+    //         if (lastWeekArray[i].getDate() == currentWeekCommits[j].getDate()){
+    //             count+=1;
+    //         }
+    //     }
+    //     date_commit_array.push([lastWeekArray[i], count]);
+    // }
+    //
+    // console.log({
+    //     currentCommits: currentWeekCommits,
+    //     lastWeekCommits: lastWeekCommits,
+    //     redFlag: redFlag,
+    //     message: message,
+    // });
 
-    var times = Object.keys(currentWeekCommits).map(function(key){
-        return currentWeekCommits[key];
-    });
-    var i;
+    var outline = outlineByUser(userName);
 
-    function getLastWeek(date) {
 
-        var lastWeek = new Date(date.getFullYear(), date.getMonth(), date.getDate() - 7);
-        return lastWeek;
-    }
-    var today = new Date();
-    var lastWeek = getLastWeek(today);
-    Date.prototype.addDays = function(days) {
-        var date = new Date(this.valueOf());
-        date.setDate(date.getDate() + days);
-        return date;
-    }
-
-    function getDates(startDate, stopDate) {
-        var dateArray = new Array();
-        var currentDate = startDate;
-        while (currentDate <= stopDate) {
-            dateArray.push(new Date (currentDate));
-            currentDate = currentDate.addDays(1);
-        }
-        return dateArray;
-    }
-    lastWeekArray = getDates(lastWeek, today);
-    lastLastWeek = getLastWeek(lastWeek);
-    lastLastWeekArray = getDates(lastLastWeek, lastWeek);
-    date_commit_array =[["Date", "Commits"]];
-    for (i = 0; i < lastWeekArray.length; i++) {
-        count = 0;
-        for (j = 0; j < currentWeekCommits.length; j++) {
-            if (lastWeekArray[i].getDate() == currentWeekCommits[j].getDate()){
-                count+=1;
-            }
-        }
-        date_commit_array.push([lastWeekArray[i], count]);
-    }
-
-    console.log({
-        currentCommits: currentWeekCommits,
-        lastWeekCommits: lastWeekCommits,
-        redFlag: redFlag,
-        message: message,
-    });
-    return {
-        currentCommits: currentWeekCommits,
-        lastWeekCommits: lastWeekCommits,
-        redFlag: redFlag,
-        message: message,
-        times: times,
-        lastWeekArray: lastWeekArray,
-        lastLastWeekArray: lastLastWeekArray,
-        date_commit_array: date_commit_array
-    };
+    // return {
+    //     currentCommits: currentWeekCommits,
+    //     lastWeekCommits: lastWeekCommits,
+    //     redFlag: redFlag,
+    //     message: message,
+    //     times: times,
+    //     lastWeekArray: lastWeekArray,
+    //     lastLastWeekArray: lastLastWeekArray,
+    //     date_commit_array: date_commit_array
+    // };
 }
 
 /**
  * help functions for generate user's report
  * @returns {boolean}
  */
+// @return higher than ??% coworkers
+async function outlineByUser(userName) {
+    var orgId = await db.getOrgIdByMName(userName);
+    var orgUserNum = await db.countOrgUserNum(orgId);
+    var userNumLessThan = await db.countLessCommitUser(userName, orgId);
+
+    return userNumLessThan / orgUserNum;
+}
+
+outlineByUser('zyc');
+
 function checkRedFlag() {
     return false;
 }
@@ -188,6 +217,6 @@ function generateMessage() {
 // End of helper functions
 
 
-            exports.generateReportLinks = generateReportLinks;
-            exports.userReportData = userReportData;
-            exports.getReportData = mngrReportDate;
+exports.generateReportLinks = generateReportLinks;
+exports.userReportData = userReportData;
+exports.getReportData = mngrReportDate;
