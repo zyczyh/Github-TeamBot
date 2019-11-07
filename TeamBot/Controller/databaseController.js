@@ -16,7 +16,7 @@ function test() {
 
 // test();
 async function f() {
-    var a = await listGithubNameInSameOrg('yzhao47');
+    var a = await listUserGithubNameByOrgId(2);
     console.log(a);
 }
 
@@ -187,6 +187,69 @@ async function listGithubNameInSameOrg(userName) {
     });
 }
 
+async function listMngrGithubNameByOrgId(orgId) {
+    var connection = createConnection();
+
+    var query = 'select github_username from Users where org_id=? and user_role=\'mngr\'';
+
+    return new Promise(function (res, rej) {
+        connection.query(query, [orgId], function (err, result, fields) {
+            if (err) throw err;
+            if (result.length !== 0) {
+                var list = [];
+                for (var line of result) {
+                    list.push(line['github_username'])
+                }
+                res(list);
+            } else {
+                res(null)
+            }
+        });
+        connection.end();
+    });
+}
+
+async function listUserGithubNameByOrgId(orgId) {
+    var connection = createConnection();
+
+    var query = 'select github_username from Users where org_id=? and user_role=\'sde\'';
+
+    return new Promise(function (res, rej) {
+        connection.query(query, [orgId], function (err, result, fields) {
+            if (err) throw err;
+            if (result.length !== 0) {
+                var list = [];
+                for (var line of result) {
+                    list.push(line['github_username'])
+                }
+                res(list);
+            } else {
+                res(null)
+            }
+        });
+        connection.end();
+    });
+}
+
+async function getMattermostNameByGithubName(gName) {
+    // TODO test
+    var connection = createConnection();
+
+    var query = 'select mattermsot_username from Users where github_username=?';
+
+    return new Promise(function (res, rej) {
+        connection.query(query, [gName], function (err, result, fields) {
+            if (err) throw err;
+            if (result.length !== 0) {
+                res(result[0]['mattermost_username']);
+            } else {
+                res(null)
+            }
+        });
+        connection.end();
+    });
+}
+
 module.exports.getOrgInfoFromDb = getOrgInfoFromDb;
 module.exports.getUserInfoByOrgFromDb = getUserInfoByOrgFromDb;
 module.exports.insertRecordIntoGithubStatistics = insertRecordIntoGithubStatistics;
@@ -195,3 +258,6 @@ module.exports.countOrgUserNum = countOrgUserNum;
 module.exports.countLessCommitUser = countLessCommitUser;
 module.exports.getStatisticsByUserAndDate = getStatisticsByUserAndDate;
 module.exports.listGithubNameInSameOrg = listGithubNameInSameOrg;
+module.exports.listMngrGithubNameByOrgId = listMngrGithubNameByOrgId;
+module.exports.listUserGithubNameByOrgId = listUserGithubNameByOrgId;
+module.exports.getMattermostNameByGithubName = getMattermostNameByGithubName;

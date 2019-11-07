@@ -13,16 +13,18 @@ var userReportLinkHead = config.host + "/user-report";
  * @return {mattermost_username: link}
  * @return eg: {'mngr1': 'host+/manager-report/mngr1/2019-10-28'}
  */
-function generateReportLinks() {
+async function generateReportLinks(org_id) {
     var today = formatDate(new Date());
-    var mngrs = db.getAllMngrs();
-    var users = db.getAllUsers();
+    var mngrs = db.listMngrGithubNameByOrgId(org_id);
+    var users = db.listUserGithubNameByOrgId(org_id);
     var links = {};
     for (var mngr of mngrs) {
-        links[mngr] = mngrReportLinkHead + '/' + mngr + '/' + today;
+        var mName = await db.getMattermostNameByGithubName(mngr);
+        links[mName] = mngrReportLinkHead + '/' + mngr + '/' + today;
     }
     for (var user of users) {
-        links[user] = userReportLinkHead + '/' + user + '/' + today;
+        var mName = await db.getMattermostNameByGithubName(user);
+        links[mName] = userReportLinkHead + '/' + user + '/' + today;
     }
 
     return links;
@@ -68,24 +70,6 @@ function formatDate(date) {
 }
 
 // End of helper functions
-
-function allCommitCounts(AC) {
-    commits = {};
-
-    for (commit of AC) {
-        var name = commit.commit.author.name;
-        if (name in commits) {
-            commits[name] += 1;
-        } else {
-            commits[name] = 1;
-        }
-    }
-
-    var users = Object.keys(commits).sort(function (a, b) {
-        return commits[a] - commits[b]
-    });
-    return [users, commits];
-}
 
 /**
  * generate all data for front end to present manager's report
