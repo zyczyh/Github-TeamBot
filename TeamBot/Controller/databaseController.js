@@ -1,13 +1,12 @@
 var mysql = require('mysql');
 var config = require('../config');
-var rp = require('./reportController');
 
 function test() {
     var connection = createConnection();
 
-    var query = 'select * from Users';
+    var query = 'select * from Organization';
 
-    connection.query(query,  function (err, result, fields) {
+    connection.query(query, function (err, result, fields) {
         if (err) throw err;
         console.log(result);
     });
@@ -16,11 +15,11 @@ function test() {
 
 // test();
 async function f() {
-    var a = await listUserGithubNameByOrgId(2);
+    var a = await listAllOrgId();
     console.log(a);
 }
 
-f();
+// f();
 
 function createConnection() {
     return mysql.createConnection({
@@ -250,6 +249,28 @@ async function getMattermostNameByGithubName(gName) {
     });
 }
 
+async function listAllOrgId() {
+    var connection = createConnection();
+
+    var query = 'select org_id from Organization';
+
+    return new Promise(function (res, rej) {
+        connection.query(query,  function (err, result, fields) {
+            if (err) throw err;
+            if (result.length !== 0) {
+                var list = [];
+                for (var line of result) {
+                    list.push(line['org_id'])
+                }
+                res(list);
+            } else {
+                res(null)
+            }
+        });
+        connection.end();
+    });
+}
+
 module.exports.getOrgInfoFromDb = getOrgInfoFromDb;
 module.exports.getUserInfoByOrgFromDb = getUserInfoByOrgFromDb;
 module.exports.insertRecordIntoGithubStatistics = insertRecordIntoGithubStatistics;
@@ -261,3 +282,4 @@ module.exports.listGithubNameInSameOrg = listGithubNameInSameOrg;
 module.exports.listMngrGithubNameByOrgId = listMngrGithubNameByOrgId;
 module.exports.listUserGithubNameByOrgId = listUserGithubNameByOrgId;
 module.exports.getMattermostNameByGithubName = getMattermostNameByGithubName;
+module.exports.listAllOrgId = listAllOrgId;

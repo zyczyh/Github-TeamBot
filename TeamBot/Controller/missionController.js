@@ -1,6 +1,7 @@
 var github = require('./githubController');
 var report = require('./reportController');
 var mattermost = require('./mattermostController');
+var db = require('./databaseController');
 var config = require('../config');
 var schedule = require('node-schedule');
 
@@ -22,12 +23,15 @@ function weeklyReports(){
 
     schedule.scheduleJob('0 30 17 * * 5', function() {
         // generate all weekly reports
-        var reportLinks = report.generateReportLinks();
-        // console.log(reportLinks);
+        var orgList = db.listAllOrgId();
+        for (var org_id of orgList) {
+            var reportLinks = report.generateReportLinks(org_id);
+            // console.log(reportLinks);
 
-        // Send report links
-        for (var user in reportLinks) {
-            mattermost.postReports(config.incoming_webhook_url, '@' + user, reportLinks[user]);
+            // Send report links
+            for (var user in reportLinks) {
+                mattermost.postReports(config.incoming_webhook_url, '@' + user, reportLinks[user]);
+            }
         }
     }); 
   }

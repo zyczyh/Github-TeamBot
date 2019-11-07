@@ -221,7 +221,7 @@ async function mngrReportDate(mngrName, date = new Date()) {
  */
 async function userReportData(userName, date = new Date()) {
 
-    var outline = [];
+    var outline = outlineByUser(userName, date);
     var weekCommits = {};
     var weekLineDelta = {};
     var weekPulls = {};
@@ -234,7 +234,6 @@ async function userReportData(userName, date = new Date()) {
     var commitsByRepo = {};
     var linesByRepo = {};
     var pullsByRepo = {};
-
 
     for (var i = 0; i < 8; i++) {
         var queryDate = getNWeeksBeforeDate(i, date);
@@ -302,21 +301,8 @@ async function outlineByUser(userName, date) {
     return userNumLessThan / orgUserNum;
 }
 
-// outlineByUser('zyc');
-
-function checkRedFlag() {
-    return false;
-}
-
-function generateMessage() {
-    return "Good Job keep going";
-}
-
 // End of helper functions
-
 
 exports.generateReportLinks = generateReportLinks;
 exports.userReportData = userReportData;
 exports.getReportData = mngrReportDate;
-
-exports.getNWeeksBeforeDate = getNWeeksBeforeDate;
