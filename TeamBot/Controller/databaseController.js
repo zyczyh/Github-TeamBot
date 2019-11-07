@@ -1,35 +1,26 @@
 var mysql = require('mysql');
 var config = require('../config');
-
-/*
-var connection = mysql.createConnection({
-    host     : config.DB.host,
-    user     : config.DB.user,
-    password : config.DB.password,
-    database : config.DB.database,
-    port     : config.DB.port
-});
-*/
+var rp = require('./reportController');
 
 function test() {
     var connection = createConnection();
 
-    var query = 'select * from GithubStatistics';
+    var query = 'select * from Users';
 
-    connection.query(query, ['zyc'], function (err, result, fields) {
+    connection.query(query,  function (err, result, fields) {
         if (err) throw err;
         console.log(result);
     });
     connection.end();
 }
 
-test();
+// test();
 async function f() {
-    var a = await countOrgUserNum(0);
+    var a = await listGithubNameInSameOrg('yzhao47');
     console.log(a);
 }
 
-// f();
+f();
 
 function createConnection() {
     return mysql.createConnection({
@@ -94,7 +85,7 @@ async function insertRecordIntoGithubStatistics(record) {
 async function getOrgIdByMName(userName) {
     var connection = createConnection();
 
-    var query = 'select * from Organization where org_id=(select org_id from Users where mattermost_username=?)';
+    var query = 'select * from Organization where org_id=(select org_id from Users where github_username=?)';
 
     return new Promise(function (res, rej) {
         connection.query(query, [userName], function (err, result, fields) {
@@ -130,17 +121,64 @@ async function countOrgUserNum(orgId) {
 async function countLessCommitUser(userName, orgId, since) {
     var connection = createConnection();
 
+    // TODO data_since and since_until meaning and edge case
     var query = 'select count(*) from GithubStatistics '
         + 'where org_id=? '
-        + 'and date_since>=?'
+        + 'and date_since<=? '
+        + 'and since_until>=? '
         + 'and commits_number > (select commits_number from GithubStatistics where user_id='
-        + '(select user_id from Users where mattermost_username=?))';
+        + '(select user_id from Users where github_username=?))';
 
     return new Promise(function (res, rej) {
-        connection.query(query, [orgId, since, userName], function (err, result, fields) {
+        connection.query(query, [orgId, since, since, userName], function (err, result, fields) {
             if (err) throw err;
             if (result.length !== 0) {
                 res(result[0]['count(*)']);
+            } else {
+                res(null)
+            }
+        });
+        connection.end();
+    });
+}
+
+async function getStatisticsByUserAndDate(userName, date) {
+    var connection = createConnection();
+
+    var query = 'select * from GithubStatistics '
+        + 'where user_id=(select user_id from Users where github_username=?) and '
+        + 'date_since<=? and '
+        + 'since_until>=?';
+
+    return new Promise(function (res, rej) {
+        connection.query(query, [userName, date, date], function (err, result, fields) {
+            if (err) throw err;
+            if (result.length !== 0) {
+                res(result);
+            } else {
+                res(null)
+            }
+        });
+        connection.end();
+    });
+
+}
+
+async function listGithubNameInSameOrg(userName) {
+    var connection = createConnection();
+
+    var query = 'select github_username from Users '
+        + 'where org_id=(select org_id from Users where github_username=?)';
+
+    return new Promise(function (res, rej) {
+        connection.query(query, [userName], function (err, result, fields) {
+            if (err) throw err;
+            if (result.length !== 0) {
+                var list = [];
+                for (var line of result) {
+                    list.push(line['github_username'])
+                }
+                res(list);
             } else {
                 res(null)
             }
@@ -155,3 +193,5 @@ module.exports.insertRecordIntoGithubStatistics = insertRecordIntoGithubStatisti
 module.exports.getOrgIdByMName = getOrgIdByMName;
 module.exports.countOrgUserNum = countOrgUserNum;
 module.exports.countLessCommitUser = countLessCommitUser;
+module.exports.getStatisticsByUserAndDate = getStatisticsByUserAndDate;
+module.exports.listGithubNameInSameOrg = listGithubNameInSameOrg;
