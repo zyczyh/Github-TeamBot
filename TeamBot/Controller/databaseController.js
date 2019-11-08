@@ -254,7 +254,7 @@ async function getMattermostNameByGithubName(gName) {
     // TODO test
     var connection = createConnection();
 
-    var query = 'select mattermsot_username from Users where github_username=?';
+    var query = 'select mattermost_username from Users where github_username=?';
 
     return new Promise(function (res, rej) {
         connection.query(query, [gName], function (err, result, fields) {

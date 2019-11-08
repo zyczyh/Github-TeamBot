@@ -8,14 +8,13 @@ var github_api = require('../github_api');
 //     date.setDate(date.getDate() - i * 7);
 //     fetchData(date);
 // }
-// fetchData();
 
 async function fetchData(curr_date=new Date()) {
     /**
      * update all needs data from github
      * store into db
      */
-    console.log("fetching data");
+    console.log("*******fetching data********");
     var since = new Date(curr_date);
     since.setDate(since.getDate() - 7);
     // var curr_date = new Date(Date.now());

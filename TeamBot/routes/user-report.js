@@ -5,11 +5,11 @@ var report = require('../Controller/reportController');
  * user report link: host/user-report/
  */
 
-router.get('/:name/:date', (req, res) => {
+router.get('/:name/:date', async (req, res) => {
     var name = req.params.name;
     var date = req.params.date;
 
-    var data = report.userReportData(name, date);
+    var data = await report.userReportData(name, date);
     var generateReportLinks =  exports.generateReportLinks;
     var userReportData = exports.userReportData;
     // exports.getReportData = mngrReportDate;
