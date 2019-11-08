@@ -13,10 +13,10 @@ function fetchData() {
 express.repoList = function (req, res, next) {
     return express.json(repos);
 };
-
-function userInOrg(orgName) {
-    
-}
+//
+// function userInOrg(orgName) {
+//
+// }
 
 // report data
 function getCommits() {
@@ -31,6 +31,11 @@ function getIssues() {
 
     // store to db
 }
+
+
+
+
+
 
 exports.fetchData = fetchData;
 exports.getCommits = getCommits;

@@ -98,7 +98,6 @@ function postReports(incomingHookLink, user, link) {
     var options = getDefaultOptions(incomingHookLink, 'POST');
 
     var data = {"channel": user, "text": "Your weekly report is ready, check it out <" + link + "|here>"};
-    console.log(data);
 
     new Promise(function (resolve, reject) {
         var requestSendLink = request(options, function (error, res, body) {
