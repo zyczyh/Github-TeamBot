@@ -12,13 +12,12 @@ function test() {
     });
     connection.end();
 }
-
 // test();
+
 async function f() {
     var a = await listAllOrgId();
     console.log(a);
 }
-
 // f();
 
 function createConnection() {
@@ -49,13 +48,13 @@ async function getOrgInfoFromDb() {
 
 async function getUserInfoByOrgFromDb(org_id) {
     var connection = createConnection();
-    var query = '?SELECT user_id, github_username FROM Users WHERE org_id = ?';
+    var query = 'SELECT user_id, github_username FROM Users WHERE org_id = ?';
     return new Promise(function (resolve, reject) {
         connection.query(query, [org_id], function (err, result, fields) {
             //connection.end();
             if (err) {
-                console.log(error);
-                reject(error);
+                console.log(err);
+                reject(err);
                 return;
             }
             resolve(result);
@@ -179,7 +178,7 @@ async function listGithubNameInSameOrg(userName) {
                 }
                 res(list);
             } else {
-                res(null)
+                res([]);
             }
         });
         connection.end();
@@ -201,7 +200,7 @@ async function listMngrGithubNameByOrgId(orgId) {
                 }
                 res(list);
             } else {
-                res(null)
+                res([])
             }
         });
         connection.end();
@@ -223,7 +222,7 @@ async function listUserGithubNameByOrgId(orgId) {
                 }
                 res(list);
             } else {
-                res(null)
+                res([])
             }
         });
         connection.end();
@@ -264,7 +263,7 @@ async function listAllOrgId() {
                 }
                 res(list);
             } else {
-                res(null)
+                res([])
             }
         });
         connection.end();

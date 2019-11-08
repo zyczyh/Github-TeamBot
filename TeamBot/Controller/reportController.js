@@ -118,7 +118,7 @@ async function mngrReportDate(mngrName, date = new Date()) {
     var weekUserLines = {};
     var weekUserPulls = {};
 
-    var users = db.listGithubNameInSameOrg(mngrName);
+    var users = await db.listGithubNameInSameOrg(mngrName);
     for (var userName of users) {
         var userData = userReportData(userName, date);
         if (userData['weekCommits'][date] === 0) {
@@ -287,6 +287,8 @@ async function userReportData(userName, date = new Date()) {
         'pullsByRepo': pullsByRepo
     }
 }
+
+mngrReportDate('zyc');
 
 /**
  * help functions for generate user's report
