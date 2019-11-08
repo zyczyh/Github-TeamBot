@@ -120,18 +120,15 @@ async function mngrReportDate(mngrName, date = new Date()) {
 
     var users = await db.listGithubNameInSameOrg(mngrName);
     for (var userName of users) {
-        var userData = userReportData(userName, date);
+        var userData = await userReportData(userName, date);
         if (userData['weekCommits'][date] === 0) {
             outline.push(userName);
         }
-        weekCommits = {queryDate: 0};
-        weekLineDelta = {queryDate: 0};
-        weekPulls = {queryDate: 0};
         for (var i = 0; i < 8; i++) {
             var queryDate = getNWeeksBeforeDate(i, date);
-            weekCommits[queryDate] += userData['weekCommits'][queryDate];
-            weekLineDelta[queryDate] += userData['weekLineDelta'][queryDate];
-            weekPulls[queryDate] += userData['weekPulls'][queryDate];
+            weekCommits[queryDate] = userData['weekCommits'][queryDate];
+            weekLineDelta[queryDate] = userData['weekLineDelta'][queryDate];
+            weekPulls[queryDate] = userData['weekPulls'][queryDate];
             if (i < 4) {
                 if (i === 0) {
                     weekUserCommits[userName] = userData['weekCommits'][queryDate];
@@ -221,7 +218,7 @@ async function mngrReportDate(mngrName, date = new Date()) {
  */
 async function userReportData(userName, date = new Date()) {
 
-    var outline = outlineByUser(userName, date);
+    var outline = await outlineByUser(userName, date);
     var weekCommits = {};
     var weekLineDelta = {};
     var weekPulls = {};
@@ -235,21 +232,24 @@ async function userReportData(userName, date = new Date()) {
     var linesByRepo = {};
     var pullsByRepo = {};
 
-    for (var i = 0; i < 8; i++) {
-        var queryDate = getNWeeksBeforeDate(i, date);
+    for (var j = 0; j < 8; j++) {
+        var queryDate = getNWeeksBeforeDate(j, date);
 
         var data = await db.getStatisticsByUserAndDate(userName, queryDate);
-        weekCommits = {queryDate: 0};
-        weekLineDelta = {queryDate: 0};
-        weekPulls = {queryDate: 0};
 
-        for (var j = 0; j < data.length; j++) {
+        weekCommits[queryDate] = 0;
+        weekLineDelta[queryDate] = 0;
+        weekPulls[queryDate] = 0;
+        if (!data) {
+            continue;
+        }
+        for (var i = 0; i < data.length; i++) {
             weekCommits[queryDate] += data[i]['commits_number'];
             weekLineDelta[queryDate] += data[i]['codelines_change'];
             weekPulls[queryDate] += data[i]['pullrequest_number'];
 
-            if (i < 4) {
-                if (i === 0) {
+            if (j < 4) {
+                if (j === 0) {
                     commitsByRepo[data[i]['repo_name']] = data[i]['commits_number'];
                     linesByRepo[data[i]['repo_name']] = data[i]['codelines_change'];
                     pullsByRepo[data[i]['repo_name']] = data[i]['pullrequest_number'];
@@ -288,7 +288,13 @@ async function userReportData(userName, date = new Date()) {
     }
 }
 
-// mngrReportDate('zyc');
+async function f() {
+    var test = await mngrReportDate('cyuan7');
+
+    console.log(test);
+}
+
+f();
 
 /**
  * help functions for generate user's report
@@ -300,7 +306,7 @@ async function outlineByUser(userName, date) {
 
     var userNumLessThan = await db.countLessCommitUser(userName, orgId, date);
 
-    return userNumLessThan / orgUserNum;
+    return 1 - userNumLessThan / (orgUserNum - 1);
 }
 
 // End of helper functions

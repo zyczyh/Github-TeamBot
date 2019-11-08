@@ -2,9 +2,12 @@ var express = require('express');
 var request = require('request');
 var db = require('./databaseController');
 var github_api = require('../github_api');
-var fake = require('../test/mock/mock');
 
-
+// for (var i = 0; i < 6; i++) {
+//     var date = new Date();
+//     date.setDate(date.getDate() - i * 7);
+//     fetchData(date);
+// }
 // fetchData();
 
 async function fetchData(curr_date=new Date()) {
@@ -13,7 +16,7 @@ async function fetchData(curr_date=new Date()) {
      * store into db
      */
     console.log("fetching data");
-    var since = curr_date;
+    var since = new Date(curr_date);
     since.setDate(since.getDate() - 7);
     // var curr_date = new Date(Date.now());
     var org_info = await db.getOrgInfoFromDb();
@@ -21,16 +24,6 @@ async function fetchData(curr_date=new Date()) {
     for (var i = 0; i < org_info.length; i = i + 1) {
         var users_info = await db.getUserInfoByOrgFromDb(org_info[i].org_id);
         var repos_info = await github_api.getReposInOrg(org_info[i].org_name, org_info[i].github_token);
-    // start of test codes
-    // var since = new Date(Date.now());
-    // since.setMonth(since.getMonth() - 3);
-    // var curr_date = new Date(Date.now());
-    // var org_info = fake.org_info;
-    //console.log(org_info);
-    // for (var i = 0; i < org_info.length; i = i + 1) {
-    //     var users_info = await db.getUserInfoByOrgFromDb(org_info[i].org_id);
-    //     var repos_info = fake.repos_info;
-    // end of test codes
         //console.log(users_info);
         //console.log(repos_info);
         for (var j = 0; j < users_info.length; j = j + 1) {

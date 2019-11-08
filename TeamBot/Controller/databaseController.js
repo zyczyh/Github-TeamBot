@@ -8,7 +8,7 @@ function test() {
     //     + '(2, 1, \'mngr1\', \'cyuan7\', \'admin\'), '
     //     + '(3, 1, \'employee1\', \'xliu74\', \'member\');';
     // var query = 'insert into Organization values (1, \'510-test\', \'528d0841b031b8eda431f3d1e147fc37db3bb9d4\')';
-    // var query = 'delete from Users where org_id=1';
+    // var query = 'delete from GithubStatistics';
 
     // var query = 'select * from Organization';
     // var query = 'select * from Users';
@@ -24,7 +24,7 @@ function test() {
 // test();
 
 async function f() {
-    var a = await listAllOrgId();
+    var a = await countLessCommitUser('hwu23', '1', new Date());
     console.log(a);
 }
 
@@ -129,21 +129,32 @@ async function countOrgUserNum(orgId) {
 async function countLessCommitUser(userName, orgId, since) {
     var connection = createConnection();
 
+    since.setDate(since.getDate() - 3);
+
     // TODO data_since and since_until meaning and edge case
     var query = 'select count(*) from GithubStatistics '
         + 'where org_id=? '
         + 'and date_since<=? '
         + 'and since_until>=? '
-        + 'and commits_number > (select commits_number from GithubStatistics where user_id='
-        + '(select user_id from Users where github_username=?))';
+        + 'and commits_number > (select sum(commits_number) from GithubStatistics where '
+        + 'date_since<=? and since_until>=? '
+        + 'and user_id=(select user_id from Users where github_username=?))'
+        + 'group by user_id';
+
+    // var query = 'select * from (select * from GithubStatistics '
+    //     + 'where org_id=? and date_since<=? and since_until>=? group by user_id) as T '
+    //     + 'where commits_number > (select sum(commits_number) from GithubStatistics where '
+    //     + 'date_since<=? and since_until>=? '
+    //     + 'and user_id=(select user_id from Users where github_username=?))'
+    //     + 'group by user_id';
 
     return new Promise(function (res, rej) {
-        connection.query(query, [orgId, since, since, userName], function (err, result, fields) {
+        connection.query(query, [orgId, since, since,since, since, userName], function (err, result, fields) {
             if (err) throw err;
             if (result.length !== 0) {
-                res(result[0]['count(*)']);
+                res(result);
             } else {
-                res(null)
+                res(0)
             }
         });
         connection.end();
