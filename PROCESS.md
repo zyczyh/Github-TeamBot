@@ -28,14 +28,14 @@ Hold a meeting to discuss database schemas and reports details.
 #### Oct 28
 - Hao: The teambot is deployed on Heroku and the database is setup. Next I will create tables and make some fake data for tests.
 - Cheng:
-- Yanchen:
+- Yanchen: Looked at the code and thought about how to refactor the credentials management part.
 - Werngran:
 - Xiaohan: Researched how the interaction with teambot can be further improved.
 
 #### Oct 30
 - Hao: Tables are created as the schemas describe. Several records are inserted for tests. I will focus on optimizing the interaction with mattermost next.
 - Cheng:
-- Yanchen:
+- Yanchen: Finished refactoring the credentials management part and create a json file to store credentials.
 - Wengran:
 - Xiaohan: Set up slash commands on mattermost to enable more features. I will attach interactive messaging buttons to optimize the interaction so that users don't have to post anything in public channel. 
 
@@ -66,13 +66,13 @@ The Kanban board status is as follow:
 #### Nov 3
 - Hao: 
 - Cheng:
-- Yanchen:
+- Yanchen: Learnt how to use node.js mysql library, thought about and wrote down some design ideas for my task. 
 - Werngran:
 - Xiaohan: Accessed data from the front end and saved them to the database.
 #### Nov 7
 - Hao: 
 - Cheng:
-- Yanchen:
+- Yanchen: Finished writing and testing my task (Get/process statics from Github and store them into DB).
 - Werngran:
 - Xiaohan: Wrote up functions to fetch github info of users (membership, role, etc.) so that the teambot can access to the real data.
 
