@@ -50,7 +50,7 @@ async function sendToAllTeamMembers(team_id, iurl) {
     }
 }
 
-function respondToUser(post, username) {
+async function respondToUser(post, username) {
     // TODO call webhook
     // https://docs.mattermost.com/developer/integration-faq.html
     // deal with user posts from outgoing webhook
@@ -71,38 +71,38 @@ function respondToUser(post, username) {
         username = '';
     }
     else if (post[0] == '@') {
-        var users = github.userInOrg(authen.orgName, authen.token).then(result=>{
-            var org_users = [];
-            var parsedResult = JSON.parse(result);
-            for (var i=0; i<parsedResult.length; i = i+1){
-                org_users.push(parsedResult[i].login);
-            }
-            console.log("Printing out the list of users..." + org_users);
-            if (org_users.includes(post.substring(1))) {
-                text = '@' + username + ' Thank you for your response, we have received and verified your info, thanks!';
-                var org_info = db.getOrgInfoFromDb();
-                var org_id;
-                for(var i = 0; i < org_info.length; i = i + 1){
-                    if (org_info[i].org_name === authen.orgName){
-                        org_id = org_info[i].org_id;
-                    }
+        var users = await github.userInOrg(authen.orgName, authen.token);
+        var org_users = [];
+        var parsedResult = JSON.parse(users);
+        for (var i=0; i<parsedResult.length; i = i+1){
+            org_users.push(parsedResult[i].login);
+        }
+        console.log("Printing out the list of users..." + org_users);
+        if (org_users.includes(post.substring(1))) {
+            text = '@' + username + ' Thank you for your response, we have received and verified your info, thanks!';
+            var org_info = db.getOrgInfoFromDb();
+            var org_id;
+            for(var i = 0; i < org_info.length; i = i + 1){
+                if (org_info[i].org_name === authen.orgName){
+                    org_id = org_info[i].org_id;
                 }
-                var role = github.checkUserRole(authen.orgName, post.substring(1), authen.token).then(result=>{
-                    var parsedResult = JSON.parse(result);
-                    console.log("Printing out the user role..." + parsedResult.role);
-                    if (parsedResult.role === 'admin'){
-                        db.insertRecordIntoUsers([org_id, username, post.substring(1), 'manager']);
-                    }
-                    else{
-                        db.insertRecordIntoUsers([org_id, username, post.substring(1), 'member']);
-                    }
-                });
-                
             }
-            else {
-                text = '@' + username + ' Sorry, your username is not in your team\'s Github Org, you can input again if you want.';
+            var role = await github.checkUserRole(authen.orgName, post.substring(1), authen.token);
+            var parsedResult = JSON.parse(role);
+            console.log("Printing out the user role..." + parsedResult.role);
+            if (parsedResult.role === 'admin'){
+                db.insertRecordIntoUsers([org_id, username, post.substring(1), 'manager']);
             }
-        });
+            else{
+                db.insertRecordIntoUsers([org_id, username, post.substring(1), 'member']);
+            }
+            
+            
+        }
+        else {
+            text = '@' + username + ' Sorry, your username is not in your team\'s Github Org, you can input again if you want.';
+        }
+        
 
         // check if username is in github organization
         // get rid of the hard code stuff
