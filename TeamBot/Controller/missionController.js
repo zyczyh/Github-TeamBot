@@ -1,7 +1,9 @@
-var github = require('../Controller/githubController');
+var github = require('./githubController');
 var report = require('./reportController');
 var mattermost = require('./mattermostController');
+var db = require('./databaseController');
 var config = require('../config');
+var schedule = require('node-schedule');
 
 /**
  * run weekly mission
@@ -10,22 +12,34 @@ var config = require('../config');
  * 3. post link for user to mattermost
  * @param repoName
  */
-exports.weeklyReport = function (repoName) {
-    // fetch data from github and store into db
-    github.fetchData();
 
-    // generate all weekly reports
-    var reportLinks = report.generateReportLinks();
-    console.log(reportLinks);
+// schedule weekly tasks
+function weeklyReports(){
+    schedule.scheduleJob('0 20 17 * * 5', function() {
+        console.log('scheduleCronstyle:' + new Date());
+        // // fetch data from github and store into db
+        github.fetchData();
+    });
 
-    // Send report links
-    for (var user in reportLinks) {
-        mattermost.postReports(config.incoming_webhook_url, '@' + user, reportLinks[user]);
-    }
-};
+    schedule.scheduleJob('0 30 17 * * 5', function() {
+        // generate all weekly reports
+        var orgList = db.listAllOrgId();
+        for (var org_id of orgList) {
+            var reportLinks = report.generateReportLinks(org_id);
+            // console.log(reportLinks);
+
+            // Send report links
+            for (var user in reportLinks) {
+                mattermost.postReports(config.incoming_webhook_url, '@' + user, reportLinks[user]);
+            }
+        }
+    }); 
+  }
 
 exports.logout = function logOut() {
     $.post("/logout").then(function(data) {
         window.location = data.redirectUrl;
     });
 };
+
+exports.weeklyReports = weeklyReports;

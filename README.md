@@ -19,3 +19,5 @@ Team number: 19
 ### Milestones
 
 - [DESIGN](./DESIGN.md)
+- [BOT](./BOT.md)
+- [PROCESS](./PROCESS.md)

@@ -65,13 +65,18 @@ html(lang='en')
                         google.charts.load('current', {'packages': ['corechart']});
                         google.charts.setOnLoadCallback(drawChart);
                         // Draw the chart and set the chart values
+                        console.log(!{JSON.stringify(commit_dict)});
                         function drawChart() {
-                            var commit_dict = (!{JSON.stringify(commit_dict)});
-                            var commit_users = (!{JSON.stringify(commit_users)});
+                            var commit_dict = (!{JSON.stringify(weekCommits)});
+
+                             // var commit_users = (!{JSON.stringify(commit_users)});
                             commit_array = [["User", "Commits"]];
                             var i;
-                            for (i = 0; i < commit_users.length; i++) {
-                                commit_array.push([commit_users[i],commit_dict[commit_users[i]]]);
+                            // for (i = 0; i < commit_users.length; i++) {
+                            //     commit_array.push([commit_users[i],commit_dict[commit_users[i]]]);
+                            // }
+                            for (var key in commit_dict) {
+                                commit_array.push([key, commit_dict[key]);
                             }
                             console.log(commit_array)
                             var data = google.visualization.arrayToDataTable(
