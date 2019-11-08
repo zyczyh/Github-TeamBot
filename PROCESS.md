@@ -64,13 +64,13 @@ The Kanban board status is as follow:
 ![Screen Shot 2019-11-08 at 11 03 29 AM](https://media.github.ncsu.edu/user/9463/files/91191700-0219-11ea-9f51-72db309b01be)
 
 #### Nov 3
-- Hao: 
+- Hao: Add scheduler function to the project so that it can generate reports weekly.
 - Cheng:
 - Yanchen: Learnt how to use node.js mysql library, thought about and wrote down some design ideas for my task. 
 - Werngran:
 - Xiaohan: Accessed data from the front end and saved them to the database.
 #### Nov 7
-- Hao: 
+- Hao: Fix some bugs on fetching data from github and storing data to database.
 - Cheng:
 - Yanchen: Finished writing and testing my task (Get/process statics from Github and store them into DB).
 - Werngran:
