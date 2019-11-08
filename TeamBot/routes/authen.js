@@ -12,16 +12,23 @@ router.get('/', (req, res) => {
    res.render('authentication');
 });
 
-router.post('/', (req, res) => {
+router.post('/authen', async function(req, res, next) {
+   await mattermostController.sendToAllTeamMembers(team_id, iurl);
    token = req.body.token;
    orgName = req.body.orgName;
-   if(typeof token === 'undefined' || typeof orgName === 'undefined'){
-      res.status(400).json({ error: 'missing parameter', data: null }); 
-      return;
-    }
-  
-   res.status(200).json({ error: null, data: [token, orgName] });
+   res.send({'status': 'OK'});
 });
+
+// router.post('/', (req, res) => {
+//    token = req.body.token;
+//    orgName = req.body.orgName;
+//    if(typeof token === 'undefined' || typeof orgName === 'undefined'){
+//       res.status(400).json({ error: 'missing parameter', data: null }); 
+//       return;
+//     }
+  
+//    res.status(200).json({ error: null, data: [token, orgName] });
+// });
 
 module.exports = router;
 module.exports.token = token;
