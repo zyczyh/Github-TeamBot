@@ -63,5 +63,7 @@ The Kanban board status is as follow:
 
 ### Iteration Review
   In this iteration, we were focusing on fetching data from github, and process the data to get the information we are interested in. We have used the teams' past 2 months data, including each team members' data into our front-end presentation.
+  
+  
   We are not only interested in the presentation of the teams' dynamics, but also how such presentation might impact the teams' future actions, so we have also added red flags and other concerning informations to the team front-end.
   
