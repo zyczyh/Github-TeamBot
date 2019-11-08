@@ -98,11 +98,11 @@ function formatDate(date) {
  *     {int} lastMonthCommits: commits# in last 4 weeks
  *     {int} monthCommitsDelta: lastMonthCommits# - theMonthBeforeCommits#
  *
- *     {dic} weekLineDelta: code line delta
+ *     {array} weekLineDelta: code line delta
  *     {int} lastMonthLineDelta: sum(lineDelta#) in last 4 weeks
  *     {int} monthLineDelta: lastMonthLineDelta - theMonthBeforeLineDelta
  *
- *     {dic} weekPulls: pull request # in last 8 weeks
+ *     {array} weekPulls: pull request # in last 8 weeks
  *     {int} lastMonthPulls: pull request # in last 4 weeks
  *     {int} monthPullsDelta: lastMonthPulls# - theMonthBeforeCommits#
  *
@@ -115,7 +115,8 @@ function formatDate(date) {
  *     {dic} weekUserPulls:
  * }
  */
-async function mngrReportData(mngrName, date = new Date()) {
+async function mngrReportDate(mngrName, date = new Date()) {
+    var standardDate = getNWeeksBeforeDate(0, date);
     var outline = [];
     var weekCommits = {};
     var weekLineDelta = {};
@@ -135,15 +136,18 @@ async function mngrReportData(mngrName, date = new Date()) {
 
     var users = await db.listGithubNameInSameOrg(mngrName);
     for (var userName of users) {
-        var userData = userReportData(userName, date);
+        date = new Date(standardDate);
+        var userData = await userReportData(userName, date);
         if (userData['weekCommits'][date] === 0) {
             outline.push(userName);
         }
-        weekCommits = {queryDate: 0};
-        weekLineDelta = {queryDate: 0};
-        weekPulls = {queryDate: 0};
         for (var i = 0; i < 8; i++) {
             var queryDate = getNWeeksBeforeDate(i, date);
+            if (!weekCommits.hasOwnProperty(queryDate)) {
+                weekCommits[queryDate] = 0;
+                weekLineDelta[queryDate] = 0;
+                weekPulls[queryDate] = 0;
+            }
             weekCommits[queryDate] += userData['weekCommits'][queryDate];
             weekLineDelta[queryDate] += userData['weekLineDelta'][queryDate];
             weekPulls[queryDate] += userData['weekPulls'][queryDate];
@@ -191,9 +195,9 @@ async function mngrReportData(mngrName, date = new Date()) {
     }
     return {
         'outline': outline,
-        'weekCommits': sortOnKeys(weekCommits, "Week", "Commits"),
-        'weekLineDelta': sortOnKeys(weekLineDelta, "Week", "LineDelta"),
-        'weekPulls': sortOnKeys(weekPulls, "Week", "Pulls"),
+        'weekCommits': weekCommits,
+        'weekLineDelta': weekLineDelta,
+        'weekPulls': weekPulls,
         'lastMonthCommits': lastMonthCommits,
         'lastMonthLineDelta': lastMonthLineDelta,
         'lastMonthPulls': lastMonthPulls,
@@ -201,11 +205,11 @@ async function mngrReportData(mngrName, date = new Date()) {
         'monthLineDelta': monthLineDelta,
         'monthPullsDelta': monthPullsDelta,
         'weekCommitsByRepo': weekCommitsByRepo,
-        'weekLinesByRepo': sortOnKeys(weekLinesByRepo, "Repo", "weekLines"),
-        'weekPullsByRepo': sortOnKeys(weekPullsByRepo, "Repo", "weekPulls"),
-        'weekUserCommits': sortOnKeys(weekUserCommits, "User", "weekCommits"),
-        'weekUserLines': sortOnKeys(weekUserLines, "User", "weekLines"),
-        'weekUserPulls': sortOnKeys(weekUserPulls, "User", "weekPulls")
+        'weekLinesByRepo': weekLinesByRepo,
+        'weekPullsByRepo': weekPullsByRepo,
+        'weekUserCommits': weekUserCommits,
+        'weekUserLines': weekUserLines,
+        'weekUserPulls': weekUserPulls
     }
 }
 
@@ -250,15 +254,18 @@ async function userReportData(userName, date = new Date()) {
     var linesByRepo = {};
     var pullsByRepo = {};
 
-    for (var i = 0; i < 8; i++) {
-        var queryDate = getNWeeksBeforeDate(i, date);
+    for (var j = 0; j < 8; j++) {
+        var queryDate = getNWeeksBeforeDate(j, date);
 
         var data = await db.getStatisticsByUserAndDate(userName, queryDate);
-        weekCommits = {queryDate: 0};
-        weekLineDelta = {queryDate: 0};
-        weekPulls = {queryDate: 0};
 
-        for (var j = 0; j < data.length; j++) {
+        weekCommits[queryDate] = 0;
+        weekLineDelta[queryDate] = 0;
+        weekPulls[queryDate] = 0;
+        if (!data) {
+            continue;
+        }
+        for (var i = 0; i < data.length; i++) {
             weekCommits[queryDate] += data[i]['commits_number'];
             weekLineDelta[queryDate] += data[i]['codelines_change'];
             weekPulls[queryDate] += data[i]['pullrequest_number'];
@@ -303,6 +310,15 @@ async function userReportData(userName, date = new Date()) {
     }
 }
 
+async function f() {
+    var test = await mngrReportDate('cyuan7');
+    // var test = await userReportData('cyuan7');
+
+    console.log(test);
+}
+
+f();
+
 /**
  * help functions for generate user's report
  */
@@ -313,11 +329,11 @@ async function outlineByUser(userName, date) {
 
     var userNumLessThan = await db.countLessCommitUser(userName, orgId, date);
 
-    return userNumLessThan / orgUserNum;
+    return 1 - userNumLessThan / (orgUserNum - 1);
 }
 
 // End of helper functions
 
 exports.generateReportLinks = generateReportLinks;
 exports.userReportData = userReportData;
-exports.getReportData = mngrReportData;
+exports.getReportData = mngrReportDate;

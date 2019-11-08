@@ -2,14 +2,14 @@ var express = require('express');
 var router = express.Router();
 var report = require('../Controller/reportController');
 /**
- * manager report link: host/manager-report/
+ * manager report link: host/:manager-report/:date
  */
 
-router.get('/:name/:date', (req, res) => {
+router.get('/:name/:date', async(req, res) => {
     var name = req.params.name;
     var date = req.params.date;
 
-    var data = report.getReportData(name, date);
+    var data = await report.getReportData(name, date);
     res.render("manager-report",
         {outline: data['outline'],
             weekCommits: data['weekCommits'],

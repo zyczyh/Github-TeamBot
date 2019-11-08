@@ -38,14 +38,15 @@ router.get('/mission-trigger', function (req, res, next) {
 //         window.location = data.redirectUrl;
 //     });
 // };
-router.post('/logout', function (req, res, next) {
-    mission.weeklyReport();
+router.post('/mission-trigger', function (req, res, next) {
+    // console.log('posted');
+    // mission.weeklyReports();
     // res.logOut();
     // res.logout();
     // req.session.destroy();
     // res.send({err: 0, redirectUrl: "test/mission-trigger"});
-    // res.render('test/mission-trigger');
-    res.redirect(307, 'test/mission-trigger');
+    res.render('test/mission-trigger');
+    // res.redirect(307, 'mission-trigger');
 });
 
 module.exports = router;

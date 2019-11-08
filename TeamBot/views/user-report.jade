@@ -54,12 +54,12 @@ html(lang='en')
                         //small !{JSON.stringify(date_commit_array)}
                         //small !{JSON.stringify(date)}
                     hr
-                    h2 #commits Recent Commits
-                        #table_div_commit(style='width:280px; height: 140px;')
-                    h2 Line changes
-                        #table_div_line(style='width:280px; height: 140px;')
-                    h2 Pull Requests
-                        #table_div_pull(style='width:280px; height: 140px;')
+                    #commits Recent Commits
+                    #table_div_commit(style='width:280px; height: 140px;')
+                    //h2 Line changes
+                    //#table_div_line(style='width:280px; height: 140px;')
+                    //h2 Pull Requests
+                    //#table_div_pull(style='width:280px; height: 140px;')
                         //#chart_sort_div(style='width:280px; height: 140px;')
 
 
@@ -81,6 +81,7 @@ html(lang='en')
 
                         function drawChart() {
                             var data = google.visualization.arrayToDataTable(!{JSON.stringify(weekCommits)});
+                            console.log(data);
                             var view = new google.visualization.DataView(data);
 
                             var options = {

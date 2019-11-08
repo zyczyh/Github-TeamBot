@@ -4,7 +4,15 @@ var config = require('../config');
 function test() {
     var connection = createConnection();
 
-    var query = 'select * from Organization';
+    // var query = 'insert into Users values (1, 1, \'yigeshuaige\', \'hwu23\', \'admin\'), '
+    //     + '(2, 1, \'mngr1\', \'cyuan7\', \'admin\'), '
+    //     + '(3, 1, \'employee1\', \'xliu74\', \'member\');';
+    // var query = 'insert into Organization values (1, \'510-test\', \'528d0841b031b8eda431f3d1e147fc37db3bb9d4\')';
+    // var query = 'delete from GithubStatistics';
+
+    // var query = 'select * from Organization';
+    // var query = 'select * from Users';
+    var query = 'select * from GithubStatistics';
 
     connection.query(query, function (err, result, fields) {
         if (err) throw err;
@@ -14,8 +22,9 @@ function test() {
 }
 
 // test();
+
 async function f() {
-    var a = await listAllOrgId();
+    var a = await countLessCommitUser('hwu23', '1', new Date());
     console.log(a);
 }
 
@@ -37,8 +46,8 @@ async function getOrgInfoFromDb() {
         connection.query('SELECT * FROM Organization', function (err, result, fields) {
             //connection.end();
             if (err) {
-                console.log(error);
-                reject(error);
+                console.log(err);
+                reject(err);
                 return;
             }
             resolve(result);
@@ -49,13 +58,13 @@ async function getOrgInfoFromDb() {
 
 async function getUserInfoByOrgFromDb(org_id) {
     var connection = createConnection();
-    var query = '?SELECT user_id, github_username FROM Users WHERE org_id = ?';
+    var query = 'SELECT user_id, github_username FROM Users WHERE org_id = ?';
     return new Promise(function (resolve, reject) {
         connection.query(query, [org_id], function (err, result, fields) {
             //connection.end();
             if (err) {
-                console.log(error);
-                reject(error);
+                console.log(err);
+                reject(err);
                 return;
             }
             resolve(result);
@@ -71,8 +80,8 @@ async function insertRecordIntoGithubStatistics(record) {
         connection.query(query, record, function (err, result, fields) {
             //connection.end();
             if (err) {
-                console.log(error);
-                reject(error);
+                console.log(err);
+                reject(err);
                 return;
             }
             resolve(result);
@@ -120,21 +129,32 @@ async function countOrgUserNum(orgId) {
 async function countLessCommitUser(userName, orgId, since) {
     var connection = createConnection();
 
+    since.setDate(since.getDate() - 3);
+
     // TODO data_since and since_until meaning and edge case
     var query = 'select count(*) from GithubStatistics '
         + 'where org_id=? '
         + 'and date_since<=? '
         + 'and since_until>=? '
-        + 'and commits_number > (select commits_number from GithubStatistics where user_id='
-        + '(select user_id from Users where github_username=?))';
+        + 'and commits_number > (select sum(commits_number) from GithubStatistics where '
+        + 'date_since<=? and since_until>=? '
+        + 'and user_id=(select user_id from Users where github_username=?))'
+        + 'group by user_id';
+
+    // var query = 'select * from (select * from GithubStatistics '
+    //     + 'where org_id=? and date_since<=? and since_until>=? group by user_id) as T '
+    //     + 'where commits_number > (select sum(commits_number) from GithubStatistics where '
+    //     + 'date_since<=? and since_until>=? '
+    //     + 'and user_id=(select user_id from Users where github_username=?))'
+    //     + 'group by user_id';
 
     return new Promise(function (res, rej) {
-        connection.query(query, [orgId, since, since, userName], function (err, result, fields) {
+        connection.query(query, [orgId, since, since,since, since, userName], function (err, result, fields) {
             if (err) throw err;
             if (result.length !== 0) {
-                res(result[0]['count(*)']);
+                res(result);
             } else {
-                res(null)
+                res(0)
             }
         });
         connection.end();
@@ -179,7 +199,7 @@ async function listGithubNameInSameOrg(userName) {
                 }
                 res(list);
             } else {
-                res(null)
+                res([]);
             }
         });
         connection.end();
@@ -189,7 +209,7 @@ async function listGithubNameInSameOrg(userName) {
 async function listMngrGithubNameByOrgId(orgId) {
     var connection = createConnection();
 
-    var query = 'select github_username from Users where org_id=? and user_role=\'mngr\'';
+    var query = 'select github_username from Users where org_id=? and user_role=\'admin\'';
 
     return new Promise(function (res, rej) {
         connection.query(query, [orgId], function (err, result, fields) {
@@ -201,7 +221,7 @@ async function listMngrGithubNameByOrgId(orgId) {
                 }
                 res(list);
             } else {
-                res(null)
+                res([])
             }
         });
         connection.end();
@@ -211,7 +231,7 @@ async function listMngrGithubNameByOrgId(orgId) {
 async function listUserGithubNameByOrgId(orgId) {
     var connection = createConnection();
 
-    var query = 'select github_username from Users where org_id=? and user_role=\'sde\'';
+    var query = 'select github_username from Users where org_id=? and user_role=\'member\'';
 
     return new Promise(function (res, rej) {
         connection.query(query, [orgId], function (err, result, fields) {
@@ -223,7 +243,7 @@ async function listUserGithubNameByOrgId(orgId) {
                 }
                 res(list);
             } else {
-                res(null)
+                res([])
             }
         });
         connection.end();
@@ -255,7 +275,7 @@ async function listAllOrgId() {
     var query = 'select org_id from Organization';
 
     return new Promise(function (res, rej) {
-        connection.query(query,  function (err, result, fields) {
+        connection.query(query, function (err, result, fields) {
             if (err) throw err;
             if (result.length !== 0) {
                 var list = [];
@@ -264,8 +284,41 @@ async function listAllOrgId() {
                 }
                 res(list);
             } else {
-                res(null)
+                res([])
             }
+        });
+        connection.end();
+    });
+}
+
+async function insertRecordIntoUsers(record) {
+    var connection = createConnection();
+    var query = 'INSERT INTO Users (org_id, mattermost_username, github_username, user_role) VALUES (?,?,?,?)';
+    return new Promise(function (resolve, reject) {
+        connection.query(query, record, function (err, result, fields) {
+            //connection.end();
+            if (err) {
+                console.log(err);
+                reject(err);
+                return;
+            }
+            resolve(result);
+        });
+        connection.end();
+    });
+}
+
+async function insertRecordIntoOrganization(record) {
+    var connection = createConnection();
+    var query = 'INSERT INTO Organization (org_name, github_token) VALUES (?,?)';
+    return new Promise(function (resolve, reject) {
+        connection.query(query, record, function (err, result, fields) {
+            if (err) {
+                console.log(err);
+                reject(err);
+                return;
+            }
+            resolve(result);
         });
         connection.end();
     });
@@ -283,3 +336,5 @@ module.exports.listMngrGithubNameByOrgId = listMngrGithubNameByOrgId;
 module.exports.listUserGithubNameByOrgId = listUserGithubNameByOrgId;
 module.exports.getMattermostNameByGithubName = getMattermostNameByGithubName;
 module.exports.listAllOrgId = listAllOrgId;
+module.exports.insertRecordIntoUsers = insertRecordIntoUsers;
+module.exports.insertRecordIntoOrganization = insertRecordIntoOrganization;
