@@ -9,12 +9,22 @@ router.get('/:name/:date', async (req, res) => {
     var name = req.params.name;
     var date = req.params.date;
 
-    var data = await report.userReportData(name, date);
-    var generateReportLinks =  exports.generateReportLinks;
-    var userReportData = exports.userReportData;
-    // exports.getReportData = mngrReportDate;
-    var date_commit_array = data.date_commit_array;
-    res.render('user-report', {data: data, date_commit_array: date_commit_array});
-});
+    var data =await report.userReportData(name, date);
+
+    res.render('user-report',
+        {outline: data['outline'],
+        weekCommits: data['weekCommits'],
+        weekLineDelta: data['weekLineDelta'],
+        weekPulls: data['weekPulls'],
+        lastMonthCommits: data['lastMonthCommits'],
+        lastMonthLineDelta: data['lastMonthLineDelta'],
+        lastMonthPulls: data['lastMonthPulls'],
+        monthCommitsDelta: data['monthCommitsDelta'],
+        monthLineDelta: data['monthLineDelta'],
+        monthPullsDelta: data['monthPullsDelta'],
+        CommitsByRepo: data['CommitsByRepo'],
+        LinesByRepo: data['LinesByRepo'],
+        PullsByRepo: data['PullsByRepo']});
+  });
 
 module.exports = router;

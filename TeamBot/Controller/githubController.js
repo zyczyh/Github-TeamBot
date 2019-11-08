@@ -67,12 +67,12 @@ express.repoList = function (req, res, next) {
 };
 
 async function userInOrg(orgName, token) {
-    // export data 
+    // export data
     // save to db in mattermostController.js
     options = github_api.getDefaultOptions('/orgs/' + orgName + '/members', 'GET', token);
     return new Promise(function(resolve, reject)
 	{
-		request(options, function (error, response, body) 
+		request(options, function (error, response, body)
 		{
 			if( error )
 			{
@@ -89,7 +89,7 @@ async function checkUserRole(org_name, username, token){
 	let options = github_api.getDefaultOptions('/orgs/' + org_name + '/memberships/' + username, 'GET', token);
 	return new Promise(function(resolve, reject)
 	{
-		request(options, function (error, response, body) 
+		request(options, function (error, response, body)
 		{
 			if( error )
 			{
@@ -102,7 +102,7 @@ async function checkUserRole(org_name, username, token){
 		});
 	});
 }
-
+(async () => {
+    await fetchData();
+})()
 exports.fetchData = fetchData;
-exports.userInOrg = userInOrg;
-exports.checkUserRole = checkUserRole;

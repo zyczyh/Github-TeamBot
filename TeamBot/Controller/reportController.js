@@ -30,6 +30,21 @@ async function generateReportLinks(org_id) {
     return links;
 }
 
+
+function sortOnKeys(dict, key_name, value_name) {
+    sorted_array = [[key_name, value_name]];
+    var sorted = [];
+    for(var key in dict) {
+        sorted[sorted.length] = key;
+    }
+    sorted.sort();
+
+    for (var key in sorted){
+        sorted_array.push([key, dict[key]])
+    }
+    return sorted_array
+}
+
 /**
  * helper function to calculate start and end date of week of {date}
  * @param date set default to today
@@ -225,7 +240,7 @@ async function mngrReportDate(mngrName, date = new Date()) {
  */
 async function userReportData(userName, date = new Date()) {
 
-    var outline = await outlineByUser(userName, date);
+    var outline = outlineByUser(userName, date);
     var weekCommits = {};
     var weekLineDelta = {};
     var weekPulls = {};
@@ -255,8 +270,8 @@ async function userReportData(userName, date = new Date()) {
             weekLineDelta[queryDate] += data[i]['codelines_change'];
             weekPulls[queryDate] += data[i]['pullrequest_number'];
 
-            if (j < 4) {
-                if (j === 0) {
+            if (i < 4) {
+                if (i === 0) {
                     commitsByRepo[data[i]['repo_name']] = data[i]['commits_number'];
                     linesByRepo[data[i]['repo_name']] = data[i]['codelines_change'];
                     pullsByRepo[data[i]['repo_name']] = data[i]['pullrequest_number'];
@@ -280,18 +295,18 @@ async function userReportData(userName, date = new Date()) {
 
     return {
         'outline': outline,
-        'weekCommits': weekCommits,
-        'weekLineDelta': weekLineDelta,
-        'weekPulls': weekPulls,
+        'weekCommits': sortOnKeys(weekCommits, "Week", "Commits"),
+        'weekLineDelta': sortOnKeys(weekLineDelta, "Week", "LineDelta"),
+        'weekPulls': sortOnKeys(weekPulls, "Week", "Pulls"),
         'lastMonthCommits': lastMonthCommits,
         'lastMonthLineDelta': lastMonthLineDelta,
         'lastMonthPulls': lastMonthPulls,
         'monthCommitsDelta': monthCommitsDelta,
         'monthLineDelta': monthLineDelta,
         'monthPullsDelta': monthPullsDelta,
-        'commitsByRepo': commitsByRepo,
-        'linesByRepo': linesByRepo,
-        'pullsByRepo': pullsByRepo
+        'commitsByRepo': sortOnKeys(commitsByRepo, "Repo", "Commits"),
+        'linesByRepo':  sortOnKeys(linesByRepo, "Repo", "Lines"),
+        'pullsByRepo':  sortOnKeys(pullsByRepo, "Repo", "Pulls")
     }
 }
 
