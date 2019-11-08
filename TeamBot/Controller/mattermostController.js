@@ -1,6 +1,9 @@
 var express = require('express');
 var request = require('request');
 var mattermost_api = require('../mattermost_api');
+var github = require('./githubController');
+var authen = require('./authenController');
+var db = require('./databaseController');
 var mock_data = require('../test/mock/mock.json');
 var config = require('../config.json');
 
@@ -55,13 +58,10 @@ function respondToUser(post, username) {
     var iurl = config.incoming_webhook_url;
     var authen_link = config.teambot_url +'/authen';
     var text = '';
-    var org = mock_data.organizationUsers;
-    var org_users = [];
+    
     var team_id = config.team_id;
     post = post.toLowerCase().replace('@teambot', '').trim();
-    for (var i = 0; i < org.length; i = i + 1) {
-        org_users[i] = org[i].login;
-    }
+
     // if user post contains 'create' or 'set up' and 'Monitor'
     if (((post.includes('create') || post.includes('set up')) && post.includes('monitor') && post.includes('github')) || post == 'yes') {
         text = '@' + username + ' How are you! I\'m the TeamBot, you can also call me Tim (-: Please use this link to set up the monitor, thank you! ' + authen_link;
@@ -71,13 +71,44 @@ function respondToUser(post, username) {
         username = '';
     }
     else if (post[0] == '@') {
+        var users = github.userInOrg(authen.orgName, authen.token).then(result=>{
+            var org_users = [];
+            var parsedResult = JSON.parse(result);
+            for (var i=0; i<parsedResult.length; i = i+1){
+                org_users.push(parsedResult[i].login);
+            }
+            console.log("Printing out the list of users..." + org_users);
+            if (org_users.includes(post.substring(1))) {
+                text = '@' + username + ' Thank you for your response, we have received and verified your info, thanks!';
+                var org_info = db.getOrgInfoFromDb();
+                var org_id;
+                for(var i = 0; i < org_info.length; i = i + 1){
+                    if (org_info[i].org_name === authen.orgName){
+                        org_id = org_info[i].org_id;
+                    }
+                }
+                var role = github.checkUserRole(authen.orgName, post.substring(1), authen.token).then(result=>{
+                    var parsedResult = JSON.parse(result);
+                    console.log("Printing out the user role..." + parsedResult.role);
+                    if (parsedResult.role === 'admin'){
+                        db.insertRecordIntoUsers([org_id, username, post.substring(1), 'manager']);
+                    }
+                    else{
+                        db.insertRecordIntoUsers([org_id, username, post.substring(1), 'member']);
+                    }
+                });
+                
+            }
+            else {
+                text = '@' + username + ' Sorry, your username is not in your team\'s Github Org, you can input again if you want.';
+            }
+        });
+
         // check if username is in github organization
-        if (org_users.includes(post.substring(1))) {
-            text = '@' + username + ' Thank you for your response, we have received and verified your info, thanks!';
-        }
-        else {
-            text = '@' + username + ' Sorry, your username is not in your team\'s Github Org, you can input again if you want.';
-        }
+        // get rid of the hard code stuff
+        // save to the second db
+        // create connection btw first two db
+        
     }
     else {
         text = '@' + username + ' Do you want to create a Github Monitor for your team? (Please input Yes or No)';

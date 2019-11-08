@@ -45,8 +45,8 @@ async function getOrgInfoFromDb()
             //connection.end();
             if (err) 
             {
-                console.log(error);
-                reject(error);
+                console.log(err);
+                reject(err);
                 return;
             }
             resolve(result);
@@ -66,8 +66,8 @@ async function getUserInfoByOrgFromDb(org_id)
             //connection.end();
             if (err) 
             {
-                console.log(error);
-                reject(error);
+                console.log(err);
+                reject(err);
                 return;
             }
             resolve(result);
@@ -87,8 +87,8 @@ async function insertRecordIntoGithubStatistics(record)
             //connection.end();
             if (err) 
             {
-                console.log(error);
-                reject(error);
+                console.log(err);
+                reject(err);
                 return;
             }
             resolve(result);
@@ -96,6 +96,49 @@ async function insertRecordIntoGithubStatistics(record)
         connection.end();
     });
 } 
+
+async function insertRecordIntoUsers(record)
+{
+    var connection = createConnection();
+    var query = 'INSERT INTO Users (org_id, nattermost_username, github_username, user_role) VALUES (?,?,?,?)';
+    return new Promise(function(resolve, reject)
+    {
+        connection.query(query, record, function(err, result, fields) 
+        {
+            //connection.end();
+            if (err) 
+            {
+                console.log(err);
+                reject(err);
+                return;
+            }
+            resolve(result);
+        });
+        connection.end();
+    });
+} 
+
+async function insertRecordIntoOrganization(record)
+{
+    var connection = createConnection();
+    var query = 'INSERT INTO Organization (org_name, github_token) VALUES (?,?)';
+    return new Promise(function(resolve, reject)
+    {
+        connection.query(query, record, function(err, result, fields) 
+        {
+            if (err) 
+            {
+                console.log(err);
+                reject(err);
+                return;
+            }
+            resolve(result);
+        });
+        connection.end();
+    });
+} 
+
+
 /*
 (async () => {
     //var x = await getOrgInfoFromDb(); 
@@ -110,3 +153,5 @@ async function insertRecordIntoGithubStatistics(record)
 module.exports.getOrgInfoFromDb = getOrgInfoFromDb;
 module.exports.getUserInfoByOrgFromDb = getUserInfoByOrgFromDb;
 module.exports.insertRecordIntoGithubStatistics = insertRecordIntoGithubStatistics;
+module.exports.insertRecordIntoUsers = insertRecordIntoUsers;
+module.exports.insertRecordIntoOrganization = insertRecordIntoOrganization;

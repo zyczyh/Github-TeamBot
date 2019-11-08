@@ -1,4 +1,5 @@
 var express = require('express');
+var request = require('request');
 var db = require('./databaseController');
 var github_api = require('../github_api');
 
@@ -12,7 +13,7 @@ async function fetchData()
     since.setDate(since.getDate() - 7);
     var curr_date = new Date(Date.now());
     var org_info = await db.getOrgInfoFromDb();
-    //console.log(org_info);
+    // console.log(org_info);
     for(var i = 0; i < org_info.length; i = i + 1)
     {
         var users_info = await db.getUserInfoByOrgFromDb(org_info[i].org_id);
@@ -49,7 +50,7 @@ async function fetchData()
                     }
                 }
                 var record = [org_info[i].org_id, users_info[j].user_id, repos_info[k].name, since, curr_date, commits_count, PR_count, lines_of_code];
-                console.log(record);
+                // console.log(record);
                 await db.insertRecordIntoGithubStatistics(record);
             }
         }
@@ -60,10 +61,47 @@ express.repoList = function (req, res, next) {
     return express.json(repos);
 };
 
-function userInOrg(orgName) {
-    
+function userInOrg(orgName, token) {
+    // export data 
+    // save to db in mattermostController.js
+    options = github_api.getDefaultOptions('/orgs/' + orgName + '/members', 'GET', token);
+    return new Promise(function(resolve, reject)
+	{
+		request(options, function (error, response, body) 
+		{
+			if( error )
+			{
+				console.log(error);
+				reject(error);
+				return; // Terminate execution.
+			}
+			resolve(body);
+		});
+	});
 }
+
+function checkUserRole(org_name, username, token){
+	let options = github_api.getDefaultOptions('/orgs/' + org_name + '/memberships/' + username, 'GET', token);
+	return new Promise(function(resolve, reject)
+	{
+		request(options, function (error, response, body) 
+		{
+			if( error )
+			{
+				console.log(error);
+				reject(error);
+				return; // Terminate execution.
+			}
+			//console.log(response.headers);
+			resolve(body);
+		});
+	});
+}
+
+
 (async () => {
     await fetchData();
 })()
 exports.fetchData = fetchData;
+exports.userInOrg = userInOrg;
+exports.checkUserRole = checkUserRole;
