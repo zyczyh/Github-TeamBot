@@ -14,20 +14,20 @@ var schedule = require('node-schedule');
 
 // schedule weekly tasks
 function weeklyReports(){
-    schedule.scheduleJob('0 20 17 * * 5', function() {
+    schedule.scheduleJob('0 56 0 * * 5', async function() {
         console.log('scheduleCronstyle:' + new Date());
         // // fetch data from github and store into db
-        github.fetchData();
+        await github.fetchData();
     });
 
-    schedule.scheduleJob('0 30 17 * * 5', function() {
+    schedule.scheduleJob('0 56 0 * * 5', async function() {
         // generate all weekly reports
         var reportLinks = report.generateReportLinks();
         // console.log(reportLinks);
 
         // Send report links
         for (var user in reportLinks) {
-            mattermost.postReports(config.incoming_webhook_url, '@' + user, reportLinks[user]);
+            await mattermost.postReports(config.incoming_webhook_url, '@' + user, reportLinks[user]);
         }
     }); 
   }

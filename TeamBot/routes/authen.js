@@ -1,21 +1,25 @@
 var express = require('express');
+var config = require('../config.json');
+var mattermostController = require('../Controller/mattermostController');
+var db = require('../Controller/databaseController');
 var router = express.Router();
 
 /*
 GET authentication page
  */
 
- var token;
- var orgName;
  
 router.get('/', (req, res) => {
    res.render('authentication');
 });
 
 router.post('/', async function(req, res, next) {
+   let token = req.body.token;
+   let orgName = req.body.orgName;
+   await db.insertRecordIntoOrganization([orgName, token]);
+   var iurl = config.incoming_webhook_url;
+   var team_id = config.team_id;
    await mattermostController.sendToAllTeamMembers(team_id, iurl);
-   token = req.body.token;
-   orgName = req.body.orgName;
    res.send({'status': 'OK'});
 });
 
@@ -31,5 +35,3 @@ router.post('/', async function(req, res, next) {
 // });
 
 module.exports = router;
-module.exports.token = token;
-module.exports.orgName = orgName;

@@ -2,10 +2,13 @@ var express = require('express');
 var request = require('request');
 var mattermost_api = require('../mattermost_api');
 var github = require('./githubController');
-var authen = require('./authenController');
 var db = require('./databaseController');
 var mock_data = require('../test/mock/mock.json');
 var config = require('../config.json');
+var authen = {
+    "orgName": "510-test",
+    "token": "64c541d6d9a692b126ecb75067ee8d29258a6c86"
+};
 
 /*
 

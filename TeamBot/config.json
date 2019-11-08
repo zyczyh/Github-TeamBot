@@ -2,7 +2,7 @@
   "host": "localhost:3000",
   "admin_token": "tpp4hwh8y78qpc8szd6u5sopeo",
   "bot_token": "yp1r11984jnk3reo9jrjfm4c9r",
-  "incoming_webhook_url": "https://csc510-mattermost-19.herokuapp.com/hooks/bkx9samofpf78fxkpmf3aok7zh",
+  "incoming_webhook_url": "https://csc510-mattermost-19.herokuapp.com/hooks/p41bhy6ebtfqpn8pfjys7egoec",
   "team_id": "mxgxnws7k3ya5m3trbsxshh6cc",
   "teambot_url": "https://csc510-19.herokuapp.com",
   "mattermost_url_root": "https://csc510-mattermost-19.herokuapp.com/api/v4",
