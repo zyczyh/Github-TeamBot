@@ -100,7 +100,7 @@ async function insertRecordIntoGithubStatistics(record)
 async function insertRecordIntoUsers(record)
 {
     var connection = createConnection();
-    var query = 'INSERT INTO Users (org_id, nattermost_username, github_username, user_role) VALUES (?,?,?,?)';
+    var query = 'INSERT INTO Users (org_id, mattermost_username, github_username, user_role) VALUES (?,?,?,?)';
     return new Promise(function(resolve, reject)
     {
         connection.query(query, record, function(err, result, fields) 

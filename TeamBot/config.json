@@ -4,7 +4,7 @@
   "bot_token": "yp1r11984jnk3reo9jrjfm4c9r",
   "incoming_webhook_url": "https://csc510-mattermost-19.herokuapp.com/hooks/bkx9samofpf78fxkpmf3aok7zh",
   "team_id": "mxgxnws7k3ya5m3trbsxshh6cc",
-  "teambot_url": "https://csc510-19.herokuapp.com/authen",
+  "teambot_url": "https://csc510-19.herokuapp.com",
   "mattermost_url_root": "https://csc510-mattermost-19.herokuapp.com/api/v4",
   "github_url_root": "https://api.github.ncsu.edu",
   "DB": {

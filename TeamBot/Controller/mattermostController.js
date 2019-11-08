@@ -80,7 +80,7 @@ async function respondToUser(post, username) {
         console.log("Printing out the list of users..." + org_users);
         if (org_users.includes(post.substring(1))) {
             text = '@' + username + ' Thank you for your response, we have received and verified your info, thanks!';
-            var org_info = db.getOrgInfoFromDb();
+            var org_info = await db.getOrgInfoFromDb();
             var org_id;
             for(var i = 0; i < org_info.length; i = i + 1){
                 if (org_info[i].org_name === authen.orgName){

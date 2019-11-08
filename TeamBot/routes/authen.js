@@ -12,7 +12,7 @@ router.get('/', (req, res) => {
    res.render('authentication');
 });
 
-router.post('/authen', async function(req, res, next) {
+router.post('/', async function(req, res, next) {
    await mattermostController.sendToAllTeamMembers(team_id, iurl);
    token = req.body.token;
    orgName = req.body.orgName;
