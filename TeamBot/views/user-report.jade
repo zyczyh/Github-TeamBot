@@ -36,11 +36,11 @@ html(lang='en')
                     h4 User Report
                     ul.nav.nav-pills.nav-stacked
                         li.active
-                            a(href='#highlights') Progress Highlights
+                            a(href='#commits') Commits Summary
                         li
-                            a(href='#red-flags') Red Flags
+                            a(href='#lines') Lines of Code Changes
                         li
-                            a(href='#members') Team Member Progress
+                            a(href='#pulls') Pull Requests Summary
                         //li
                         //    a(href='#section3') Photos
                     br
@@ -56,22 +56,17 @@ html(lang='en')
                     hr
                     #commits Recent Commits
                     #table_div_commit(style='width:280px; height: 140px;')
-                    //h2 Line changes
-                    //#table_div_line(style='width:280px; height: 140px;')
-                    //h2 Pull Requests
-                    //#table_div_pull(style='width:280px; height: 140px;')
-                        //#chart_sort_div(style='width:280px; height: 140px;')
 
-
-                            //input(type='button', value='Go Faster', onclick='changeTemp(1)')
-                            //input(type='button', value='Slow down', onclick='changeTemp(-1)')
 
 
                     br
                     script(type='text/javascript', src='https://www.gstatic.com/charts/loader.js')
                     script(type='text/javascript').
                         google.charts.load("current", {packages: ['corechart']});
-                        google.charts.setOnLoadCallback(drawChart);
+                        google.charts.setOnLoadCallback(drawChartCommit);
+                        google.charts.setOnLoadCallback(drawChartLine);
+                        google.charts.setOnLoadCallback(drawChartPull);
+
                         google.charts.load('current', {'packages': ['table']});
                         google.charts.setOnLoadCallback(drawTableCommit);
                         google.charts.setOnLoadCallback(drawTableLine);
@@ -79,8 +74,9 @@ html(lang='en')
 
 
 
-                        function drawChart() {
+                        function drawChartCommit() {
                             var data = google.visualization.arrayToDataTable(!{JSON.stringify(weekCommits)});
+                            console.log('weekCommits: ', !{JSON.stringify(weekCommits)});
                             console.log(data);
                             var view = new google.visualization.DataView(data);
 
@@ -91,162 +87,31 @@ html(lang='en')
                                 bar: {groupWidth: "95%"},
                                 legend: {position: "none"},
                             };
-                            var chart = new google.visualization.ColumnChart(document.getElementById("columnchart_values"));
+                            var chart = new google.visualization.ColumnChart(document.getElementById("columnchart_commits"));
                             chart.draw(view, options);
                         }
 
                         google.charts.load("current", {packages: ['corechart']});
                         google.charts.setOnLoadCallback(drawChart);
-                        function drawChart() {
+                        function drawChartLine() {
                             var data = google.visualization.arrayToDataTable(!{JSON.stringify(weekLineDelta)});
                             var view = new google.visualization.DataView(data);
 
                             var options = {
-                                title: "Commits in the past week",
+                                title: "Change of Lines of Codes in the past week",
                                 width: 500,
                                 height: 300,
                                 bar: {groupWidth: "95%"},
                                 legend: {position: "none"},
                             };
-                            var chart = new google.visualization.ColumnChart(document.getElementById("columnchart_values"));
-                            chart.draw(view, options);
-                        }
-
-                        google.charts.load("current", {packages: ['corechart']});
-                        google.charts.setOnLoadCallback(drawChart);
-                        function drawChart() {
-                            var data = google.visualization.arrayToDataTable(!{JSON.stringify(weekPulls)});
-                            var view = new google.visualization.DataView(data);
-
-                            var options = {
-                                title: "Commits in the past week",
-                                width: 500,
-                                height: 300,
-                                bar: {groupWidth: "95%"},
-                                legend: {position: "none"},
-                            };
-                            var chart = new google.visualization.ColumnChart(document.getElementById("columnchart_values"));
+                            var chart = new google.visualization.ColumnChart(document.getElementById("columnchart_lines"));
                             chart.draw(view, options);
                         }
 
 
+                    #columnchart_commits(style='width: 600px; height: 300px;')
+                    #columnchart_lines(style='width: 600px; height: 300px;')
+                    #columnchart_pulls(style='width: 600px; height: 300px;')
 
-                        function drawTableCommit() {
-                            var data = new google.visualization.DataTable();
-                            data.addColumn('string', 'Name');
-                            data.addColumn('number', 'Salary');
-                            data.addColumn('boolean', 'Full Time');
-                            data.addRows(5);
-                            data.setCell(0, 0, 'John');
-                            data.setCell(0, 1, 10000, '$10,000');
-                            data.setCell(0, 2, true);
-                            data.setCell(1, 0, 'Mary');
-                            data.setCell(1, 1, 25000, '$25,000');
-                            data.setCell(1, 2, true);
-                            data.setCell(2, 0, 'Steve');
-                            data.setCell(2, 1, 8000, '$8,000');
-                            data.setCell(2, 2, false);
-                            data.setCell(3, 0, 'Ellen');
-                            data.setCell(3, 1, 20000, '$20,000');
-                            data.setCell(3, 2, true);
-                            data.setCell(4, 0, 'Mike');
-                            data.setCell(4, 1, 12000, '$12,000');
-                            data.setCell(4, 2, false);
-
-                            var table = new google.visualization.Table(document.getElementById('table_div_commit'));
-                            table.draw(data, {showRowNumber: true, width: '100%', height: '100%'});
-
-                            google.visualization.events.addListener(table, 'select', function () {
-                                var row = table.getSelection()[0].row;
-                                alert('You selected ' + data.getValue(row, 0));
-                            });
-                        }
-
-
-                        function drawTableLine() {
-                            var data = new google.visualization.DataTable();
-                            data.addColumn('string', 'Name');
-                            data.addColumn('number', 'Salary');
-                            data.addColumn('boolean', 'Full Time');
-                            data.addRows(5);
-                            data.setCell(0, 0, 'John');
-                            data.setCell(0, 1, 10000, '$10,000');
-                            data.setCell(0, 2, true);
-                            data.setCell(1, 0, 'Mary');
-                            data.setCell(1, 1, 25000, '$25,000');
-                            data.setCell(1, 2, true);
-                            data.setCell(2, 0, 'Steve');
-                            data.setCell(2, 1, 8000, '$8,000');
-                            data.setCell(2, 2, false);
-                            data.setCell(3, 0, 'Ellen');
-                            data.setCell(3, 1, 20000, '$20,000');
-                            data.setCell(3, 2, true);
-                            data.setCell(4, 0, 'Mike');
-                            data.setCell(4, 1, 12000, '$12,000');
-                            data.setCell(4, 2, false);
-
-                            var table = new google.visualization.Table(document.getElementById('table_div_line'));
-                            table.draw(data, {showRowNumber: true, width: '100%', height: '100%'});
-
-                            google.visualization.events.addListener(table, 'select', function () {
-                                var row = table.getSelection()[0].row;
-                                alert('You selected ' + data.getValue(row, 0));
-                            });
-                        }
-
-
-                        function drawTablePull() {
-                            var data = new google.visualization.DataTable();
-                            data.addColumn('string', 'Name');
-                            data.addColumn('number', 'Salary');
-                            data.addColumn('boolean', 'Full Time');
-                            data.addRows(5);
-                            data.setCell(0, 0, 'John');
-                            data.setCell(0, 1, 10000, '$10,000');
-                            data.setCell(0, 2, true);
-                            data.setCell(1, 0, 'Mary');
-                            data.setCell(1, 1, 25000, '$25,000');
-                            data.setCell(1, 2, true);
-                            data.setCell(2, 0, 'Steve');
-                            data.setCell(2, 1, 8000, '$8,000');
-                            data.setCell(2, 2, false);
-                            data.setCell(3, 0, 'Ellen');
-                            data.setCell(3, 1, 20000, '$20,000');
-                            data.setCell(3, 2, true);
-                            data.setCell(4, 0, 'Mike');
-                            data.setCell(4, 1, 12000, '$12,000');
-                            data.setCell(4, 2, false);
-
-                            var table = new google.visualization.Table(document.getElementById('table_div_pull'));
-                            table.draw(data, {showRowNumber: true, width: '100%', height: '100%'});
-
-                            //
-                            // var formatter = new google.visualization.NumberFormat({prefix: '$'});g
-                            // formatter.format(data, 1); // Apply formatter to second column
-                            //
-                            // var view = new google.visualization.DataView(data);
-                            // view.setColumns([0, 1]);
-                            //
-                            // var table = new google.visualization.Table(document.getElementById('table_sort_div'));
-                            // table.draw(view, {width: '100%', height: '100%'});
-                            //
-                            // var chart = new google.visualization.BarChart(document.getElementById('chart_sort_div'));
-                            // chart.draw(view);
-
-                            google.visualization.events.addListener(table, 'sort',
-                                function (event) {
-                                    data.sort([{column: event.column, desc: !event.ascending}]);
-                                    chart.draw(view);
-                                });
-
-
-
-                            google.visualization.events.addListener(table, 'select', function () {
-                                var row = table.getSelection()[0].row;
-                                alert('You selected ' + data.getValue(row, 0));
-                            });
-                        }
-
-                    #columnchart_values(style='width: 600px; height: 300px;')
 
 

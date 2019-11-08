@@ -9,7 +9,7 @@ router.get('/:name/:date', async (req, res) => {
     var name = req.params.name;
     var date = req.params.date;
 
-    var data = report.userReportData(name, date);
+    var data =await report.userReportData(name, date);
 
     res.render('user-report',
         {outline: data['outline'],
@@ -25,6 +25,6 @@ router.get('/:name/:date', async (req, res) => {
         CommitsByRepo: data['CommitsByRepo'],
         LinesByRepo: data['LinesByRepo'],
         PullsByRepo: data['PullsByRepo']});
-});
+  });
 
 module.exports = router;

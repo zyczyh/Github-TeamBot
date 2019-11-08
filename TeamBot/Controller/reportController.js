@@ -15,8 +15,8 @@ var userReportLinkHead = config.host + "/user-report";
  */
 async function generateReportLinks(org_id) {
     var today = formatDate(new Date());
-    var mngrs = db.listMngrGithubNameByOrgId(org_id);
-    var users = db.listUserGithubNameByOrgId(org_id);
+    var mngrs = await db.listMngrGithubNameByOrgId(org_id);
+    var users = await db.listUserGithubNameByOrgId(org_id);
     var links = {};
     for (var mngr of mngrs) {
         var mName = await db.getMattermostNameByGithubName(mngr);
@@ -116,7 +116,7 @@ function formatDate(date) {
  * }
  */
 async function mngrReportDate(mngrName, date = new Date()) {
-    var standardDate = getNWeeksBeforeDate(0, date);
+    var standardDate = getNWeeksBeforeDate(0);
     var outline = [];
     var weekCommits = {};
     var weekLineDelta = {};
@@ -317,7 +317,7 @@ async function f() {
     console.log(test);
 }
 
-f();
+// f();
 
 /**
  * help functions for generate user's report
@@ -336,4 +336,4 @@ async function outlineByUser(userName, date) {
 
 exports.generateReportLinks = generateReportLinks;
 exports.userReportData = userReportData;
-exports.getReportData = mngrReportDate;
+exports.mngrReportDate = mngrReportDate;

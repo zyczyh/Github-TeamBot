@@ -40,7 +40,7 @@ router.get('/mission-trigger', function (req, res, next) {
 // };
 router.post('/mission-trigger', function (req, res, next) {
     // console.log('posted');
-    // mission.weeklyReports();
+    mission.weeklyReports();
     // res.logOut();
     // res.logout();
     // req.session.destroy();

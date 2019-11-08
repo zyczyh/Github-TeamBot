@@ -12,10 +12,19 @@ var schedule = require('node-schedule');
  * 3. post link for user to mattermost
  * @param repoName
  */
-
+// weeklyReports();
 // schedule weekly tasks
-function weeklyReports(){
-        github.fetchData();
+async function weeklyReports(){
+    // github.fetchData();
+    var orgList = await db.listAllOrgId();
+    for (var org_id of orgList) {
+        var reportLinks = await report.generateReportLinks(org_id);
+        // console.log(reportLinks);
+        // Send report links
+        for (var user in reportLinks) {
+            mattermost.postReports(config.incoming_webhook_url, '@' + user, reportLinks[user]);
+        }
+    }
     // schedule.scheduleJob('0 56 0 * * 5', async function() {
     //     console.log('scheduleCronstyle:' + new Date());
     //     // // fetch data from github and store into db
