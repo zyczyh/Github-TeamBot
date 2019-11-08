@@ -50,7 +50,9 @@ The Kanban board status is as follow:
 
 ## Second Iteration
 ### Story Creation and Assignment
-
+![image](https://media.github.ncsu.edu/user/14814/files/2aa1f200-0235-11ea-8977-b2a708f55499)
+![image](https://media.github.ncsu.edu/user/14814/files/2d044c00-0235-11ea-9a74-6c27ad265bbf)
+![image](https://media.github.ncsu.edu/user/14814/files/2e357900-0235-11ea-839d-bb80d83ad762)
 
 
 ### Scrum Meeting Notes
@@ -67,7 +69,7 @@ The Kanban board status is as follow:
 - Yanchen:
 - Werngran:
 - Xiaohan: Accessed data from the front end and saved them to the database.
-### Nov 7
+#### Nov 7
 - Hao: 
 - Cheng:
 - Yanchen:
