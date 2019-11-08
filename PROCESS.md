@@ -81,4 +81,6 @@ The Kanban board status is as follow:
   
   
   We are not only interested in the presentation of the teams' dynamics, but also how such presentation might impact the teams' future actions, so we have also added red flags and other concerning information to the team front-end.
-  
+
+Our Kanban board at this point:
+![image](https://media.github.ncsu.edu/user/14814/files/9e43ff00-0235-11ea-98b6-7cf11efaf6d4)
