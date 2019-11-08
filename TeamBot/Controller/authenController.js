@@ -15,8 +15,8 @@ TODO 2. test -- mock
  */
 
 // save the authen data to db
-var record = [authen.orgName, authen.token];
-// var record = ['510-test',  '64c541d6d9a692b126ecb75067ee8d29258a6c86'];
+// var record = [authen.orgName, authen.token];
+var record = ['510-test',  '64c541d6d9a692b126ecb75067ee8d29258a6c86'];
 db.insertRecordIntoOrganization(record);
 
 // var user_lists = [];

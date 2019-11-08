@@ -23,7 +23,7 @@ function sendTextToUser(text, username, iurl) {
     };
     if (username != '') {
         options.json.channel = '@' + username;
-    } 
+    }
     //console.log(options);
     return new Promise(function(resolve, reject)
     {
