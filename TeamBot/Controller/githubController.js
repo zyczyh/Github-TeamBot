@@ -1,4 +1,5 @@
 var express = require('express');
+var request = require('request');
 var db = require('./databaseController');
 var github_api = require('../github_api');
 var fake = require('../test/mock/mock');
@@ -57,7 +58,7 @@ async function fetchData() {
                     }
                 }
                 var record = [org_info[i].org_id, users_info[j].user_id, repos_info[k].name, since, curr_date, commits_count, PR_count, lines_of_code];
-                console.log(record);
+                // console.log(record);
                 await db.insertRecordIntoGithubStatistics(record);
             }
         }
@@ -68,11 +69,43 @@ express.repoList = function (req, res, next) {
     return express.json(repos);
 };
 
-function userInOrg(orgName) {
-
+async function userInOrg(orgName, token) {
+    // export data 
+    // save to db in mattermostController.js
+    options = github_api.getDefaultOptions('/orgs/' + orgName + '/members', 'GET', token);
+    return new Promise(function(resolve, reject)
+	{
+		request(options, function (error, response, body) 
+		{
+			if( error )
+			{
+				console.log(error);
+				reject(error);
+				return; // Terminate execution.
+			}
+			resolve(body);
+		});
+	});
 }
 
-// (async () => {
-//     await fetchData();
-// })()
+async function checkUserRole(org_name, username, token){
+	let options = github_api.getDefaultOptions('/orgs/' + org_name + '/memberships/' + username, 'GET', token);
+	return new Promise(function(resolve, reject)
+	{
+		request(options, function (error, response, body) 
+		{
+			if( error )
+			{
+				console.log(error);
+				reject(error);
+				return; // Terminate execution.
+			}
+			//console.log(response.headers);
+			resolve(body);
+		});
+	});
+}
+
 exports.fetchData = fetchData;
+exports.userInOrg = userInOrg;
+exports.checkUserRole = checkUserRole;

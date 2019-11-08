@@ -37,9 +37,10 @@ async function getOrgInfoFromDb() {
     return new Promise(function (resolve, reject) {
         connection.query('SELECT * FROM Organization', function (err, result, fields) {
             //connection.end();
-            if (err) {
-                console.log(error);
-                reject(error);
+            if (err) 
+            {
+                console.log(err);
+                reject(err);
                 return;
             }
             resolve(result);
@@ -272,6 +273,48 @@ async function listAllOrgId() {
     });
 }
 
+
+async function insertRecordIntoUsers(record)
+{
+    var connection = createConnection();
+    var query = 'INSERT INTO Users (org_id, mattermost_username, github_username, user_role) VALUES (?,?,?,?)';
+    return new Promise(function(resolve, reject)
+    {
+        connection.query(query, record, function(err, result, fields) 
+        {
+            //connection.end();
+            if (err) 
+            {
+                console.log(err);
+                reject(err);
+                return;
+            }
+            resolve(result);
+        });
+        connection.end();
+    });
+} 
+
+async function insertRecordIntoOrganization(record)
+{
+    var connection = createConnection();
+    var query = 'INSERT INTO Organization (org_name, github_token) VALUES (?,?)';
+    return new Promise(function(resolve, reject)
+    {
+        connection.query(query, record, function(err, result, fields) 
+        {
+            if (err) 
+            {
+                console.log(err);
+                reject(err);
+                return;
+            }
+            resolve(result);
+        });
+        connection.end();
+    });
+} 
+
 module.exports.getOrgInfoFromDb = getOrgInfoFromDb;
 module.exports.getUserInfoByOrgFromDb = getUserInfoByOrgFromDb;
 module.exports.insertRecordIntoGithubStatistics = insertRecordIntoGithubStatistics;
@@ -284,3 +327,5 @@ module.exports.listMngrGithubNameByOrgId = listMngrGithubNameByOrgId;
 module.exports.listUserGithubNameByOrgId = listUserGithubNameByOrgId;
 module.exports.getMattermostNameByGithubName = getMattermostNameByGithubName;
 module.exports.listAllOrgId = listAllOrgId;
+module.exports.insertRecordIntoUsers = insertRecordIntoUsers;
+module.exports.insertRecordIntoOrganization = insertRecordIntoOrganization;

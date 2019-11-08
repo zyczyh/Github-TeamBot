@@ -102,6 +102,7 @@ async function getSingleCommit(org_name, repo, ref, token)
 		});
 	});
 }
+
 /*
 (async () => {
     var date = new Date("2019-10-28");
@@ -119,3 +120,4 @@ module.exports.getReposInOrg = getReposInOrg;
 module.exports.getCommits = getCommits;
 module.exports.getSingleCommit = getSingleCommit;
 module.exports.getPRs = getPRs;
+module.exports.getDefaultOptions = getDefaultOptions;
