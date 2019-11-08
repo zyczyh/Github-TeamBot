@@ -101,6 +101,7 @@ function formatDate(date) {
  * }
  */
 async function mngrReportDate(mngrName, date = new Date()) {
+    var standardDate = getNWeeksBeforeDate(0, date);
     var outline = [];
     var weekCommits = {};
     var weekLineDelta = {};
@@ -120,15 +121,21 @@ async function mngrReportDate(mngrName, date = new Date()) {
 
     var users = await db.listGithubNameInSameOrg(mngrName);
     for (var userName of users) {
+        date = new Date(standardDate);
         var userData = await userReportData(userName, date);
         if (userData['weekCommits'][date] === 0) {
             outline.push(userName);
         }
         for (var i = 0; i < 8; i++) {
             var queryDate = getNWeeksBeforeDate(i, date);
-            weekCommits[queryDate] = userData['weekCommits'][queryDate];
-            weekLineDelta[queryDate] = userData['weekLineDelta'][queryDate];
-            weekPulls[queryDate] = userData['weekPulls'][queryDate];
+            if (!weekCommits.hasOwnProperty(queryDate)) {
+                weekCommits[queryDate] = 0;
+                weekLineDelta[queryDate] = 0;
+                weekPulls[queryDate] = 0;
+            }
+            weekCommits[queryDate] += userData['weekCommits'][queryDate];
+            weekLineDelta[queryDate] += userData['weekLineDelta'][queryDate];
+            weekPulls[queryDate] += userData['weekPulls'][queryDate];
             if (i < 4) {
                 if (i === 0) {
                     weekUserCommits[userName] = userData['weekCommits'][queryDate];
@@ -290,6 +297,7 @@ async function userReportData(userName, date = new Date()) {
 
 async function f() {
     var test = await mngrReportDate('cyuan7');
+    // var test = await userReportData('cyuan7');
 
     console.log(test);
 }
