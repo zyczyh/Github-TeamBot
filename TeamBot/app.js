@@ -33,7 +33,7 @@ app.use('/user-report', userReportRouter);
 
 app.use('/test', testRouter);
 
-scheduledTasks.weeklyReports();
+// scheduledTasks.weeklyReports();
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

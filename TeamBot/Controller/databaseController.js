@@ -4,9 +4,15 @@ var config = require('../config');
 function test() {
     var connection = createConnection();
 
-    // var query = 'insert into Users values (1, 1, \'employee1\', \'zhu6\', \'member\')';
+    // var query = 'insert into Users values (1, 1, \'yigeshuaige\', \'hwu23\', \'admin\'), '
+    //     + '(2, 1, \'mngr1\', \'cyuan7\', \'admin\'), '
+    //     + '(3, 1, \'employee1\', \'xliu74\', \'member\');';
+    // var query = 'insert into Organization values (1, \'510-test\', \'528d0841b031b8eda431f3d1e147fc37db3bb9d4\')';
+    // var query = 'delete from Users where org_id=1';
+
+    // var query = 'select * from Organization';
+    // var query = 'select * from Users';
     var query = 'select * from GithubStatistics';
-    // var query = 'select * from GithubStatistics';
 
     connection.query(query, function (err, result, fields) {
         if (err) throw err;
@@ -14,12 +20,14 @@ function test() {
     });
     connection.end();
 }
+
 // test();
 
 async function f() {
     var a = await listAllOrgId();
     console.log(a);
 }
+
 // f();
 
 function createConnection() {
@@ -37,8 +45,7 @@ async function getOrgInfoFromDb() {
     return new Promise(function (resolve, reject) {
         connection.query('SELECT * FROM Organization', function (err, result, fields) {
             //connection.end();
-            if (err) 
-            {
+            if (err) {
                 console.log(err);
                 reject(err);
                 return;
@@ -257,7 +264,7 @@ async function listAllOrgId() {
     var query = 'select org_id from Organization';
 
     return new Promise(function (res, rej) {
-        connection.query(query,  function (err, result, fields) {
+        connection.query(query, function (err, result, fields) {
             if (err) throw err;
             if (result.length !== 0) {
                 var list = [];
@@ -273,18 +280,13 @@ async function listAllOrgId() {
     });
 }
 
-
-async function insertRecordIntoUsers(record)
-{
+async function insertRecordIntoUsers(record) {
     var connection = createConnection();
     var query = 'INSERT INTO Users (org_id, mattermost_username, github_username, user_role) VALUES (?,?,?,?)';
-    return new Promise(function(resolve, reject)
-    {
-        connection.query(query, record, function(err, result, fields) 
-        {
+    return new Promise(function (resolve, reject) {
+        connection.query(query, record, function (err, result, fields) {
             //connection.end();
-            if (err) 
-            {
+            if (err) {
                 console.log(err);
                 reject(err);
                 return;
@@ -293,18 +295,14 @@ async function insertRecordIntoUsers(record)
         });
         connection.end();
     });
-} 
+}
 
-async function insertRecordIntoOrganization(record)
-{
+async function insertRecordIntoOrganization(record) {
     var connection = createConnection();
     var query = 'INSERT INTO Organization (org_name, github_token) VALUES (?,?)';
-    return new Promise(function(resolve, reject)
-    {
-        connection.query(query, record, function(err, result, fields) 
-        {
-            if (err) 
-            {
+    return new Promise(function (resolve, reject) {
+        connection.query(query, record, function (err, result, fields) {
+            if (err) {
                 console.log(err);
                 reject(err);
                 return;
@@ -313,7 +311,7 @@ async function insertRecordIntoOrganization(record)
         });
         connection.end();
     });
-} 
+}
 
 module.exports.getOrgInfoFromDb = getOrgInfoFromDb;
 module.exports.getUserInfoByOrgFromDb = getUserInfoByOrgFromDb;

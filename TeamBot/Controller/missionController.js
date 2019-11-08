@@ -15,24 +15,25 @@ var schedule = require('node-schedule');
 
 // schedule weekly tasks
 function weeklyReports(){
-    schedule.scheduleJob('0 56 0 * * 5', async function() {
-        console.log('scheduleCronstyle:' + new Date());
-        // // fetch data from github and store into db
-        await github.fetchData();
-    });
-
-    schedule.scheduleJob('0 56 0 * * 5', async function() {
-        // generate all weekly reports
-        var orgList = db.listAllOrgId();
-        for (var org_id of orgList) {
-            var reportLinks = report.generateReportLinks(org_id);
-            // console.log(reportLinks);
-            // Send report links
-            for (var user in reportLinks) {
-                mattermost.postReports(config.incoming_webhook_url, '@' + user, reportLinks[user]);
-            }
-        }
-    }); 
+        github.fetchData();
+    // schedule.scheduleJob('0 56 0 * * 5', async function() {
+    //     console.log('scheduleCronstyle:' + new Date());
+    //     // // fetch data from github and store into db
+    //     await github.fetchData();
+    // });
+    //
+    // schedule.scheduleJob('0 56 0 * * 5', async function() {
+    //     // generate all weekly reports
+    //     var orgList = db.listAllOrgId();
+    //     for (var org_id of orgList) {
+    //         var reportLinks = report.generateReportLinks(org_id);
+    //         // console.log(reportLinks);
+    //         // Send report links
+    //         for (var user in reportLinks) {
+    //             mattermost.postReports(config.incoming_webhook_url, '@' + user, reportLinks[user]);
+    //         }
+    //     }
+    // });
   }
 
 exports.logout = function logOut() {
