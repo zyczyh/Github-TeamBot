@@ -11,6 +11,7 @@ router.get('/:name/:date', async (req, res) => {
     var date = req.params.date;
 
     var data = await report.mngrReportDate(name, date);
+    // res.render('test', {data: data});
     res.render("manager-report",
         {outline: data['outline'],
             weekCommits: data['weekCommits'],

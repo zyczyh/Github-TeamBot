@@ -32,6 +32,7 @@ async function generateReportLinks(org_id) {
 
 
 function sortOnKeys(dict, key_name, value_name) {
+    console.log("lajs" , dict);
     sorted_array = [[key_name, value_name]];
     var sorted = [];
     for(var key in dict) {
@@ -40,8 +41,14 @@ function sortOnKeys(dict, key_name, value_name) {
     sorted.sort();
 
     for (var key in sorted){
-        sorted_array.push([key, dict[key]])
+        if ( (typeof dict[key] !== 'undefined')){
+            sorted_array.push([key, dict[key]])
+        }
+        else{
+            sorted_array.push([key, 0])
+        }
     }
+    console.log("sorted_array: ",sorted_array);
     return sorted_array
 }
 
@@ -85,36 +92,6 @@ function formatDate(date) {
 }
 
 // End of helper functions
-
-/**
- * generate all data for front end to present manager's report
- * @param mngrName github_username
- * @param date
- * @returns Mngr report data
- * {
- *     {array} outline: user has 0 commits last week
- *
- *     {dic} weekCommits: commits# in last week
- *     {int} lastMonthCommits: commits# in last 4 weeks
- *     {int} monthCommitsDelta: lastMonthCommits# - theMonthBeforeCommits#
- *
- *     {array} weekLineDelta: code line delta
- *     {int} lastMonthLineDelta: sum(lineDelta#) in last 4 weeks
- *     {int} monthLineDelta: lastMonthLineDelta - theMonthBeforeLineDelta
- *
- *     {array} weekPulls: pull request # in last 8 weeks
- *     {int} lastMonthPulls: pull request # in last 4 weeks
- *     {int} monthPullsDelta: lastMonthPulls# - theMonthBeforeCommits#
- *
- *     {dic} weekCommitsByRepo: commits# for each repo
- *     {dic} weekLinesByRepo: lastWeekDelta for each repo
- *     {dic} weekPullsByRepo: pull request # for each repo
- *
- *     {dic} weekUserCommits:
- *     {dic} weekUserLines:
- *     {dic} weekUserPulls:
- * }
- */
 async function mngrReportDate(mngrName, date = new Date()) {
     var standardDate = getNWeeksBeforeDate(0);
     var outline = [];
@@ -195,9 +172,9 @@ async function mngrReportDate(mngrName, date = new Date()) {
     }
     return {
         'outline': outline,
-        'weekCommits': weekCommits,
-        'weekLineDelta': weekLineDelta,
-        'weekPulls': weekPulls,
+        'weekCommits': sortOnKeys(weekCommits, "Week", "Commits"),
+        'weekLineDelta': sortOnKeys(weekLineDelta, "Week", "LineDelta"),
+        'weekPulls': sortOnKeys(weekPulls, "Week", "Pulls"),
         'lastMonthCommits': lastMonthCommits,
         'lastMonthLineDelta': lastMonthLineDelta,
         'lastMonthPulls': lastMonthPulls,
@@ -205,42 +182,142 @@ async function mngrReportDate(mngrName, date = new Date()) {
         'monthLineDelta': monthLineDelta,
         'monthPullsDelta': monthPullsDelta,
         'weekCommitsByRepo': weekCommitsByRepo,
-        'weekLinesByRepo': weekLinesByRepo,
-        'weekPullsByRepo': weekPullsByRepo,
-        'weekUserCommits': weekUserCommits,
-        'weekUserLines': weekUserLines,
-        'weekUserPulls': weekUserPulls
+        'weekLinesByRepo': sortOnKeys(weekLinesByRepo, "Repo", "weekLines"),
+        'weekPullsByRepo': sortOnKeys(weekPullsByRepo, "Repo", "weekPulls"),
+        'weekUserCommits': sortOnKeys(weekUserCommits, "User", "weekCommits"),
+        'weekUserLines': sortOnKeys(weekUserLines, "User", "weekLines"),
+        'weekUserPulls': sortOnKeys(weekUserPulls, "User", "weekPulls")
     }
 }
-
 /**
- * generate all data for front end to present user's report
- * @param userName github_username
- * @param date query date
- * @return User report data
+ * generate all data for front end to present manager's report
+ * @param mngrName github_username
+ * @param date
+ * @returns Mngr report data
  * {
- *     {double} outline: user_commits# / team_commits# this week
+ *     {array} outline: user has 0 commits last week
  *
- *     {dic} weekCommits: commits# in last 8 weeks
+ *     {dic} weekCommits: commits# in last week
  *     {int} lastMonthCommits: commits# in last 4 weeks
  *     {int} monthCommitsDelta: lastMonthCommits# - theMonthBeforeCommits#
  *
- *     {dic} weekLineDelta: code line delta
+ *     {array} weekLineDelta: code line delta
  *     {int} lastMonthLineDelta: sum(lineDelta#) in last 4 weeks
  *     {int} monthLineDelta: lastMonthLineDelta - theMonthBeforeLineDelta
  *
- *     {dic} weekPulls: pull request # in last 8 weeks
+ *     {array} weekPulls: pull request # in last 8 weeks
  *     {int} lastMonthPulls: pull request # in last 4 weeks
  *     {int} monthPullsDelta: lastMonthPulls# - theMonthBeforeCommits#
  *
- *     {Dic} CommitsByRepo: {repo1: #commits, repo2: #commits, … repo4: #commits}
- *     {Dic} LinesByRepo: {repo1: #codes, repo2: #codes, … repo4: #codes}
- *     {Dic} PullsByRepo: {repo1: #pull, repo2: #pull, … repo4: #pull}
+ *     {dic} weekCommitsByRepo: commits# for each repo
+ *     {dic} weekLinesByRepo: lastWeekDelta for each repo
+ *     {dic} weekPullsByRepo: pull request # for each repo
+ *
+ *     {dic} weekUserCommits:
+ *     {dic} weekUserLines:
+ *     {dic} weekUserPulls:
  * }
  */
+// async function mngrReportDate(mngrName, date = new Date()) {
+//     var standardDate = getNWeeksBeforeDate(0);
+//     var outline = [];
+//     var weekCommits = {};
+//     var weekLineDelta = {};
+//     var weekPulls = {};
+//     var lastMonthCommits = 0;
+//     var lastMonthLineDelta = 0;
+//     var lastMonthPulls = 0;
+//     var monthCommitsDelta = 0;
+//     var monthLineDelta = 0;
+//     var monthPullsDelta = 0;
+//     var weekCommitsByRepo = {};
+//     var weekLinesByRepo = {};
+//     var weekPullsByRepo = {};
+//     var weekUserCommits = {};
+//     var weekUserLines = {};
+//     var weekUserPulls = {};
+//
+//     var users = await db.listGithubNameInSameOrg(mngrName);
+//     for (var userName of users) {
+//         date = new Date(standardDate);
+//         var userData = await userReportData(userName, date);
+//         if (userData['weekCommits'][date] === 0) {
+//             outline.push(userName);
+//         }
+//         for (var i = 0; i < 8; i++) {
+//             var queryDate = getNWeeksBeforeDate(i, date);
+//             if (!weekCommits.hasOwnProperty(queryDate)) {
+//                 weekCommits[queryDate] = 0;
+//                 weekLineDelta[queryDate] = 0;
+//                 weekPulls[queryDate] = 0;
+//             }
+//             weekCommits[queryDate] += userData['weekCommits'][queryDate];
+//             weekLineDelta[queryDate] += userData['weekLineDelta'][queryDate];
+//             weekPulls[queryDate] += userData['weekPulls'][queryDate];
+//             if (i < 4) {
+//                 if (i === 0) {
+//                     weekUserCommits[userName] = userData['weekCommits'][queryDate];
+//                     weekUserLines[userName] = userData['weekLineDelta'][queryDate];
+//                     weekUserPulls[userName] = userData['weekPulls'][queryDate];
+//                 }
+//                 lastMonthCommits += userData['weekCommits'][queryDate];
+//                 lastMonthLineDelta += userData['weekLineDelta'][queryDate];
+//                 lastMonthPulls += userData['weekPulls'][queryDate];
+//
+//                 monthCommitsDelta += userData['weekCommits'][queryDate];
+//                 monthLineDelta += userData['weekLineDelta'][queryDate];
+//                 monthPullsDelta += userData['weekPulls'][queryDate];
+//             } else {
+//                 monthCommitsDelta -= userData['weekCommits'][queryDate];
+//                 monthLineDelta -= userData['weekLineDelta'][queryDate];
+//                 monthPullsDelta -= userData['weekPulls'][queryDate];
+//             }
+//         }
+//
+//         for (var repo in userData['commitsByRepo']) {
+//             if (weekCommitsByRepo.hasOwnProperty(repo)) {
+//                 weekCommitsByRepo[repo] += userData['commitsByRepo'][repo];
+//             } else {
+//                 weekCommitsByRepo[repo] = userData['commitsByRepo'][repo];
+//             }
+//         }
+//         for (var repo in userData['linesByRepo']) {
+//             if (weekLinesByRepo.hasOwnProperty(repo)) {
+//                 weekLinesByRepo[repo] += userData['linesByRepo'][repo];
+//             } else {
+//                 weekLinesByRepo[repo] = userData['linesByRepo'][repo];
+//             }
+//         }
+//         for (var repo in userData['pullsByRepo']) {
+//             if (weekPullsByRepo.hasOwnProperty(repo)) {
+//                 weekPullsByRepo[repo] += userData['pullsByRepo'][repo];
+//             } else {
+//                 weekPullsByRepo[repo] = userData['pullsByRepo'][repo];
+//             }
+//         }
+//     }
+//     return {
+//         'outline': outline,
+//         'weekCommits': sortOnKeys(weekCommits, "Week", "Commits"),
+//         'weekLineDelta': sortOnKeys(weekLineDelta, "Week", "LineDelta"),
+//         'weekPulls': sortOnKeys(weekPulls, "Week", "Pulls"),
+//         'lastMonthCommits': lastMonthCommits,
+//         'lastMonthLineDelta': lastMonthLineDelta,
+//         'lastMonthPulls': lastMonthPulls,
+//         'monthCommitsDelta': monthCommitsDelta,
+//         'monthLineDelta': monthLineDelta,
+//         'monthPullsDelta': monthPullsDelta,
+//         'weekCommitsByRepo': weekCommitsByRepo,
+//         'weekLinesByRepo': sortOnKeys(weekLinesByRepo, "Repo", "weekLines"),
+//         'weekPullsByRepo': sortOnKeys(weekPullsByRepo, "Repo", "weekPulls"),
+//         'weekUserCommits': sortOnKeys(weekUserCommits, "User", "weekCommits"),
+//         'weekUserLines': sortOnKeys(weekUserLines, "User", "weekLines"),
+//         'weekUserPulls': sortOnKeys(weekUserPulls, "User", "weekPulls")
+//     }
+// }
 async function userReportData(userName, date = new Date()) {
 
-    var outline = outlineByUser(userName, date);
+    var outline = await outlineByUser(userName, date);
     var weekCommits = {};
     var weekLineDelta = {};
     var weekPulls = {};
@@ -270,8 +347,8 @@ async function userReportData(userName, date = new Date()) {
             weekLineDelta[queryDate] += data[i]['codelines_change'];
             weekPulls[queryDate] += data[i]['pullrequest_number'];
 
-            if (i < 4) {
-                if (i === 0) {
+            if (j < 4) {
+                if (j === 0) {
                     commitsByRepo[data[i]['repo_name']] = data[i]['commits_number'];
                     linesByRepo[data[i]['repo_name']] = data[i]['codelines_change'];
                     pullsByRepo[data[i]['repo_name']] = data[i]['pullrequest_number'];
@@ -309,6 +386,102 @@ async function userReportData(userName, date = new Date()) {
         'pullsByRepo':  sortOnKeys(pullsByRepo, "Repo", "Pulls")
     }
 }
+/**
+ * generate all data for front end to present user's report
+ * @param userName github_username
+ * @param date query date
+ * @return User report data
+ * {
+ *     {double} outline: user_commits# / team_commits# this week
+ *
+ *     {dic} weekCommits: commits# in last 8 weeks
+ *     {int} lastMonthCommits: commits# in last 4 weeks
+ *     {int} monthCommitsDelta: lastMonthCommits# - theMonthBeforeCommits#
+ *
+ *     {dic} weekLineDelta: code line delta
+ *     {int} lastMonthLineDelta: sum(lineDelta#) in last 4 weeks
+ *     {int} monthLineDelta: lastMonthLineDelta - theMonthBeforeLineDelta
+ *
+ *     {dic} weekPulls: pull request # in last 8 weeks
+ *     {int} lastMonthPulls: pull request # in last 4 weeks
+ *     {int} monthPullsDelta: lastMonthPulls# - theMonthBeforeCommits#
+ *
+ *     {Dic} CommitsByRepo: {repo1: #commits, repo2: #commits, … repo4: #commits}
+ *     {Dic} LinesByRepo: {repo1: #codes, repo2: #codes, … repo4: #codes}
+ *     {Dic} PullsByRepo: {repo1: #pull, repo2: #pull, … repo4: #pull}
+ * }
+ */
+// async function userReportData(userName, date = new Date()) {
+//
+//     var outline = outlineByUser(userName, date);
+//     var weekCommits = {};
+//     var weekLineDelta = {};
+//     var weekPulls = {};
+//     var lastMonthCommits = 0;
+//     var lastMonthLineDelta = 0;
+//     var lastMonthPulls = 0;
+//     var monthCommitsDelta = 0;
+//     var monthLineDelta = 0;
+//     var monthPullsDelta = 0;
+//     var commitsByRepo = {};
+//     var linesByRepo = {};
+//     var pullsByRepo = {};
+//
+//     for (var j = 0; j < 8; j++) {
+//         var queryDate = getNWeeksBeforeDate(j, date);
+//
+//         var data = await db.getStatisticsByUserAndDate(userName, queryDate);
+//
+//         weekCommits[queryDate] = 0;
+//         weekLineDelta[queryDate] = 0;
+//         weekPulls[queryDate] = 0;
+//         if (!data) {
+//             continue;
+//         }
+//         for (var i = 0; i < data.length; i++) {
+//             weekCommits[queryDate] += data[i]['commits_number'];
+//             weekLineDelta[queryDate] += data[i]['codelines_change'];
+//             weekPulls[queryDate] += data[i]['pullrequest_number'];
+//
+//             if (i < 4) {
+//                 if (i === 0) {
+//                     commitsByRepo[data[i]['repo_name']] = data[i]['commits_number'];
+//                     linesByRepo[data[i]['repo_name']] = data[i]['codelines_change'];
+//                     pullsByRepo[data[i]['repo_name']] = data[i]['pullrequest_number'];
+//                 }
+//                 lastMonthCommits += data[i]['commits_number'];
+//                 lastMonthLineDelta += data[i]['codelines_change'];
+//                 lastMonthPulls += data[i]['pullrequest_number'];
+//
+//                 monthCommitsDelta += data[i]['commits_number'];
+//                 monthLineDelta += data[i]['codelines_change'];
+//                 monthPullsDelta += data[i]['pullrequest_number'];
+//             } else {
+//                 monthCommitsDelta -= data[i]['commits_number'];
+//                 monthLineDelta -= data[i]['codelines_change'];
+//                 monthPullsDelta -= data[i]['pullrequest_number'];
+//             }
+//         }
+//
+//
+//     }
+//
+//     return {
+//         'outline': outline,
+//         'weekCommits': sortOnKeys(weekCommits, "Week", "Commits"),
+//         'weekLineDelta': sortOnKeys(weekLineDelta, "Week", "LineDelta"),
+//         'weekPulls': sortOnKeys(weekPulls, "Week", "Pulls"),
+//         'lastMonthCommits': lastMonthCommits,
+//         'lastMonthLineDelta': lastMonthLineDelta,
+//         'lastMonthPulls': lastMonthPulls,
+//         'monthCommitsDelta': monthCommitsDelta,
+//         'monthLineDelta': monthLineDelta,
+//         'monthPullsDelta': monthPullsDelta,
+//         'commitsByRepo': sortOnKeys(commitsByRepo, "Repo", "Commits"),
+//         'linesByRepo':  sortOnKeys(linesByRepo, "Repo", "Lines"),
+//         'pullsByRepo':  sortOnKeys(pullsByRepo, "Repo", "Pulls")
+//     }
+// }
 
 async function f() {
     var test = await mngrReportDate('cyuan7');
@@ -318,6 +491,7 @@ async function f() {
 }
 
 // f();
+
 
 /**
  * help functions for generate user's report
