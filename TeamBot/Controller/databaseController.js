@@ -21,7 +21,7 @@ function test() {
     connection.end();
 }
 
-// test();
+test();
 
 async function f() {
     var a = await countLessCommitUser('hwu23', '1', new Date());

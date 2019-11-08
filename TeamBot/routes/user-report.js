@@ -7,9 +7,10 @@ var report = require('../Controller/reportController');
 
 router.get('/:name/:date', async (req, res) => {
     var name = req.params.name;
-    var date = req.params.date;
+    // var date = req.params.date;
 
-    var data =await report.userReportData(name, date);
+    var data =await report.userReportData(name);
+    console.log("data in user-report: ", data);
 
     res.render('user-report',
         {outline: data['outline'],

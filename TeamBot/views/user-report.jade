@@ -51,12 +51,11 @@ html(lang='en')
                                 span.glyphicon.glyphicon-search
                 .col-sm-9
                     h4
-                        //small !{JSON.stringify(date_commit_array)}
+                        //red flag: !{JSON.stringify(date_commit_array)}
                         //small !{JSON.stringify(date)}
-                    hr
-                    #commits Recent Commits
-                    #table_div_commit(style='width:280px; height: 140px;')
+                    //hr Red Flag 25 percent team members have no commit in the past month
 
+                    //
 
 
                     br
@@ -68,9 +67,12 @@ html(lang='en')
                         google.charts.setOnLoadCallback(drawChartPull);
 
                         google.charts.load('current', {'packages': ['table']});
-                        google.charts.setOnLoadCallback(drawTableCommit);
-                        google.charts.setOnLoadCallback(drawTableLine);
-                        google.charts.setOnLoadCallback(drawTablePull);
+                        // google.charts.setOnLoadCallback(drawTableCommit);
+                        // google.charts.setOnLoadCallback(drawTableLine);
+                        // google.charts.setOnLoadCallback(drawTablePull);
+                        google.charts.setOnLoadCallback(drawPieCommit);
+                        google.charts.setOnLoadCallback(drawPieLine);
+                        google.charts.setOnLoadCallback(drawPiePull);
 
 
 
@@ -107,11 +109,65 @@ html(lang='en')
                             var chart = new google.visualization.ColumnChart(document.getElementById("columnchart_lines"));
                             chart.draw(view, options);
                         }
+                        function drawChartPull() {
+                            var data = google.visualization.arrayToDataTable(!{JSON.stringify(weekLineDelta)});
+                            var view = new google.visualization.DataView(data);
+
+                            var options = {
+                                title: "Number of Pull requests in the past week",
+                                width: 500,
+                                height: 300,
+                                bar: {groupWidth: "95%"},
+                                legend: {position: "none"},
+                            };
+                            var chart = new google.visualization.ColumnChart(document.getElementById("columnchart_pulls"));
+                            chart.draw(view, options);
+                        }
 
 
-                    #columnchart_commits(style='width: 600px; height: 300px;')
-                    #columnchart_lines(style='width: 600px; height: 300px;')
-                    #columnchart_pulls(style='width: 600px; height: 300px;')
+                        google.charts.load('current', {'packages': ['corechart']});
+                        google.charts.setOnLoadCallback(drawChart);
+                        console.log(!{JSON.stringify(commitsByRepo)});
+                        function drawPieCommit() {
+                            var data = google.visualization.arrayToDataTable(
+                                !{JSON.stringify(commitsByRepo)}
+                            );
+                            // Optional; add a title and set the width and height of the chart
+                            var options = {'title': '', 'width': 550, 'height': 400};
+                            // Display the chart inside the <div> element with id="piechart"
+                            var chart = new google.visualization.PieChart(document.getElementById('drawPieCommit'));
+                            chart.draw(data, options);
+                        }
+                        function drawPieLine() {
+                            var data = google.visualization.arrayToDataTable(
+                                !{JSON.stringify(linesByRepo)}
+                            );
+                            // Optional; add a title and set the width and height of the chart
+                            var options = {'title': '', 'width': 550, 'height': 400};
+                            // Display the chart inside the <div> element with id="piechart"
+                            var chart = new google.visualization.PieChart(document.getElementById('drawPieLine'));
+                            chart.draw(data, options);
+                        }
+                        function drawPiePull() {
+                            var data = google.visualization.arrayToDataTable(
+                                !{JSON.stringify(pullsByRepo)}
+                            );
+                            // Optional; add a title and set the width and height of the chart
+                            var options = {'title': '', 'width': 550, 'height': 400};
+                            // Display the chart inside the <div> element with id="piechart"
+                            var chart = new google.visualization.PieChart(document.getElementById('drawPiePull'));
+                            chart.draw(data, options);
+                        }
 
 
 
+                    #commits Commits
+                        #columnchart_commits(style='width: 600px; height: 300px;')
+                        #piechart_commits
+
+
+                    #lines Change in Lines of codes
+                        #columnchart_lines(style='width: 600px; height: 300px;')
+
+                    #pulls Pull Requests
+                        #columnchart_pulls(style='width: 600px; height: 300px;')
