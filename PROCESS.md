@@ -30,14 +30,14 @@ Hold a meeting to discuss database schemas and reports details.
 - Cheng:
 - Yanchen:
 - Werngran:
-- Xiaohan: 
+- Xiaohan: Researched how the interaction with teambot can be further improved.
 
 #### Oct 30
 - Hao: Tables are created as the schemas describe. Several records are inserted for tests. I will focus on optimizing the interaction with mattermost next.
 - Cheng:
 - Yanchen:
 - Wengran:
-- Xiaohan: 
+- Xiaohan: Set up slash commands on mattermost to enable more features. I will attach interactive messaging buttons to optimize the interaction so that users don't have to post anything in public channel. 
 
 ### Iteration Review
   Most work on databases are done. Both teambot and mattermost servers are deployed on Heroku so that it can be tested easily for all members and be demoed to others. Optimization on configuration and interaction with mattermost are finished.
@@ -61,9 +61,22 @@ The Kanban board status is as follow:
 ![Screen Shot 2019-11-08 at 11 03 23 AM](https://media.github.ncsu.edu/user/9463/files/90808080-0219-11ea-868b-dacba8ca6a51)
 ![Screen Shot 2019-11-08 at 11 03 29 AM](https://media.github.ncsu.edu/user/9463/files/91191700-0219-11ea-9f51-72db309b01be)
 
+#### Nov 3
+- Hao: 
+- Cheng:
+- Yanchen:
+- Werngran:
+- Xiaohan: Accessed data from the front end and saved them to the database.
+### Nov 7
+- Hao: 
+- Cheng:
+- Yanchen:
+- Werngran:
+- Xiaohan: Wrote up functions to fetch github info of users (membership, role, etc.) so that the teambot can access to the real data.
+
 ### Iteration Review
-  In this iteration, we were focusing on fetching data from github, and process the data to get the information we are interested in. We have used the teams' past 2 months data, including each team members' data into our front-end presentation.
+  In this iteration, we were focusing on fetching data from github, processing the data to get information we are interested in, and building up our database. Using the past 2 months' data of the team, we have demonstrated a bunch of github statistics on the front-end, including the number of commits, the number of pull requests, the number of addtions and deletions of code, and etc.. 
   
   
-  We are not only interested in the presentation of the teams' dynamics, but also how such presentation might impact the teams' future actions, so we have also added red flags and other concerning informations to the team front-end.
+  We are not only interested in the presentation of the teams' dynamics, but also how such presentation might impact the teams' future actions, so we have also added red flags and other concerning information to the team front-end.
   
