@@ -12,6 +12,10 @@ GET authentication page
 router.get('/', (req, res) => {
    res.render('authentication');
 });
+//
+// router.post('/', (req, res) => {
+//
+// });
 
 router.post('/', async function(req, res, next) {
    let token = req.body.token;
