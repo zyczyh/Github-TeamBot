@@ -50,7 +50,7 @@ html(lang='en')
                             button.btn.btn-default(type='button')
                                 span.glyphicon.glyphicon-search
                 .col-sm-9
-                    h4
+                    h4 Red Flag! 66 percent team members have more commits than you in the past month
                         //red flag: !{JSON.stringify(date_commit_array)}
                         //small !{JSON.stringify(date)}
                     //hr Red Flag 25 percent team members have no commit in the past month
@@ -129,6 +129,7 @@ html(lang='en')
                         google.charts.setOnLoadCallback(drawChart);
                         console.log(!{JSON.stringify(commitsByRepo)});
                         function drawPieCommit() {
+                            // console.log(commitsByRepo);
                             var data = google.visualization.arrayToDataTable(
                                 !{JSON.stringify(commitsByRepo)}
                             );
@@ -163,11 +164,17 @@ html(lang='en')
 
                     #commits Commits
                         #columnchart_commits(style='width: 600px; height: 300px;')
-                        #piechart_commits
+                        h commits in each repo:
+                        #drawPieCommit
 
 
                     #lines Change in Lines of codes
                         #columnchart_lines(style='width: 600px; height: 300px;')
+                        h change of codes in each repo:
+                        #drawPieLine
 
                     #pulls Pull Requests
                         #columnchart_pulls(style='width: 600px; height: 300px;')
+                        h Pull request change in each repo:
+                        #drawPiePull
+

@@ -36,11 +36,11 @@ html(lang='en')
                     h4 Manager Report
                     ul.nav.nav-pills.nav-stacked
                         li.active
-                            a(href='#highlights') Progress Highlights
+                            a(href='#commits') Commits Summary
                         li
-                            a(href='#red-flags') Red Flags
+                            a(href='#lines') Lines of Code Changes
                         li
-                            a(href='#members') Team Member Progress
+                            a(href='#pulls') Pull Requests Summary
                         //li
                         //    a(href='#section3') Photos
                     br
@@ -50,102 +50,131 @@ html(lang='en')
                             button.btn.btn-default(type='button')
                                 span.glyphicon.glyphicon-search
                 .col-sm-9
-                    h4
-                        small RECENT POSTS
-                    hr
-                    h2 Recent Commits
-                    h5
-                        //span.label.label-danger Food
-                        //span.label.label-primary Ipsum
+                    h4 Red Flag! 33 percent team members did not commit in the past week
+                        //red flag: !{JSON.stringify(date_commit_array)}
+                        //small !{JSON.stringify(date)}
+                    //hr Red Flag 25 percent team members have no commit in the past month
+
+                    //
+
+
                     br
-                    #piechart
                     script(type='text/javascript', src='https://www.gstatic.com/charts/loader.js')
                     script(type='text/javascript').
-                        // Load google charts
+                        google.charts.load("current", {packages: ['corechart']});
+                        google.charts.setOnLoadCallback(drawChartCommit);
+                        google.charts.setOnLoadCallback(drawChartLine);
+                        google.charts.setOnLoadCallback(drawChartPull);
+
+                        google.charts.load('current', {'packages': ['table']});
+                        // google.charts.setOnLoadCallback(drawTableCommit);
+                        // google.charts.setOnLoadCallback(drawTableLine);
+                        // google.charts.setOnLoadCallback(drawTablePull);
+                        google.charts.setOnLoadCallback(drawPieCommit);
+                        google.charts.setOnLoadCallback(drawPieLine);
+                        google.charts.setOnLoadCallback(drawPiePull);
+
+
+
+                        function drawChartCommit() {
+                            var data = google.visualization.arrayToDataTable(!{JSON.stringify(weekCommits)});
+                            console.log('weekCommits: ', !{JSON.stringify(weekCommits)});
+                            console.log(data);
+                            var view = new google.visualization.DataView(data);
+
+                            var options = {
+                                title: "Commits in the past week",
+                                width: 500,
+                                height: 300,
+                                bar: {groupWidth: "95%"},
+                                legend: {position: "none"},
+                            };
+                            var chart = new google.visualization.ColumnChart(document.getElementById("columnchart_commits"));
+                            chart.draw(view, options);
+                        }
+
+                        google.charts.load("current", {packages: ['corechart']});
+                        google.charts.setOnLoadCallback(drawChart);
+                        function drawChartLine() {
+                            var data = google.visualization.arrayToDataTable(!{JSON.stringify(weekLineDelta)});
+                            var view = new google.visualization.DataView(data);
+
+                            var options = {
+                                title: "Change of Lines of Codes in the past week",
+                                width: 500,
+                                height: 300,
+                                bar: {groupWidth: "95%"},
+                                legend: {position: "none"},
+                            };
+                            var chart = new google.visualization.ColumnChart(document.getElementById("columnchart_lines"));
+                            chart.draw(view, options);
+                        }
+                        function drawChartPull() {
+                            var data = google.visualization.arrayToDataTable(!{JSON.stringify(weekLineDelta)});
+                            var view = new google.visualization.DataView(data);
+
+                            var options = {
+                                title: "Number of Pull requests in the past week",
+                                width: 500,
+                                height: 300,
+                                bar: {groupWidth: "95%"},
+                                legend: {position: "none"},
+                            };
+                            var chart = new google.visualization.ColumnChart(document.getElementById("columnchart_pulls"));
+                            chart.draw(view, options);
+                        }
+
+
                         google.charts.load('current', {'packages': ['corechart']});
                         google.charts.setOnLoadCallback(drawChart);
-                        // Draw the chart and set the chart values
-                        console.log(!{JSON.stringify(commit_dict)});
-                        function drawChart() {
-                            // var commit_dict = (!{JSON.stringify(weekCommits)});
-                            //
-                            //  // var commit_users = (!{JSON.stringify(commit_users)});
-                            // commit_array = [["User", "Commits"]];
-                            // var i;
-                            // // for (i = 0; i < commit_users.length; i++) {
-                            // //     commit_array.push([commit_users[i],commit_dict[commit_users[i]]]);
-                            // // }
-                            // for (var key in commit_dict) {
-                            //     commit_array.push([key, commit_dict[key]);
-                            // }
-                            // console.log(commit_array)
+                        console.log(!{JSON.stringify(weekCommitsByRepo)});
+                        function drawPieCommit() {
+                            // console.log(weekCommitsByRepo);
                             var data = google.visualization.arrayToDataTable(
-                                weekCommits
+                                !{JSON.stringify(weekCommitsByRepo)}
                             );
                             // Optional; add a title and set the width and height of the chart
                             var options = {'title': '', 'width': 550, 'height': 400};
                             // Display the chart inside the <div> element with id="piechart"
-                            var chart = new google.visualization.PieChart(document.getElementById('piechart'));
+                            var chart = new google.visualization.PieChart(document.getElementById('drawPieCommit'));
+                            chart.draw(data, options);
+                        }
+                        function drawPieLine() {
+                            var data = google.visualization.arrayToDataTable(
+                                !{JSON.stringify(linesByRepo)}
+                            );
+                            // Optional; add a title and set the width and height of the chart
+                            var options = {'title': '', 'width': 550, 'height': 400};
+                            // Display the chart inside the <div> element with id="piechart"
+                            var chart = new google.visualization.PieChart(document.getElementById('drawPieLine'));
+                            chart.draw(data, options);
+                        }
+                        function drawPiePull() {
+                            var data = google.visualization.arrayToDataTable(
+                                !{JSON.stringify(pullsByRepo)}
+                            );
+                            // Optional; add a title and set the width and height of the chart
+                            var options = {'title': '', 'width': 550, 'height': 400};
+                            // Display the chart inside the <div> element with id="piechart"
+                            var chart = new google.visualization.PieChart(document.getElementById('drawPiePull'));
                             chart.draw(data, options);
                         }
 
-        //            br
-        //            br
-        //            h4
-        //                small RECENT POSTS
-        //            hr
-        //            h2 Officially Blogging
-        //            h5
-        //                span.glyphicon.glyphicon-time
-        //                |  Post by John Doe, Sep 24, 2015.
-        //            h5
-        //                span.label.label-success Lorem
-        //            br
-        //            p
-        //                | Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-        //            hr
-        //            h4 Leave a Comment:
-        //            form(role='form')
-        //                .form-group
-        //                    textarea.form-control(rows='3', required='')
-        //                button.btn.btn-success(type='submit') Submit
-        //            br
-        //            br
-        //            p
-        //                span.badge 2
-        //                |  Comments:
-        //            br
-        //            .row
-        //                .col-sm-2.text-center
-        //                    img.img-circle(src='bandmember.jpg', height='65', width='65', alt='Avatar')
-        //                .col-sm-10
-        //                    h4
-        //                        | Anja
-        //                        small Sep 29, 2015, 9:12 PM
-        //                    p
-        //                        | Keep up the GREAT work! I am cheering for you!! Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-        //                    br
-        //                .col-sm-2.text-center
-        //                    img.img-circle(src='bird.jpg', height='65', width='65', alt='Avatar')
-        //                .col-sm-10
-        //                    h4
-        //                        | John Row
-        //                        small Sep 25, 2015, 8:25 PM
-        //                    p
-        //                        | I am so happy for you man! Finally. I am looking forward to read about your trendy life. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-        //                    br
-        //                    p
-        //                        span.badge 1
-        //                        |  Comment:
-        //                    br
-        //                    .row
-        //                        .col-sm-2.text-center
-        //                            img.img-circle(src='bird.jpg', height='65', width='65', alt='Avatar')
-        //                        .col-xs-10
-        //                            h4
-        //                                | Nested Bro
-        //                                small Sep 25, 2015, 8:28 PM
-        //                            p Me too! WOW!
-        //                            br
-        //footer.container-fluid
-        //    p Footer Text
+
+
+                    #commits Commits
+                        #columnchart_commits(style='width: 600px; height: 300px;')
+                        h commits in each repo:
+                        #drawPieCommit
+
+
+                    #lines Change in Lines of codes
+                        #columnchart_lines(style='width: 600px; height: 300px;')
+                        h change of codes in each repo:
+                        #drawPieLine
+
+                    #pulls Pull Requests
+                        #columnchart_pulls(style='width: 600px; height: 300px;')
+                        h Pull request change in each repo:
+                        #drawPiePull
+
