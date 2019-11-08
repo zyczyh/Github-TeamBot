@@ -54,7 +54,11 @@ The Kanban board status is as follow:
 
 
 ### Scrum Meeting Notes
-
-
+![Screen Shot 2019-11-08 at 11 02 39 AM](https://media.github.ncsu.edu/user/9463/files/8fe7ea00-0219-11ea-9cbb-2bd50633d117)
+![Screen Shot 2019-11-08 at 11 02 50 AM](https://media.github.ncsu.edu/user/9463/files/8fe7ea00-0219-11ea-9bcc-b4192d2ad5b9)
+![Screen Shot 2019-11-08 at 11 02 55 AM](https://media.github.ncsu.edu/user/9463/files/8fe7ea00-0219-11ea-9f68-2ad9d51bb6a9)
+![Screen Shot 2019-11-08 at 11 03 04 AM](https://media.github.ncsu.edu/user/9463/files/8fe7ea00-0219-11ea-8a9f-05c112601ec1)
+![Screen Shot 2019-11-08 at 11 03 23 AM](https://media.github.ncsu.edu/user/9463/files/90808080-0219-11ea-868b-dacba8ca6a51)
+![Screen Shot 2019-11-08 at 11 03 29 AM](https://media.github.ncsu.edu/user/9463/files/91191700-0219-11ea-9f51-72db309b01be)
 
 ### Iteration Review
