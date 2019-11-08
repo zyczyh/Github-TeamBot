@@ -23,9 +23,9 @@ router.get('/:name/:date', async (req, res) => {
         monthCommitsDelta: data['monthCommitsDelta'],
         monthLineDelta: data['monthLineDelta'],
         monthPullsDelta: data['monthPullsDelta'],
-        CommitsByRepo: data['CommitsByRepo'],
-        LinesByRepo: data['LinesByRepo'],
-        PullsByRepo: data['PullsByRepo']});
+            commitsByRepo: data['commitsByRepo'],
+            linesByRepo: data['linesByRepo'],
+            pullsByRepo: data['pullsByRepo']});
   });
 
 module.exports = router;
