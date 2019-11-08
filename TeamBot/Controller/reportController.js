@@ -42,9 +42,9 @@ function sortOnKeys(dict, key_name, value_name) {
     for (var key in sorted){
         sorted_array.push([key, dict[key]])
     }
+    return sorted_array
 }
 
-dict = sortOnKeys(dict);
 /**
  * helper function to calculate start and end date of week of {date}
  * @param date set default to today
@@ -98,11 +98,11 @@ function formatDate(date) {
  *     {int} lastMonthCommits: commits# in last 4 weeks
  *     {int} monthCommitsDelta: lastMonthCommits# - theMonthBeforeCommits#
  *
- *     {array} weekLineDelta: code line delta
+ *     {dic} weekLineDelta: code line delta
  *     {int} lastMonthLineDelta: sum(lineDelta#) in last 4 weeks
  *     {int} monthLineDelta: lastMonthLineDelta - theMonthBeforeLineDelta
  *
- *     {array} weekPulls: pull request # in last 8 weeks
+ *     {dic} weekPulls: pull request # in last 8 weeks
  *     {int} lastMonthPulls: pull request # in last 4 weeks
  *     {int} monthPullsDelta: lastMonthPulls# - theMonthBeforeCommits#
  *
@@ -191,9 +191,9 @@ async function mngrReportData(mngrName, date = new Date()) {
     }
     return {
         'outline': outline,
-        'weekCommits': weekCommits,
-        'weekLineDelta': weekLineDelta,
-        'weekPulls': weekPulls,
+        'weekCommits': sortOnKeys(weekCommits, "Week", "Commits"),
+        'weekLineDelta': sortOnKeys(weekLineDelta, "Week", "LineDelta"),
+        'weekPulls': sortOnKeys(weekPulls, "Week", "Pulls"),
         'lastMonthCommits': lastMonthCommits,
         'lastMonthLineDelta': lastMonthLineDelta,
         'lastMonthPulls': lastMonthPulls,
@@ -201,11 +201,11 @@ async function mngrReportData(mngrName, date = new Date()) {
         'monthLineDelta': monthLineDelta,
         'monthPullsDelta': monthPullsDelta,
         'weekCommitsByRepo': weekCommitsByRepo,
-        'weekLinesByRepo': weekLinesByRepo,
-        'weekPullsByRepo': weekPullsByRepo,
-        'weekUserCommits': weekUserCommits,
-        'weekUserLines': weekUserLines,
-        'weekUserPulls': weekUserPulls
+        'weekLinesByRepo': sortOnKeys(weekLinesByRepo, "Repo", "weekLines"),
+        'weekPullsByRepo': sortOnKeys(weekPullsByRepo, "Repo", "weekPulls"),
+        'weekUserCommits': sortOnKeys(weekUserCommits, "User", "weekCommits"),
+        'weekUserLines': sortOnKeys(weekUserLines, "User", "weekLines"),
+        'weekUserPulls': sortOnKeys(weekUserPulls, "User", "weekPulls")
     }
 }
 
@@ -288,18 +288,18 @@ async function userReportData(userName, date = new Date()) {
 
     return {
         'outline': outline,
-        'weekCommits': weekCommits,
-        'weekLineDelta': weekLineDelta,
-        'weekPulls': weekPulls,
+        'weekCommits': sortOnKeys(weekCommits, "Week", "Commits"),
+        'weekLineDelta': sortOnKeys(weekLineDelta, "Week", "LineDelta"),
+        'weekPulls': sortOnKeys(weekPulls, "Week", "Pulls"),
         'lastMonthCommits': lastMonthCommits,
         'lastMonthLineDelta': lastMonthLineDelta,
         'lastMonthPulls': lastMonthPulls,
         'monthCommitsDelta': monthCommitsDelta,
         'monthLineDelta': monthLineDelta,
         'monthPullsDelta': monthPullsDelta,
-        'commitsByRepo': commitsByRepo,
-        'linesByRepo': linesByRepo,
-        'pullsByRepo': pullsByRepo
+        'commitsByRepo': sortOnKeys(commitsByRepo, "Repo", "Commits"),
+        'linesByRepo':  sortOnKeys(linesByRepo, "Repo", "Lines"),
+        'pullsByRepo':  sortOnKeys(pullsByRepo, "Repo", "Pulls")
     }
 }
 
