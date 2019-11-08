@@ -36,7 +36,7 @@ Hold a meeting to discuss database schemas and reports details.
 - Hao: Tables are created as the schemas describe. Several records are inserted for tests. I will focus on optimizing the interaction with mattermost next.
 - Cheng:
 - Yanchen:
-- Werngran:
+- Wengran:
 - Xiaohan: 
 
 ### Iteration Review
@@ -62,3 +62,6 @@ The Kanban board status is as follow:
 ![Screen Shot 2019-11-08 at 11 03 29 AM](https://media.github.ncsu.edu/user/9463/files/91191700-0219-11ea-9f51-72db309b01be)
 
 ### Iteration Review
+  In this iteration, we were focusing on fetching data from github, and process the data to get the information we are interested in. We have used the teams' past 2 months data, including each team members' data into our front-end presentation.
+  We are not only interested in the presentation of the teams' dynamics, but also how such presentation might impact the teams' future actions, so we have also added red flags and other concerning informations to the team front-end.
+  
