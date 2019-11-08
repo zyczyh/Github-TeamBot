@@ -1,20 +1,33 @@
 var express = require('express');
 var db = require('./databaseController');
 var github_api = require('../github_api');
+var fake = require('../test/mock/mock');
+
+// fetchData();
 
 async function fetchData() {
     /**
      * update all needs data from github
      * store into db
      */
+    // var since = new Date(Date.now());
+    // since.setDate(since.getDate() - 7);
+    // var curr_date = new Date(Date.now());
+    // var org_info = await db.getOrgInfoFromDb();
+    // //console.log(org_info);
+    // for (var i = 0; i < org_info.length; i = i + 1) {
+    //     var users_info = await db.getUserInfoByOrgFromDb(org_info[i].org_id);
+    //     var repos_info = await github_api.getReposInOrg(org_info[i].org_name, org_info[i].github_token);
+    // start of test codes
     var since = new Date(Date.now());
-    since.setDate(since.getDate() - 7);
+    since.setMonth(since.getMonth() - 3);
     var curr_date = new Date(Date.now());
-    var org_info = await db.getOrgInfoFromDb();
+    var org_info = fake.org_info;
     //console.log(org_info);
     for (var i = 0; i < org_info.length; i = i + 1) {
         var users_info = await db.getUserInfoByOrgFromDb(org_info[i].org_id);
-        var repos_info = await github_api.getReposInOrg(org_info[i].org_name, org_info[i].github_token);
+        var repos_info = fake.repos_info;
+    // end of test codes
         //console.log(users_info);
         //console.log(repos_info);
         for (var j = 0; j < users_info.length; j = j + 1) {
@@ -29,6 +42,9 @@ async function fetchData() {
                 var commits_count = 0;
                 for (var q = 0; q < commits_info.length; q = q + 1) {
                     if (commits_info[q].author != null && commits_info[q].author.login == users_info[j].github_username) {
+                        if(commits_info[q].commit.author.date <  since.toISOString()) {
+                            break;
+                        }
                         commits_count = commits_count + 1;
                         var commit = await github_api.getSingleCommit(org_info[i].org_name, repos_info[k].name, commits_info[q].sha, org_info[i].github_token);
                         //console.log(commit);
@@ -56,7 +72,7 @@ function userInOrg(orgName) {
 
 }
 
-(async () => {
-    await fetchData();
-})()
+// (async () => {
+//     await fetchData();
+// })()
 exports.fetchData = fetchData;

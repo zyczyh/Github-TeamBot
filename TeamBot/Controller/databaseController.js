@@ -4,11 +4,13 @@ var config = require('../config');
 function test() {
     var connection = createConnection();
 
-    var query = 'select * from Users';
+    // var query = 'insert into Users values (1, 1, \'employee1\', \'zhu6\', \'member\')';
+    var query = 'select * from GithubStatistics';
+    // var query = 'select * from GithubStatistics';
 
     connection.query(query, function (err, result, fields) {
         if (err) throw err;
-        console.log('result: '+result);
+        console.log(result);
     });
     connection.end();
 }
@@ -70,8 +72,8 @@ async function insertRecordIntoGithubStatistics(record) {
         connection.query(query, record, function (err, result, fields) {
             //connection.end();
             if (err) {
-                console.log(error);
-                reject(error);
+                console.log(err);
+                reject(err);
                 return;
             }
             resolve(result);
