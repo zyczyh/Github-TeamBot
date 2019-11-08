@@ -4,11 +4,11 @@ var config = require('../config');
 function test() {
     var connection = createConnection();
 
-    var query = 'select * from Organization';
+    var query = 'select * from Users';
 
     connection.query(query, function (err, result, fields) {
         if (err) throw err;
-        console.log(result);
+        console.log('result: '+result);
     });
     connection.end();
 }
@@ -188,7 +188,7 @@ async function listGithubNameInSameOrg(userName) {
 async function listMngrGithubNameByOrgId(orgId) {
     var connection = createConnection();
 
-    var query = 'select github_username from Users where org_id=? and user_role=\'mngr\'';
+    var query = 'select github_username from Users where org_id=? and user_role=\'admin\'';
 
     return new Promise(function (res, rej) {
         connection.query(query, [orgId], function (err, result, fields) {
@@ -210,7 +210,7 @@ async function listMngrGithubNameByOrgId(orgId) {
 async function listUserGithubNameByOrgId(orgId) {
     var connection = createConnection();
 
-    var query = 'select github_username from Users where org_id=? and user_role=\'sde\'';
+    var query = 'select github_username from Users where org_id=? and user_role=\'member\'';
 
     return new Promise(function (res, rej) {
         connection.query(query, [orgId], function (err, result, fields) {

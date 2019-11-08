@@ -288,7 +288,7 @@ async function userReportData(userName, date = new Date()) {
     }
 }
 
-mngrReportDate('zyc');
+// mngrReportDate('zyc');
 
 /**
  * help functions for generate user's report
