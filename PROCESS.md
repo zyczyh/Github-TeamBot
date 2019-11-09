@@ -29,14 +29,14 @@ Hold a meeting to discuss database schemas and reports details.
 - Hao: The teambot is deployed on Heroku and the database is setup. Next I will create tables and make some fake data for tests.
 - Cheng: Installed MySQL driver and connect to AWS cloud database
 - Yanchen: Looked at the code and thought about how to refactor the credentials management part.
-- Werngran:
+- Wengran: Looked into the code, learned bootstrap and google chart to help create html interactive graphs.
 - Xiaohan: Researched how the interaction with teambot can be further improved.
 
 #### Oct 30
 - Hao: Tables are created as the schemas describe. Several records are inserted for tests. I will focus on optimizing the interaction with mattermost next.
 - Cheng: Write some test functions to make sure MySQL works fine, write base functions for check data and basic munipulation used when develop. 
 - Yanchen: Finished refactoring the credentials management part and create a json file to store credentials.
-- Wengran:
+- Wengran: Used mock data to create html graphs.
 - Xiaohan: Set up slash commands on mattermost to enable more features. I will attach interactive messaging buttons to optimize the interaction so that users don't have to post anything in public channel. 
 
 ### Iteration Review
