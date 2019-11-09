@@ -27,14 +27,14 @@ Hold a meeting to discuss database schemas and reports details.
 
 #### Oct 28
 - Hao: The teambot is deployed on Heroku and the database is setup. Next I will create tables and make some fake data for tests.
-- Cheng:
+- Cheng: Installed MySQL driver and connect to AWS cloud database
 - Yanchen: Looked at the code and thought about how to refactor the credentials management part.
 - Werngran:
 - Xiaohan: Researched how the interaction with teambot can be further improved.
 
 #### Oct 30
 - Hao: Tables are created as the schemas describe. Several records are inserted for tests. I will focus on optimizing the interaction with mattermost next.
-- Cheng:
+- Cheng: Write some test functions to make sure MySQL works fine, write base functions for check data and basic munipulation used when develop. 
 - Yanchen: Finished refactoring the credentials management part and create a json file to store credentials.
 - Wengran:
 - Xiaohan: Set up slash commands on mattermost to enable more features. I will attach interactive messaging buttons to optimize the interaction so that users don't have to post anything in public channel. 
@@ -65,13 +65,13 @@ The Kanban board status is as follow:
 
 #### Nov 3
 - Hao: Add scheduler function to the project so that it can generate reports weekly.
-- Cheng:
+- Cheng: Implemented userReportData function, which read data from DB, then analysis and process, package as dictionary to provide to front end.
 - Yanchen: Learnt how to use node.js mysql library, thought about and wrote down some design ideas for my task. 
 - Werngran:
 - Xiaohan: Accessed data from the front end and saved them to the database.
 #### Nov 7
 - Hao: Fix some bugs on fetching data from github and storing data to database.
-- Cheng:
+- Cheng: Implemented managerReportData based on userReportData, generated red flag infoamtions and analysis data for whole team.
 - Yanchen: Finished writing and testing my task (Get/process statics from Github and store them into DB).
 - Werngran:
 - Xiaohan: Wrote up functions to fetch github info of users (membership, role, etc.) so that the teambot can access to the real data.
@@ -80,7 +80,7 @@ The Kanban board status is as follow:
   In this iteration, we were focusing on fetching data from github, processing the data to get information we are interested in, and building up our database. Using the past 2 months' data of the team, we have demonstrated a bunch of github statistics on the front-end, including the number of commits, the number of pull requests, the number of addtions and deletions of code, and etc.. 
   
   
-  We are not only interested in the presentation of the teams' dynamics, but also how such presentation might impact the teams' future actions, so we have also added red flags and other concerning information to the team front-end.
+  For the user reports, we are not only interested in the presentation of the teams' dynamics by doing simple fetching and presenting data from Github, but also we process and analysis data so that we could provide some higher level data which reflect team‘s progress and problems, which data may easily be overlooked by just checking the raw Github data. By checking red flags and other concerning information we presented to the team front-end. Team leader and each member in the team could perform much more efficient and smart future actions,
 
 Our Kanban board at this point:
 ![image](https://media.github.ncsu.edu/user/14814/files/9e43ff00-0235-11ea-98b6-7cf11efaf6d4)
