@@ -82,5 +82,7 @@ The Kanban board status is as follow:
   
   For the user reports, we are not only interested in the presentation of the teams' dynamics by doing simple fetching and presenting data from Github, but also we process and analysis data so that we could provide some higher level data which reflect team‘s progress and problems, which data may easily be overlooked by just checking the raw Github data. By checking red flags and other concerning information we presented to the team front-end. Team leader and each member in the team could perform much more efficient and smart future actions,
 
-Our Kanban board at this point:
+  We successfully finished all stories in the second iteration; implemented our user case; demonstrated to TA.
+  
+Our Kanban board at end of the second iteration:
 ![image](https://media.github.ncsu.edu/user/14814/files/9e43ff00-0235-11ea-98b6-7cf11efaf6d4)
