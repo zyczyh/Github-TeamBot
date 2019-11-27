@@ -3,7 +3,6 @@ var request = require('request');
 var mattermost_api = require('../mattermost_api');
 var github = require('./githubController');
 var db = require('./databaseController');
-var mock_data = require('../test/mock/mock.json');
 var config = require('../config.json');
 var authen = {
     "orgName": "510-test",
@@ -120,6 +119,10 @@ async function respondToUser(post, username) {
     sendTextToUser(text, username, iurl);
 }
 
+async function generateBabyReport(user, date=Date()) {
+    var thisWeek = db.getStatisticsByUserAndDate(user, date);
+}
+
 function postReports(incomingHookLink, user, link) {
     /**
      * send weekly report link to particular user
@@ -130,6 +133,8 @@ function postReports(incomingHookLink, user, link) {
      */
 
     var options = getDefaultOptions(incomingHookLink, 'POST');
+
+    var quickGlance = generateBabyReport(user);
 
     var data = {"channel": user, "text": "Your weekly report is ready, check it out <" + link + "|here>"};
 

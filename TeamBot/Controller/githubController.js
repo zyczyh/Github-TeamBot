@@ -50,6 +50,7 @@ async function fetchData(curr_date=new Date()) {
                     }
                 }
                 for (var p = 0; p < PRs_info.length; p = p + 1) {
+                    // TODO may arouse undefined PRs_info[p].user
                     if (PRs_info[p].user.login == users_info[j].github_username) {
                         PR_count = PR_count + 1;
                     }
@@ -102,7 +103,7 @@ async function checkUserRole(org_name, username, token){
 		});
 	});
 }
-(async () => {
-    await fetchData();
-})()
+
 exports.fetchData = fetchData;
+exports.userInOrg = userInOrg;
+exports.checkUserRole = checkUserRole;

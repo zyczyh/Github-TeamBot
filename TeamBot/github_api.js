@@ -62,12 +62,13 @@ async function getCommits(org_name, repo, user_name, since, token)
 
 async function getPRs(org_name, repo, token)
 {
-    let options = getDefaultOptions("/repos/"+org_name+"/"+repo+"/pulls", "GET", token);
-    options.json = 
-    {
-        "state": "closed",
-        "base": "master"
-    };
+	let parameter = '?state="closed"&base="master"';
+    let options = getDefaultOptions("/repos/"+org_name+"/"+repo+"/pulls"+parameter, "GET", token);
+    // options.json =
+    // {
+    //     "state": "closed",
+    //     "base": "master"
+    // };
     
 	return new Promise(function(resolve, reject)
 	{

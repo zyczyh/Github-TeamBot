@@ -30,7 +30,6 @@ async function generateReportLinks(org_id) {
     return links;
 }
 
-
 function sortOnKeys(dict, key_name, value_name) {
     console.log("lajs" , dict);
     sorted_array = [[key_name, value_name]];
@@ -91,6 +90,7 @@ function formatDate(date) {
     }
     return (myyear + "-" + mymonth + "-" + myweekday);
 }
+
 async function mngrReportDate(mngrName, date = new Date()) {
     var standardDate = getNWeeksBeforeDate(0);
     var outline = [];
@@ -364,8 +364,7 @@ async function f() {
     console.log(test);
 }
 
-f();
-
+// f();
 
 /**
  * help functions for generate user's report
@@ -385,3 +384,4 @@ async function outlineByUser(userName, date) {
 exports.generateReportLinks = generateReportLinks;
 exports.userReportData = userReportData;
 exports.mngrReportDate = mngrReportDate;
+exports.getNWeeksBeforeDate = getNWeeksBeforeDate;
