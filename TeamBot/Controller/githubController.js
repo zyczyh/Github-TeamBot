@@ -3,11 +3,6 @@ var request = require('request');
 var db = require('./databaseController');
 var github_api = require('../github_api');
 
-// for (var i = 0; i < 6; i++) {
-//     var date = new Date();
-//     date.setDate(date.getDate() - i * 7);
-//     fetchData(date);
-// }
 
 async function fetchData(curr_date=new Date()) {
     /**
@@ -34,29 +29,20 @@ async function fetchData(curr_date=new Date()) {
                 //console.log(PRs_info);
                 var lines_of_code = 0;
                 var PR_count = 0;
-                var commits_count = 0;
+                var commits_count = commits_info.length;
                 for (var q = 0; q < commits_info.length; q = q + 1) {
-                    if (commits_info[q].author != null && commits_info[q].author.login == users_info[j].github_username) {
-                        if(commits_info[q].commit.author.date >  curr_date.toISOString()) {
-                            continue;
-                        }
-                        if(commits_info[q].commit.author.date <  since.toISOString()) {
-                            break;
-                        }
-                        commits_count = commits_count + 1;
-                        var commit = await github_api.getSingleCommit(org_info[i].org_name, repos_info[k].name, commits_info[q].sha, org_info[i].github_token);
-                        //console.log(commit);
-                        lines_of_code = lines_of_code + commit.stats.total;
-                    }
+                    var commit = await github_api.getSingleCommit(org_info[i].org_name, repos_info[k].name, commits_info[q].sha, org_info[i].github_token);
+                    //console.log(commit);
+                    lines_of_code = lines_of_code + commit.stats.total;
                 }
                 for (var p = 0; p < PRs_info.length; p = p + 1) {
                     // TODO may arouse undefined PRs_info[p].user
-                    if (PRs_info[p].user.login == users_info[j].github_username) {
+                    if (PRs_info[p].user != undefined && PRs_info[p].user.login == users_info[j].github_username) {
                         PR_count = PR_count + 1;
                     }
                 }
                 var record = [org_info[i].org_id, users_info[j].user_id, repos_info[k].name, since, curr_date, commits_count, PR_count, lines_of_code];
-                // console.log(record);
+                //console.log(record);
                 await db.insertRecordIntoGithubStatistics(record);
             }
         }
@@ -103,7 +89,15 @@ async function checkUserRole(org_name, username, token){
 		});
 	});
 }
-
+/*
+(async () => {
+    for (var i = 0; i < 6; i++) {
+         var date = new Date();
+         date.setDate(date.getDate() - i * 7);
+         await fetchData(date);
+    }
+})()
+*/
 exports.fetchData = fetchData;
 exports.userInOrg = userInOrg;
 exports.checkUserRole = checkUserRole;
