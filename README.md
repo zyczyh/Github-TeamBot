@@ -21,3 +21,4 @@ Team number: 19
 - [DESIGN](./DESIGN.md)
 - [BOT](./BOT.md)
 - [PROCESS](./PROCESS.md)
+- [DEPLOY](./DEPLOY.md)
