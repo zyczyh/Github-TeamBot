@@ -10,7 +10,7 @@ router.get('/:name/:date', async (req, res) => {
     var name = req.params.name;
     var date = req.params.date;
 
-    var data = await report.mngrReportDate(name, date);
+    var data = await report.mngrReportDate(name);
     // res.render('test', {data: data});
     res.render("manager-report",
         {outline: data['outline'],
@@ -29,10 +29,10 @@ router.get('/:name/:date', async (req, res) => {
             weekUserCommits: data['weekUserCommits'],
             weekUserLines: data['weekUserLines'],
             weekUserPulls: data['weekUserPulls']});
-    var data = await report.mngrReportDate(name, date);
+    // var data = await report.mngrReportDate(name, date);
 
     // res.render('manager-report', {commit_users: commit_users, user_count:user_count, commit_dict:commit_dict});
-    res.render('test', {data: data});
+    // res.render('test', {data: data});
 });
 
 

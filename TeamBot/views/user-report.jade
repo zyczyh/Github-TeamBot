@@ -15,6 +15,9 @@ html(lang='en')
                 background-color: #f1f1f1;
                 height: 100%;
             }
+            .h5{
+                color: red;
+            }
             /* Set black background color, white text and some padding */
             footer {
                 background-color: #555;
@@ -29,6 +32,7 @@ html(lang='en')
                 }
                 .row.content {height: auto;}
             }
+
     body
         .container-fluid
             .row.content
@@ -51,11 +55,7 @@ html(lang='en')
                                 span.glyphicon.glyphicon-search
                 .col-sm-9
                     h4 Red Flag! 66 percent team members have more commits than you in the past month
-                        //red flag: !{JSON.stringify(date_commit_array)}
-                        //small !{JSON.stringify(date)}
-                    //hr Red Flag 25 percent team members have no commit in the past month
 
-                    //
 
 
                     br
@@ -70,9 +70,8 @@ html(lang='en')
                         // google.charts.setOnLoadCallback(drawTableCommit);
                         // google.charts.setOnLoadCallback(drawTableLine);
                         // google.charts.setOnLoadCallback(drawTablePull);
-                        google.charts.setOnLoadCallback(drawPieCommit);
-                        google.charts.setOnLoadCallback(drawPieLine);
-                        google.charts.setOnLoadCallback(drawPiePull);
+                        google.charts.setOnLoadCallback(writeText);
+
 
 
 
@@ -94,7 +93,7 @@ html(lang='en')
                         }
 
                         google.charts.load("current", {packages: ['corechart']});
-                        google.charts.setOnLoadCallback(drawChart);
+                        // google.charts.setOnLoadCallback(drawChart);
                         function drawChartLine() {
                             var data = google.visualization.arrayToDataTable(!{JSON.stringify(weekLineDelta)});
                             var view = new google.visualization.DataView(data);
@@ -126,55 +125,52 @@ html(lang='en')
 
 
                         google.charts.load('current', {'packages': ['corechart']});
-                        google.charts.setOnLoadCallback(drawChart);
+                        // google.charts.setOnLoadCallback(drawChart);
                         console.log(!{JSON.stringify(commitsByRepo)});
-                        function drawPieCommit() {
-                            // console.log(commitsByRepo);
-                            var data = google.visualization.arrayToDataTable(
-                                !{JSON.stringify(commitsByRepo)}
-                            );
-                            // Optional; add a title and set the width and height of the chart
-                            var options = {'title': '', 'width': 550, 'height': 400};
-                            // Display the chart inside the <div> element with id="piechart"
-                            var chart = new google.visualization.PieChart(document.getElementById('drawPieCommit'));
-                            chart.draw(data, options);
+
+                        function writeRepoInfo(somethingByRepo, something) {
+                            // somethingByRepo = !{JSON.stringify(somethingByRepo)};
+                            console.log("somethingByRepo: ", (somethingByRepo));
+                            var s = "<div><h5>";
+                            if (somethingByRepo.length > 1) {
+                                for (var i = 1; i < somethingByRepo.length; i++) {
+                                    var commit = somethingByRepo[i];
+                                    var str = `&nbsp&nbsp&nbsp&nbsp&nbsp  The repository: ${commit[0]} has ${commit[1]} ` + something + ` in the past week <br/>`;
+                                    s += str;
+                                }
+                            }
+                            s+= "</h5></div>";
+
+                            console.log(s);
+                            document.getElementById(something).innerHTML += (s);
                         }
-                        function drawPieLine() {
-                            var data = google.visualization.arrayToDataTable(
-                                !{JSON.stringify(linesByRepo)}
-                            );
-                            // Optional; add a title and set the width and height of the chart
-                            var options = {'title': '', 'width': 550, 'height': 400};
-                            // Display the chart inside the <div> element with id="piechart"
-                            var chart = new google.visualization.PieChart(document.getElementById('drawPieLine'));
-                            chart.draw(data, options);
+                        function writeText(){
+                            commitsByRepo = !{JSON.stringify(commitsByRepo)}
+                            writeRepoInfo(commitsByRepo, "commits");
+                            linesByRepo = !{JSON.stringify(linesByRepo)}
+                            writeRepoInfo(linesByRepo, "lines_of_code_change");
+                            pullsByRepo = !{JSON.stringify(pullsByRepo)}
+                            writeRepoInfo(pullsByRepo, "pull_requests");
+
+
                         }
-                        function drawPiePull() {
-                            var data = google.visualization.arrayToDataTable(
-                                !{JSON.stringify(pullsByRepo)}
-                            );
-                            // Optional; add a title and set the width and height of the chart
-                            var options = {'title': '', 'width': 550, 'height': 400};
-                            // Display the chart inside the <div> element with id="piechart"
-                            var chart = new google.visualization.PieChart(document.getElementById('drawPiePull'));
-                            chart.draw(data, options);
-                        }
+
 
 
 
                     #commits Commits
                         #columnchart_commits(style='width: 600px; height: 300px;')
-                        h commits in each repo:
-                        #drawPieCommit
+                        h commits in each repo in the past week:
+                        //#drawPieCommit
 
 
-                    #lines Change in Lines of codes
+                    #lines_of_code_change Change in Lines of codes
                         #columnchart_lines(style='width: 600px; height: 300px;')
-                        h change of codes in each repo:
-                        #drawPieLine
+                        h change of codes in each repo in the past week:
+                        //#drawPieLine
 
-                    #pulls Pull Requests
+                    #pull_requests Pull Requests
                         #columnchart_pulls(style='width: 600px; height: 300px;')
-                        h Pull request change in each repo:
-                        #drawPiePull
+                        h Pull request change in each repo in the past week:
+                        //#drawPiePull
 

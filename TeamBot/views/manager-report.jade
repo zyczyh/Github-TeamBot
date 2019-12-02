@@ -51,6 +51,7 @@ html(lang='en')
                                 span.glyphicon.glyphicon-search
                 .col-sm-9
                     h4 Red Flag! 33 percent team members did not commit in the past week
+                    h4 !{JSON.stringify(weekCommit)}
                         //red flag: !{JSON.stringify(date_commit_array)}
                         //small !{JSON.stringify(date)}
                     //hr Red Flag 25 percent team members have no commit in the past month
@@ -77,15 +78,15 @@ html(lang='en')
 
 
                         function drawChartCommit() {
-                            weekCommits = [['Week', 'LineDelta'],
-                                ['Tue Nov 05 2019 00:00:00 GMT-0500 (Eastern Standard Time)', 300],
-                                ['Tue Oct 01 2019 00:00:00 GMT-0400 (Eastern Daylight Time)', 200],
-                                ['Tue Oct 08 2019 00:00:00 GMT-0400 (Eastern Daylight Time)', 6],
-                                ['Tue Oct 15 2019 00:00:00 GMT-0400 (Eastern Daylight Time)', 89],
-                                ['Tue Oct 22 2019 00:00:00 GMT-0400 (Eastern Daylight Time)', 0],
-                                ['Tue Oct 29 2019 00:00:00 GMT-0400 (Eastern Daylight Time)', 0],
-                                ['Tue Sep 17 2019 00:00:00 GMT-0400 (Eastern Daylight Time)', 0],
-                                ['Tue Sep 24 2019 00:00:00 GMT-0400 (Eastern Daylight Time)', 0]]
+                            // weekCommits = [['Week', 'LineDelta'],
+                            //     ['Tue Nov 05 2019 00:00:00 GMT-0500 (Eastern Standard Time)', 300],
+                            //     ['Tue Oct 01 2019 00:00:00 GMT-0400 (Eastern Daylight Time)', 200],
+                            //     ['Tue Oct 08 2019 00:00:00 GMT-0400 (Eastern Daylight Time)', 6],
+                            //     ['Tue Oct 15 2019 00:00:00 GMT-0400 (Eastern Daylight Time)', 89],
+                            //     ['Tue Oct 22 2019 00:00:00 GMT-0400 (Eastern Daylight Time)', 0],
+                            //     ['Tue Oct 29 2019 00:00:00 GMT-0400 (Eastern Daylight Time)', 0],
+                            //     ['Tue Sep 17 2019 00:00:00 GMT-0400 (Eastern Daylight Time)', 0],
+                            //     ['Tue Sep 24 2019 00:00:00 GMT-0400 (Eastern Daylight Time)', 0]]
 
                             var data = google.visualization.arrayToDataTable((weekCommits));
                             console.log('weekCommits: ', !{JSON.stringify(weekCommits)});
@@ -104,7 +105,7 @@ html(lang='en')
                         }
 
                         google.charts.load("current", {packages: ['corechart']});
-                        google.charts.setOnLoadCallback(drawChart);
+                        // google.charts.setOnLoadCallback(drawChart);
                         function drawChartLine() {
                             var data = google.visualization.arrayToDataTable(!{JSON.stringify(weekLineDelta)});
                             var view = new google.visualization.DataView(data);
@@ -120,15 +121,15 @@ html(lang='en')
                             chart.draw(view, options);
                         }
                         function drawChartPull() {
-                            weekLineDelta = [['Week', 'LineDelta'],
-                                ['Tue Nov 05 2019 00:00:00 GMT-0500 (Eastern Standard Time)', 176],
-                                ['Tue Oct 01 2019 00:00:00 GMT-0400 (Eastern Daylight Time)', 135],
-                                ['Tue Oct 08 2019 00:00:00 GMT-0400 (Eastern Daylight Time)', 6],
-                                ['Tue Oct 15 2019 00:00:00 GMT-0400 (Eastern Daylight Time)', 89],
-                                ['Tue Oct 22 2019 00:00:00 GMT-0400 (Eastern Daylight Time)', 0],
-                                ['Tue Oct 29 2019 00:00:00 GMT-0400 (Eastern Daylight Time)', 0],
-                                ['Tue Sep 17 2019 00:00:00 GMT-0400 (Eastern Daylight Time)', 0],
-                                ['Tue Sep 24 2019 00:00:00 GMT-0400 (Eastern Daylight Time)', 0]]
+                            // weekLineDelta = [['Week', 'LineDelta'],
+                            //     ['Tue Nov 05 2019 00:00:00 GMT-0500 (Eastern Standard Time)', 176],
+                            //     ['Tue Oct 01 2019 00:00:00 GMT-0400 (Eastern Daylight Time)', 135],
+                            //     ['Tue Oct 08 2019 00:00:00 GMT-0400 (Eastern Daylight Time)', 6],
+                            //     ['Tue Oct 15 2019 00:00:00 GMT-0400 (Eastern Daylight Time)', 89],
+                            //     ['Tue Oct 22 2019 00:00:00 GMT-0400 (Eastern Daylight Time)', 0],
+                            //     ['Tue Oct 29 2019 00:00:00 GMT-0400 (Eastern Daylight Time)', 0],
+                            //     ['Tue Sep 17 2019 00:00:00 GMT-0400 (Eastern Daylight Time)', 0],
+                            //     ['Tue Sep 24 2019 00:00:00 GMT-0400 (Eastern Daylight Time)', 0]]
                             var data = google.visualization.arrayToDataTable((weekLineDelta));
                             var view = new google.visualization.DataView(data);
 
@@ -145,7 +146,6 @@ html(lang='en')
 
 
                         google.charts.load('current', {'packages': ['corechart']});
-                        google.charts.setOnLoadCallback(drawChart);
                         console.log(!{JSON.stringify(weekCommitsByRepo)});
                         function drawPieCommit() {
                             // console.log(weekCommitsByRepo);
