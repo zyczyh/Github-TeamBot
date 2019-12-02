@@ -23,3 +23,7 @@ CREATE TABLE IF NOT EXISTS GithubStatistics(
    pullrequest_number INT NOT NULL,
    codelines_change INT NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+DROP TABLE Organization;
+DROP TABLE Users;
+DROP TABLE GithubStatistics;

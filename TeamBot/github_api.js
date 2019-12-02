@@ -38,13 +38,7 @@ async function getReposInOrg(org_name, token)
 
 async function getCommits(org_name, repo, user_name, since, token)
 {
-    let options = getDefaultOptions("/repos/"+org_name+"/"+repo+"/commits", "GET", token);
-    options.json =
-    {
-        "author": user_name,
-        "since": since
-    };
-    
+    let options = getDefaultOptions("/repos/"+org_name+"/"+repo+"/commits?author="+user_name+"&since="+since, "GET", token);
 	return new Promise(function(resolve, reject)
 	{
 		request(options, function (error, response, body) 
@@ -55,19 +49,20 @@ async function getCommits(org_name, repo, user_name, since, token)
 				reject(error);
 				return; // Terminate execution.
 			}
-			resolve(body);
+			resolve(JSON.parse(body));
 		});
 	});
 }
 
 async function getPRs(org_name, repo, token)
 {
-    let options = getDefaultOptions("/repos/"+org_name+"/"+repo+"/pulls", "GET", token);
-    options.json = 
-    {
-        "state": "closed",
-        "base": "master"
-    };
+	let parameter = '?state="closed"&base="master"';
+    let options = getDefaultOptions("/repos/"+org_name+"/"+repo+"/pulls"+parameter, "GET", token);
+    // options.json =
+    // {
+    //     "state": "closed",
+    //     "base": "master"
+    // };
     
 	return new Promise(function(resolve, reject)
 	{
@@ -103,19 +98,19 @@ async function getSingleCommit(org_name, repo, ref, token)
 	});
 }
 
-/*
+
 (async () => {
-    var date = new Date("2019-10-28");
-    var x = await getReposInOrg("csc510-fall2019", "2162eb2daeb479931cc7dea401c36e901ccad9d8");
+    var date = new Date("2019-11-28");
+    //var x = await getReposInOrg("csc510-fall2019", "2162eb2daeb479931cc7dea401c36e901ccad9d8");
     //console.log(x); 
     //x = await getCommits("csc510-fall2019", "CSC510-19", "hwu23", date, "2162eb2daeb479931cc7dea401c36e901ccad9d8");
     //console.log(x);
-    x = await getPRs("csc510-fall2019", "CSC510-19", "2162eb2daeb479931cc7dea401c36e901ccad9d8");
-    console.log(x);
+    //x = await getPRs("csc510-fall2019", "CSC510-19", "2162eb2daeb479931cc7dea401c36e901ccad9d8");
+    //console.log(x);
     //x = await getSingleCommit("csc510-fall2019","CSC510-19","fc05ba47a57a44a441790aaa030d0d35c88ecc8e","2162eb2daeb479931cc7dea401c36e901ccad9d8");
     //console.log(x);
 })()
-*/
+
 module.exports.getReposInOrg = getReposInOrg;
 module.exports.getCommits = getCommits;
 module.exports.getSingleCommit = getSingleCommit;

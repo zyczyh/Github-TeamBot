@@ -13,6 +13,7 @@ var schedule = require('node-schedule');
  * @param repoName
  */
 // weeklyReports();
+
 // schedule weekly tasks
 async function weeklyReports(){
     // github.fetchData();
@@ -22,7 +23,7 @@ async function weeklyReports(){
         // console.log(reportLinks);
         // Send report links
         for (var user in reportLinks) {
-            mattermost.postReports(config.incoming_webhook_url, '@' + user, reportLinks[user]);
+            await mattermost.postReports(config.incoming_webhook_url, '@' + user, reportLinks[user]);
         }
     }
     // schedule.scheduleJob('0 56 0 * * 5', async function() {

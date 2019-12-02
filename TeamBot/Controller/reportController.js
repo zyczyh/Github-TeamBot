@@ -5,8 +5,8 @@ var express = require('express');
 var db = require('./databaseController');
 // var db = require('../test/mock/mockController');
 var config = require('../config');
-var mngrReportLinkHead = config.host + "/manager-report";
-var userReportLinkHead = config.host + "/user-report";
+var mngrReportLinkHead = config.teambot_url + "/manager-report";
+var userReportLinkHead = config.teambot_url + "/user-report";
 
 /**
  * generate report links for both mngr and user
@@ -29,7 +29,6 @@ async function generateReportLinks(org_id) {
 
     return links;
 }
-
 
 function sortOnKeys(dict, key_name, value_name) {
     console.log("lajs" , dict);
@@ -95,6 +94,7 @@ function formatDate(date) {
     }
     return (myyear + "-" + mymonth + "-" + myweekday);
 }
+
 async function mngrReportDate(mngrName, date = new Date()) {
     var standardDate = getNWeeksBeforeDate(0);
     var outline = [];
@@ -368,8 +368,7 @@ async function f() {
     console.log(test);
 }
 
-f();
-
+// f();
 
 /**
  * help functions for generate user's report
@@ -389,3 +388,4 @@ async function outlineByUser(userName, date) {
 exports.generateReportLinks = generateReportLinks;
 exports.userReportData = userReportData;
 exports.mngrReportDate = mngrReportDate;
+exports.getNWeeksBeforeDate = getNWeeksBeforeDate;
