@@ -3,6 +3,15 @@ var request = require('request');
 var db = require('./databaseController');
 var github_api = require('../github_api');
 
+async function testFetchData() {
+    for (var i = 0; i < 8; i++) {
+        var since = new Date();
+        since.setDate(since.getDate() - 7*i);
+        await fetchData(since);
+    }
+}
+
+// testFetchData();
 
 async function fetchData(curr_date=new Date()) {
     /**
@@ -32,7 +41,10 @@ async function fetchData(curr_date=new Date()) {
                 var commits_count = commits_info.length;
                 for (var q = 0; q < commits_info.length; q = q + 1) {
                     var commit = await github_api.getSingleCommit(org_info[i].org_name, repos_info[k].name, commits_info[q].sha, org_info[i].github_token);
-                    //console.log(commit);
+                    console.log(commit);
+                    if(!(since < commit['commit']['author']['date'] < curr_date)) {
+                        continue;
+                    }
                     lines_of_code = lines_of_code + commit.stats.total;
                 }
                 for (var p = 0; p < PRs_info.length; p = p + 1) {

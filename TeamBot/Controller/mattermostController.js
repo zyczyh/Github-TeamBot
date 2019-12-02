@@ -109,23 +109,33 @@ async function respondToUser(post, username) {
     sendTextToUser(text, username, iurl);
 }
 
-async function generateBabyReport(user, date = Date()) {
+async function generateBabyReport(user, date = new Date()) {
+    date.setDate(date.getDate() - 1);
     var thisWeekStat = await db.getStatisticsByUserAndDate(user, date);
     if (!thisWeekStat) {
         var commit = 0;
         var loc = 0;
         var pr = 0;
     } else {
-        var commit = thisWeekStat[0]['commits_number'];
-        var loc = thisWeekStat[0]['codelines_change'];
-        var pr = thisWeekStat[0]['pullrequest_number'];
+        var commit = 0;
+        var loc = 0;
+        var pr = 0;
+        for (var data of thisWeekStat) {
+            commit += data['commits_number'];
+            loc += data['codelines_change'];
+            pr += data['pullrequest_number'];
+        }
+
     }
 
     var lastWeekStat = await db.getStatisticsByUserAndDate(user, report.getNWeeksBeforeDate(1));
-    if (!thisWeekStat) {
+    if (!lastWeekStat) {
         var lastWeekCommit = 0.000001;
     } else {
-        var lastWeekCommit = lastWeekStat[0]['commits_number'];
+        var lastWeekCommit = 0;
+        for (var data of lastWeekStat) {
+            lastWeekCommit += data['commits_number'];
+        }
     }
 
     var percentage = Math.round((commit - lastWeekCommit) / lastWeekCommit * 10000) / 100;
@@ -182,7 +192,7 @@ async function test() {
     console.log(test);
 }
 
-test();
+// test();
 
 exports.postReports = postReports;
 module.exports.respondToUser = respondToUser;
