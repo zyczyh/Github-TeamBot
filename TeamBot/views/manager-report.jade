@@ -170,7 +170,7 @@ html(lang='en')
 
                         google.charts.load('current', {'packages': ['corechart']});
                         // google.charts.setOnLoadCallback(drawChart);
-                        console.log(!{JSON.stringify(commitsByRepo)});
+                        console.log(!{JSON.stringify(weekCommitsByRepo)});
 
                         function writeRepoInfo(somethingByRepo, something) {
                         // somethingByRepo =
@@ -180,7 +180,7 @@ html(lang='en')
                             if (somethingByRepo.length > 1) {
                                 for (var i = 1; i < somethingByRepo.length; i++) {
                                     var commit = somethingByRepo[i];
-                                    var str = `<li class="list-group-item list-group-item-action list-group-item-secondary"> The repository: ${commit[0]} has ${commit[1]} ` + something + ` in the past week </li>`;
+                                    var str = `<li class="list-group-item "> The repository: ${commit[0]} has ${commit[1]} ` + something + ` in the past week </li>`;
                                     s += str;
                                 }
                             }
@@ -190,12 +190,12 @@ html(lang='en')
                             document.getElementById(something).innerHTML += (s);
                         }
                         function writeText() {
-                            commitsByRepo = !{JSON.stringify(commitsByRepo)}
-                            writeRepoInfo(commitsByRepo, "commits");
-                            linesByRepo = !{JSON.stringify(linesByRepo)}
-                            writeRepoInfo(linesByRepo, "lines_of_code_change");
-                            pullsByRepo = !{JSON.stringify(pullsByRepo)}
-                            writeRepoInfo(pullsByRepo, "pull_requests");
+                            weekCommitsByRepo = !{JSON.stringify(weekCommitsByRepo)}
+                            writeRepoInfo(weekCommitsByRepo, "commits");
+                            weekLinesByRepo = !{JSON.stringify(weekLinesByRepo)}
+                            writeRepoInfo(weekLinesByRepo, "lines_of_code_change");
+                            weekPullsByRepo = !{JSON.stringify(weekPullsByRepo)}
+                            writeRepoInfo(weekPullsByRepo, "pull_requests");
 
 
                         }

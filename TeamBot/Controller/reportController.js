@@ -191,7 +191,7 @@ async function mngrReportDate(mngrName, date = new Date()) {
         'monthCommitsDelta': monthCommitsDelta,
         'monthLineDelta': monthLineDelta,
         'monthPullsDelta': monthPullsDelta,
-        'weekCommitsByRepo': weekCommitsByRepo,
+        'weekCommitsByRepo': sortOnKeys(weekCommitsByRepo, "Repo", "weekCommits"),
         // 'weekLinesByRepo': (weekLinesByRepo),
         // 'weekPullsByRepo': (weekPullsByRepo),
         // 'weekUserCommits': (weekUserCommits),
