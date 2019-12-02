@@ -288,7 +288,7 @@ async function f() {
     console.log(test);
 }
 
-f();
+// f();
 
 /**
  * help functions for generate user's report
