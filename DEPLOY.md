@@ -31,25 +31,25 @@ In order to verify your identify, the teambot will send you another message aski
 
 #### Use Case 2: Getting Weekly Report As Manager
 1. The weekly report has been scheduled to be sent out on a weekly basis(Every Friday ). For test purpose, we have set up a simulator that triggers the task of sending reports to all members upon clicking the “submit” button. Go to 
-“https://csc510-19.herokuapp.com/test/mission-trigger” to trigger the bot sends weekly reports to all users.
+“https://csc510-19.herokuapp.com/test/mission-trigger” to trigger the bot to send weekly reports to all users.
   
-2. Back to Mattermost. You will receive a direct message. The message include what we called ‘baby report’, which show a glance of your report of this week, and a link to a more detailed and interactable weekly report.
+2. Back to Mattermost. You will receive a direct message. The message includes a ‘baby report’, which gives a glance of your report of the current week and a link to a more detailed and interactable weekly report.
   
-3. For managers, your report shows not only the progress of the whole team, but you can also take a look into each team members and track their progress.
+3. For managers, your report shows not only the progress of the whole team but also how each team member is doing so that you can track their progress.
   
-4. You can @teambot and ask for the information you need(statistics about commits/lines of code/PR), if teambot can't understand your query, he will send you a specific query format, just follow it and you can get what you need from teambot's response. 
-If you are not team manager, you can't query other team members statistics(managers have different query format with other members).
-If you can't get what you want, you can @teambot and say "Send me my report", then you can get your report link and look up the information you need.
+4. You can @teambot and ask for the information you need (statistics of commits/lines of code/pull requests). If teambot can't understand your query, he will responds you a specific query format guiding you to correctly interact with him and get the information you need.  
+If you are not the team manager, you can't query other team members' statistics (managers have different query format with other members).
+To get the full report that covers everything, simply @teambot and say "Send me my report".
 
 #### Use Case 3: Getting Weekly Report As User
-Since team member’s Mattermost message is basically the same as managers, we will simply provide you a link to checkout user reports: [click_here](https://csc510-mattermost-19.herokuapp.com/user-report/cyuan7/2019-10-22), so you don’t have to log out and relog in as a team member.  
-As normal team members, we care about yours and others' privacy, so you can only check out your own information in your report.
+Since team member’s Mattermost message is basically the same as managers, we will simply provide you a link to checkout user reports: [click_here](https://csc510-mattermost-19.herokuapp.com/user-report/cyuan7/2019-10-22) so that you don’t have to log out and relog in as a team member. 
+Because we care about your privacy, only you and your manager are able to view your report. That being said, you cannot request to see others' report either.
 
 
 ## Exploratory Testing and Code Inspection (30%)  
 Nothing to submit here.  
   
 ## Bonus: Continuous Integration Service (20%)
-We setup the jenkins server on the virtual machine and setup a build process. The [build log](./deploy/jenkins.log) is in deploy folder. Other helper scripts are also in the folder.
+We set up the Jenkins server on the virtual machine and set up a build process. The [build log](./deploy/jenkins.log) is in deploy folder. Other helper scripts are also in the folder.
 
-We don't add a trigger for the project when a commit is pushed because our jenkins server is on viertual machine and it doesn't have a public ip or url so that github can use it as callback url.
+We don't add a trigger for the project when a commit is pushed because our Jenkins server is on virtual machine and it doesn't have a public ip or url that github can use as a callback url.
