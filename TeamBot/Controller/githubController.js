@@ -3,6 +3,15 @@ var request = require('request');
 var db = require('./databaseController');
 var github_api = require('../github_api');
 
+function testFetchData() {
+    for (var i = 0; i < 8; i++) {
+        var since = new Date();
+        since.setDate(since.getDate() - 7*i);
+        fetchData(since);
+    }
+}
+
+// testFetchData();
 
 async function fetchData(curr_date=new Date()) {
     /**
