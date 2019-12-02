@@ -31,7 +31,7 @@ async function generateReportLinks(org_id) {
 }
 
 function sortOnKeys(dict, key_name, value_name) {
-    console.log("dict" , dict);
+    // console.log("dict" , dict);
 
     sorted_array = [[key_name, value_name]];
     var sorted = [];
@@ -43,7 +43,7 @@ function sortOnKeys(dict, key_name, value_name) {
     sorted.sort(function (a, b) {
         return new Date(a) - new Date(b);
     });
-    console.log("sorted: ", sorted);
+    // console.log("sorted: ", sorted);
 
     for (var key of sorted){
 
@@ -58,7 +58,7 @@ function sortOnKeys(dict, key_name, value_name) {
             sorted_array.push([key, 0])
         }
     }
-    console.log("sorted_array: ",sorted_array);
+    // console.log("sorted_array: ",sorted_array);
     return sorted_array
 }
 
@@ -261,9 +261,9 @@ async function userReportData(userName, date = new Date()) {
 
     return {
         'outline': outline,
-        'weekCommits': sortOnKeys(weekCommits, "Week", "Commits"),
-        'weekLineDelta': sortOnKeys(weekLineDelta, "Week", "LineDelta"),
-        'weekPulls': sortOnKeys(weekPulls, "Week", "Pulls"),
+        'weekCommits': weekCommits,
+        'weekLineDelta': weekLineDelta,
+        'weekPulls': weekPulls,
         'lastMonthCommits': lastMonthCommits,
         'lastMonthLineDelta': lastMonthLineDelta,
         'lastMonthPulls': lastMonthPulls,
@@ -273,9 +273,9 @@ async function userReportData(userName, date = new Date()) {
         // 'commitsByRepo': commitsByRepo,
         // 'linesByRepo':  linesByRepo,
         // 'pullsByRepo':  pullsByRepo
-        'commitsByRepo': sortOnKeys(commitsByRepo, "Repo", "Commits"),
-        'linesByRepo':  sortOnKeys(linesByRepo, "Repo", "Lines"),
-        'pullsByRepo':  sortOnKeys(pullsByRepo, "Repo", "Pulls")
+        'commitsByRepo': commitsByRepo,
+        'linesByRepo':  linesByRepo,
+        'pullsByRepo':  pullsByRepo
     }
 }
 /**
@@ -376,13 +376,13 @@ async function userReportData(userName, date = new Date()) {
 // }
 
 async function f() {
-    var test = await userReportData('cyuan7');
+    var test = await mngrReportDate('cyuan7');
     // var test = await userReportData('cyuan7');
 
-    // console.log(test);
+    console.log(test);
 }
 
-// f();
+f();
 
 /**
  * help functions for generate user's report
@@ -403,3 +403,4 @@ exports.generateReportLinks = generateReportLinks;
 exports.userReportData = userReportData;
 exports.mngrReportDate = mngrReportDate;
 exports.getNWeeksBeforeDate = getNWeeksBeforeDate;
+exports.sortOnKeys = sortOnKeys;
