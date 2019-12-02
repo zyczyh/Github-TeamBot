@@ -31,13 +31,19 @@ async function generateReportLinks(org_id) {
 }
 
 function sortOnKeys(dict, key_name, value_name) {
-    console.log("lajs" , dict);
+    console.log("dict" , dict);
+
     sorted_array = [[key_name, value_name]];
     var sorted = [];
     for(var key in dict) {
+        // console.log("key type: ", typeof key);
+
         sorted[sorted.length] = key;
     }
-    sorted.sort();
+    sorted.sort(function (a, b) {
+        return new Date(a) - new Date(b);
+    });
+    console.log("sorted: ", sorted);
 
     for (var key of sorted){
 
@@ -185,6 +191,11 @@ async function mngrReportDate(mngrName, date = new Date()) {
         'monthLineDelta': monthLineDelta,
         'monthPullsDelta': monthPullsDelta,
         'weekCommitsByRepo': weekCommitsByRepo,
+        // 'weekLinesByRepo': (weekLinesByRepo),
+        // 'weekPullsByRepo': (weekPullsByRepo),
+        // 'weekUserCommits': (weekUserCommits),
+        // 'weekUserLines': (weekUserLines),
+        // 'weekUserPulls': (weekUserPulls)
         'weekLinesByRepo': sortOnKeys(weekLinesByRepo, "Repo", "weekLines"),
         'weekPullsByRepo': sortOnKeys(weekPullsByRepo, "Repo", "weekPulls"),
         'weekUserCommits': sortOnKeys(weekUserCommits, "User", "weekCommits"),
@@ -259,6 +270,9 @@ async function userReportData(userName, date = new Date()) {
         'monthCommitsDelta': monthCommitsDelta,
         'monthLineDelta': monthLineDelta,
         'monthPullsDelta': monthPullsDelta,
+        // 'commitsByRepo': commitsByRepo,
+        // 'linesByRepo':  linesByRepo,
+        // 'pullsByRepo':  pullsByRepo
         'commitsByRepo': sortOnKeys(commitsByRepo, "Repo", "Commits"),
         'linesByRepo':  sortOnKeys(linesByRepo, "Repo", "Lines"),
         'pullsByRepo':  sortOnKeys(pullsByRepo, "Repo", "Pulls")
@@ -365,7 +379,7 @@ async function f() {
     var test = await userReportData('cyuan7');
     // var test = await userReportData('cyuan7');
 
-    console.log(test);
+    // console.log(test);
 }
 
 // f();
