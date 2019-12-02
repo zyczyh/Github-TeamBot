@@ -30,4 +30,5 @@ router.get('/:name/:date', async (req, res) => {
         });
 });
 
+
 module.exports = router;
