@@ -1,3 +1,4 @@
+
 /**
  * provide data for manager report and user report
  */
@@ -278,102 +279,7 @@ async function userReportData(userName, date = new Date()) {
         'pullsByRepo':  pullsByRepo
     }
 }
-/**
- * generate all data for front end to present user's report
- * @param userName github_username
- * @param date query date
- * @return User report data
- * {
- *     {double} outline: user_commits# / team_commits# this week
- *
- *     {dic} weekCommits: commits# in last 8 weeks
- *     {int} lastMonthCommits: commits# in last 4 weeks
- *     {int} monthCommitsDelta: lastMonthCommits# - theMonthBeforeCommits#
- *
- *     {dic} weekLineDelta: code line delta
- *     {int} lastMonthLineDelta: sum(lineDelta#) in last 4 weeks
- *     {int} monthLineDelta: lastMonthLineDelta - theMonthBeforeLineDelta
- *
- *     {dic} weekPulls: pull request # in last 8 weeks
- *     {int} lastMonthPulls: pull request # in last 4 weeks
- *     {int} monthPullsDelta: lastMonthPulls# - theMonthBeforeCommits#
- *
- *     {Dic} CommitsByRepo: {repo1: #commits, repo2: #commits, … repo4: #commits}
- *     {Dic} LinesByRepo: {repo1: #codes, repo2: #codes, … repo4: #codes}
- *     {Dic} PullsByRepo: {repo1: #pull, repo2: #pull, … repo4: #pull}
- * }
- */
-// async function userReportData(userName, date = new Date()) {
-//
-//     var outline = outlineByUser(userName, date);
-//     var weekCommits = {};
-//     var weekLineDelta = {};
-//     var weekPulls = {};
-//     var lastMonthCommits = 0;
-//     var lastMonthLineDelta = 0;
-//     var lastMonthPulls = 0;
-//     var monthCommitsDelta = 0;
-//     var monthLineDelta = 0;
-//     var monthPullsDelta = 0;
-//     var commitsByRepo = {};
-//     var linesByRepo = {};
-//     var pullsByRepo = {};
-//
-//     for (var j = 0; j < 8; j++) {
-//         var queryDate = getNWeeksBeforeDate(j, date);
-//
-//         var data = await db.getStatisticsByUserAndDate(userName, queryDate);
-//
-//         weekCommits[queryDate] = 0;
-//         weekLineDelta[queryDate] = 0;
-//         weekPulls[queryDate] = 0;
-//         if (!data) {
-//             continue;
-//         }
-//         for (var i = 0; i < data.length; i++) {
-//             weekCommits[queryDate] += data[i]['commits_number'];
-//             weekLineDelta[queryDate] += data[i]['codelines_change'];
-//             weekPulls[queryDate] += data[i]['pullrequest_number'];
-//
-//             if (i < 4) {
-//                 if (i === 0) {
-//                     commitsByRepo[data[i]['repo_name']] = data[i]['commits_number'];
-//                     linesByRepo[data[i]['repo_name']] = data[i]['codelines_change'];
-//                     pullsByRepo[data[i]['repo_name']] = data[i]['pullrequest_number'];
-//                 }
-//                 lastMonthCommits += data[i]['commits_number'];
-//                 lastMonthLineDelta += data[i]['codelines_change'];
-//                 lastMonthPulls += data[i]['pullrequest_number'];
-//
-//                 monthCommitsDelta += data[i]['commits_number'];
-//                 monthLineDelta += data[i]['codelines_change'];
-//                 monthPullsDelta += data[i]['pullrequest_number'];
-//             } else {
-//                 monthCommitsDelta -= data[i]['commits_number'];
-//                 monthLineDelta -= data[i]['codelines_change'];
-//                 monthPullsDelta -= data[i]['pullrequest_number'];
-//             }
-//         }
-//
-//
-//     }
-//
-//     return {
-//         'outline': outline,
-//         'weekCommits': sortOnKeys(weekCommits, "Week", "Commits"),
-//         'weekLineDelta': sortOnKeys(weekLineDelta, "Week", "LineDelta"),
-//         'weekPulls': sortOnKeys(weekPulls, "Week", "Pulls"),
-//         'lastMonthCommits': lastMonthCommits,
-//         'lastMonthLineDelta': lastMonthLineDelta,
-//         'lastMonthPulls': lastMonthPulls,
-//         'monthCommitsDelta': monthCommitsDelta,
-//         'monthLineDelta': monthLineDelta,
-//         'monthPullsDelta': monthPullsDelta,
-//         'commitsByRepo': sortOnKeys(commitsByRepo, "Repo", "Commits"),
-//         'linesByRepo':  sortOnKeys(linesByRepo, "Repo", "Lines"),
-//         'pullsByRepo':  sortOnKeys(pullsByRepo, "Repo", "Pulls")
-//     }
-// }
+
 
 async function f() {
     var test = await mngrReportDate('cyuan7');

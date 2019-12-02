@@ -6,29 +6,64 @@ html(lang='en')
         meta(name='viewport', content='width=device-width, initial-scale=1')
         link(rel='stylesheet', href='https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css')
         script(src='https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js')
-        script(src='https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js')
+        script(src="assets")
+        link(href='/assets/css/bootstrap.min.css', rel='stylesheet')
+        link(href='/assets/css/light-bootstrap-dashboard.css?v=2.0.0 ', rel='stylesheet')
+        // CSS Just for demo purpose, don't include it in your project
+        link(href='/assets/css/demo.css', rel='stylesheet')
         style.
             /* Set height of the grid so .sidenav can be 100% (adjust if needed) */
-            .row.content {height: 1500px}
+            .row.content {
+                height: 1500px
+            }
+
             /* Set gray background color and 100% height */
             .sidenav {
                 background-color: #f1f1f1;
                 height: 100%;
             }
+
+            h4 {
+                color: red;
+            }
+
+            h5 {
+                color: saddlebrown;
+                font-size: large;
+            }
+
+            h {
+                font-size: medium;
+            }
+
+            li {
+                font-size: medium;
+            }
+
+            .list-group-item {
+                font-size: medium;
+                /*background: #a0ffff;*/
+            }
+
             /* Set black background color, white text and some padding */
             footer {
                 background-color: #555;
                 color: white;
                 padding: 15px;
             }
+
             /* On small screens, set height to 'auto' for sidenav and grid */
             @media screen and (max-width: 767px) {
                 .sidenav {
                     height: auto;
                     padding: 15px;
                 }
-                .row.content {height: auto;}
+
+                .row.content {
+                    height: auto;
+                }
             }
+
     body
         .container-fluid
             .row.content
@@ -50,13 +85,17 @@ html(lang='en')
                             button.btn.btn-default(type='button')
                                 span.glyphicon.glyphicon-search
                 .col-sm-9
-                    h4 Red Flag! 33 percent team members did not commit in the past week
-                    h4 !{JSON.stringify(weekCommit)}
-                        //red flag: !{JSON.stringify(date_commit_array)}
-                        //small !{JSON.stringify(date)}
-                    //hr Red Flag 25 percent team members have no commit in the past month
 
-                    //
+
+
+                    div
+                        h4 Red Flags:
+                        .list-group
+                            a.list-group-item.list-group-item-action.list-group-item-danger(href='#') 1. Your team has Less than 5 total commits in the past week.
+                            a.list-group-item.list-group-item-action.list-group-item-danger(href='#') 2. At least 1 team member has not made commits.
+                            a.list-group-item.list-group-item-action.list-group-item-danger(href='#') 3. Your team's commit this week is LESS than the commits at the week of ""
+
+
 
 
                     br
@@ -71,24 +110,14 @@ html(lang='en')
                         // google.charts.setOnLoadCallback(drawTableCommit);
                         // google.charts.setOnLoadCallback(drawTableLine);
                         // google.charts.setOnLoadCallback(drawTablePull);
-                        google.charts.setOnLoadCallback(drawPieCommit);
-                        google.charts.setOnLoadCallback(drawPieLine);
-                        google.charts.setOnLoadCallback(drawPiePull);
+                        google.charts.setOnLoadCallback(writeText);
+                        google.charts.setOnLoadCallback(enterTeamMember);
+
 
 
 
                         function drawChartCommit() {
-                            // weekCommits = [['Week', 'LineDelta'],
-                            //     ['Tue Nov 05 2019 00:00:00 GMT-0500 (Eastern Standard Time)', 300],
-                            //     ['Tue Oct 01 2019 00:00:00 GMT-0400 (Eastern Daylight Time)', 200],
-                            //     ['Tue Oct 08 2019 00:00:00 GMT-0400 (Eastern Daylight Time)', 6],
-                            //     ['Tue Oct 15 2019 00:00:00 GMT-0400 (Eastern Daylight Time)', 89],
-                            //     ['Tue Oct 22 2019 00:00:00 GMT-0400 (Eastern Daylight Time)', 0],
-                            //     ['Tue Oct 29 2019 00:00:00 GMT-0400 (Eastern Daylight Time)', 0],
-                            //     ['Tue Sep 17 2019 00:00:00 GMT-0400 (Eastern Daylight Time)', 0],
-                            //     ['Tue Sep 24 2019 00:00:00 GMT-0400 (Eastern Daylight Time)', 0]]
-
-                            var data = google.visualization.arrayToDataTable((weekCommits));
+                            var data = google.visualization.arrayToDataTable(!{JSON.stringify(weekCommits)});
                             console.log('weekCommits: ', !{JSON.stringify(weekCommits)});
                             console.log(data);
                             var view = new google.visualization.DataView(data);
@@ -116,21 +145,13 @@ html(lang='en')
                                 height: 300,
                                 bar: {groupWidth: "95%"},
                                 legend: {position: "none"},
+                                colors: ['#e0440e', '#e6693e', '#ec8f6e', '#f3b49f', '#f6c7b6']
                             };
                             var chart = new google.visualization.ColumnChart(document.getElementById("columnchart_lines"));
                             chart.draw(view, options);
                         }
                         function drawChartPull() {
-                            // weekLineDelta = [['Week', 'LineDelta'],
-                            //     ['Tue Nov 05 2019 00:00:00 GMT-0500 (Eastern Standard Time)', 176],
-                            //     ['Tue Oct 01 2019 00:00:00 GMT-0400 (Eastern Daylight Time)', 135],
-                            //     ['Tue Oct 08 2019 00:00:00 GMT-0400 (Eastern Daylight Time)', 6],
-                            //     ['Tue Oct 15 2019 00:00:00 GMT-0400 (Eastern Daylight Time)', 89],
-                            //     ['Tue Oct 22 2019 00:00:00 GMT-0400 (Eastern Daylight Time)', 0],
-                            //     ['Tue Oct 29 2019 00:00:00 GMT-0400 (Eastern Daylight Time)', 0],
-                            //     ['Tue Sep 17 2019 00:00:00 GMT-0400 (Eastern Daylight Time)', 0],
-                            //     ['Tue Sep 24 2019 00:00:00 GMT-0400 (Eastern Daylight Time)', 0]]
-                            var data = google.visualization.arrayToDataTable((weekLineDelta));
+                            var data = google.visualization.arrayToDataTable(!{JSON.stringify(weekLineDelta)});
                             var view = new google.visualization.DataView(data);
 
                             var options = {
@@ -139,6 +160,8 @@ html(lang='en')
                                 height: 300,
                                 bar: {groupWidth: "95%"},
                                 legend: {position: "none"},
+                                colors: ['#68e047']
+
                             };
                             var chart = new google.visualization.ColumnChart(document.getElementById("columnchart_pulls"));
                             chart.draw(view, options);
@@ -146,54 +169,105 @@ html(lang='en')
 
 
                         google.charts.load('current', {'packages': ['corechart']});
-                        console.log(!{JSON.stringify(weekCommitsByRepo)});
-                        function drawPieCommit() {
-                            // console.log(weekCommitsByRepo);
-                            var data = google.visualization.arrayToDataTable(
-                                !{JSON.stringify(weekCommitsByRepo)}
-                            );
-                            // Optional; add a title and set the width and height of the chart
-                            var options = {'title': '', 'width': 550, 'height': 400};
-                            // Display the chart inside the <div> element with id="piechart"
-                            var chart = new google.visualization.PieChart(document.getElementById('drawPieCommit'));
-                            chart.draw(data, options);
+                        // google.charts.setOnLoadCallback(drawChart);
+                        console.log(!{JSON.stringify(commitsByRepo)});
+
+                        function writeRepoInfo(somethingByRepo, something) {
+                        // somethingByRepo =
+
+                            console.log("somethingByRepo: ", (somethingByRepo));
+                            var s = "<div><ul class=\"list-group\">";
+                            if (somethingByRepo.length > 1) {
+                                for (var i = 1; i < somethingByRepo.length; i++) {
+                                    var commit = somethingByRepo[i];
+                                    var str = `<li class="list-group-item list-group-item-action list-group-item-secondary"> The repository: ${commit[0]} has ${commit[1]} ` + something + ` in the past week </li>`;
+                                    s += str;
+                                }
+                            }
+                            s += "</ul></div>";
+
+                            console.log(s);
+                            document.getElementById(something).innerHTML += (s);
                         }
-                        function drawPieLine() {
-                            var data = google.visualization.arrayToDataTable(
-                                !{JSON.stringify(linesByRepo)}
-                            );
-                            // Optional; add a title and set the width and height of the chart
-                            var options = {'title': '', 'width': 550, 'height': 400};
-                            // Display the chart inside the <div> element with id="piechart"
-                            var chart = new google.visualization.PieChart(document.getElementById('drawPieLine'));
-                            chart.draw(data, options);
+                        function writeText() {
+                            commitsByRepo = !{JSON.stringify(commitsByRepo)}
+                            writeRepoInfo(commitsByRepo, "commits");
+                            linesByRepo = !{JSON.stringify(linesByRepo)}
+                            writeRepoInfo(linesByRepo, "lines_of_code_change");
+                            pullsByRepo = !{JSON.stringify(pullsByRepo)}
+                            writeRepoInfo(pullsByRepo, "pull_requests");
+
+
                         }
-                        function drawPiePull() {
-                            var data = google.visualization.arrayToDataTable(
-                                !{JSON.stringify(pullsByRepo)}
-                            );
-                            // Optional; add a title and set the width and height of the chart
-                            var options = {'title': '', 'width': 550, 'height': 400};
-                            // Display the chart inside the <div> element with id="piechart"
-                            var chart = new google.visualization.PieChart(document.getElementById('drawPiePull'));
-                            chart.draw(data, options);
+                        function enterTeamMember(){
+                             outline = !{JSON.stringify(outline)};
+                             console.log(outline);
+                             var s = "<div><ul class=\"list-group\">";
+                             for (var uid of outline) {
+                                 var str = `<li><a class="list-group-item list-group-item-action list-group-item-secondary" href='/user-report/${uid}/2019-12-01'> ${uid} </li>`;
+                                 s += str;
+                             }
+
+                                s += "</ul></div>";
+
+                                console.log(s);
+                            document.getElementById("member").innerHTML += (s);
+
                         }
+                    .content
+                        .container-fluid
+                            .row
+                                .col-md-5
+                                    .card
+                                        .card-header
+                                            h4.card-title Team Commits in the Past 2 Months
+                                            //p.card-category Last Campaign Performance
+                                        .card-body
+                                            #commits
+                                                h5 Commits
+                                                #columnchart_commits(style='width: 600px; height: 300px;')
+                                                h commits in each repo in the past week:
+                                                //#drawPieCommit
+                                .col-md-5
+                                    .card
+                                        .card-header
+                                            h4.card-title Change in Lines of codes in the Past 2 Months
+                                            //p.card-category Last Campaign Performance
+                                        .card-body
+                                            #lines_of_code_change
+                                                h5 Change in Lines of codes
+                                                #columnchart_lines(style='width: 600px; height: 300px;')
+                                                h change of codes in each repo in the past week:
+
+                            .row
+                                .col-md-5
+                                    .card
+                                        .card-header
+                                            h4.card-title Change in Lines of codes in the Past 2 Months
+                                            //p.card-category Last Campaign Performance
+                                        .card-body
+                                            #pull_requests
+                                                h5 Pull Requests
+                                                #columnchart_pulls(style='width: 600px; height: 300px;')
+                                                h Pull request change in each repo in the past week:
+                                .col-md-5
+                                    .card
+                                        .card-header
+                                            h4.card-title Team Member Dynamics
+                                            //p.card-category Last Campaign Performance
+                                        .card-body
+
+                                            h Click here to go to each team member's page:
+                                            #member
+                                                //ul.nav
+                                                //    li.nav-item
+                                                //        a.nav-link.active(href='#') Active
+                                                //    li.nav-item
+                                                //        a.nav-link(href='#') Link
+                                                //    li.nav-item
+                                                //        a.nav-link(href='#') Link
 
 
 
-                    #commits Commits
-                        #columnchart_commits(style='width: 600px; height: 300px;')
-                        h commits in each repo:
-                        #drawPieCommit
 
-                    //
-                    //#lines Change in Lines of codes
-                    //    #columnchart_lines(style='width: 600px; height: 300px;')
-                    //    h change of codes in each repo:
-                    //    #drawPieLine
-
-                    #pulls Pull Requests
-                        #columnchart_pulls(style='width: 600px; height: 300px;')
-                        h Pull request change in each repo:
-                        #drawPiePull
 

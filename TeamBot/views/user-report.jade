@@ -1,3 +1,5 @@
+
+
 doctype html
 html(lang='en')
     head
@@ -6,7 +8,11 @@ html(lang='en')
         meta(name='viewport', content='width=device-width, initial-scale=1')
         link(rel='stylesheet', href='https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css')
         script(src='https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js')
-        script(src='https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js')
+        script(src="assets")
+        link(href='/assets/css/bootstrap.min.css', rel='stylesheet')
+        link(href='/assets/css/light-bootstrap-dashboard.css?v=2.0.0 ', rel='stylesheet')
+        // CSS Just for demo purpose, don't include it in your project
+        link(href='/assets/css/demo.css', rel='stylesheet')
         style.
             /* Set height of the grid so .sidenav can be 100% (adjust if needed) */
             .row.content {height: 1500px}
@@ -17,6 +23,19 @@ html(lang='en')
             }
             h4{
                 color: red;
+            }
+            h5{
+                color: saddlebrown;
+                font-size: large;
+            }
+            h{
+                font-size: medium;
+            }
+            li{
+                font-size: medium;
+            }
+            .list-group-item{
+                background: #a0ffff;
             }
             /* Set black background color, white text and some padding */
             footer {
@@ -104,6 +123,7 @@ html(lang='en')
                                 height: 300,
                                 bar: {groupWidth: "95%"},
                                 legend: {position: "none"},
+                                colors: ['#e0440e', '#e6693e', '#ec8f6e', '#f3b49f', '#f6c7b6']
                             };
                             var chart = new google.visualization.ColumnChart(document.getElementById("columnchart_lines"));
                             chart.draw(view, options);
@@ -118,6 +138,8 @@ html(lang='en')
                                 height: 300,
                                 bar: {groupWidth: "95%"},
                                 legend: {position: "none"},
+                                colors: ['#68e047']
+
                             };
                             var chart = new google.visualization.ColumnChart(document.getElementById("columnchart_pulls"));
                             chart.draw(view, options);
@@ -131,15 +153,15 @@ html(lang='en')
                         function writeRepoInfo(somethingByRepo, something) {
                             // somethingByRepo = !{JSON.stringify(somethingByRepo)};
                             console.log("somethingByRepo: ", (somethingByRepo));
-                            var s = "<div><h5>";
+                            var s = "<div><ul class=\"list-group\">";
                             if (somethingByRepo.length > 1) {
                                 for (var i = 1; i < somethingByRepo.length; i++) {
                                     var commit = somethingByRepo[i];
-                                    var str = `&nbsp&nbsp&nbsp&nbsp&nbsp  The repository: ${commit[0]} has ${commit[1]} ` + something + ` in the past week <br/>`;
+                                    var str = `<li class="list-group-item list-group-item-action list-group-item-secondary"> The repository: ${commit[0]} has ${commit[1]} ` + something + ` in the past week </li>`;
                                     s += str;
                                 }
                             }
-                            s+= "</h5></div>";
+                            s+= "</ul></div>";
 
                             console.log(s);
                             document.getElementById(something).innerHTML += (s);
@@ -156,21 +178,43 @@ html(lang='en')
                         }
 
 
+                    .content
+                      .container-fluid
+                        .row
+                          .col-md-5
+                            .card
+                              .card-header
+                                h4.card-title User Commits in the Past 2 Months
+                                //p.card-category Last Campaign Performance
+                              .card-body
+                                  #commits
+                                      h5 Commits
+                                      #columnchart_commits(style='width: 600px; height: 300px;')
+                                      h commits in each repo in the past week:
+                                      //#drawPieCommit
+                          .col-md-5
+                              .card
+                                  .card-header
+                                      h4.card-title Change in Lines of codes in the Past 2 Months
+                                      //p.card-category Last Campaign Performance
+                                  .card-body
+                                      #lines_of_code_change
+                                          h5 Change in Lines of codes
+                                          #columnchart_lines(style='width: 600px; height: 300px;')
+                                          h change of codes in each repo in the past week:
+
+                        .row
+                            .col-md-5
+                                .card
+                                    .card-header
+                                        h4.card-title Change in Lines of codes in the Past 2 Months
+                                        //p.card-category Last Campaign Performance
+                                    .card-body
+                                        #pull_requests
+                                            h5 Pull Requests
+                                            #columnchart_pulls(style='width: 600px; height: 300px;')
+                                            h Pull request change in each repo in the past week:
 
 
-                    #commits Commits
-                        #columnchart_commits(style='width: 600px; height: 300px;')
-                        h commits in each repo in the past week:
-                        //#drawPieCommit
 
-
-                    #lines_of_code_change Change in Lines of codes
-                        #columnchart_lines(style='width: 600px; height: 300px;')
-                        h change of codes in each repo in the past week:
-                        //#drawPieLine
-
-                    #pull_requests Pull Requests
-                        #columnchart_pulls(style='width: 600px; height: 300px;')
-                        h Pull request change in each repo in the past week:
-                        //#drawPiePull
 
