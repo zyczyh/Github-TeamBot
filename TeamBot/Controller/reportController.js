@@ -41,11 +41,15 @@ function sortOnKeys(dict, key_name, value_name) {
     sorted.sort();
 
     for (var key of sorted){
+
         if ( (typeof dict[key] !== 'undefined')){
             sorted_array.push([key, dict[key]])
         }
 
         else{
+            if (! dict[key]){
+                sorted_array.push([key, 0])
+            }
             sorted_array.push([key, 0])
         }
     }
