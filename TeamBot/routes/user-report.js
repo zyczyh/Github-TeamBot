@@ -14,6 +14,7 @@ router.get('/:name/:date', async (req, res) => {
 
     res.render('user-report',
         {
+            data:data,
             outline: data['outline'],
             weekCommits: report.sortOnKeys(data['weekCommits'], "Week", "Commits"),
             weekLineDelta: report.sortOnKeys(data['weekLineDelta'], "Week", "LineDelta"),

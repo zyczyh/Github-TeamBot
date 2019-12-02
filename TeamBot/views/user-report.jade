@@ -35,7 +35,7 @@ html(lang='en')
                 font-size: medium;
             }
             .list-group-item{
-                background: #a0ffff;
+                /*background: #a0ffff;*/
             }
             /* Set black background color, white text and some padding */
             footer {
@@ -73,8 +73,6 @@ html(lang='en')
                             button.btn.btn-default(type='button')
                                 span.glyphicon.glyphicon-search
                 .col-sm-9
-                    h4 Red Flag! 66 percent team members have more commits than you in the past month
-
 
 
                     br
@@ -90,6 +88,7 @@ html(lang='en')
                         // google.charts.setOnLoadCallback(drawTableLine);
                         // google.charts.setOnLoadCallback(drawTablePull);
                         google.charts.setOnLoadCallback(writeText);
+                        google.charts.setOnLoadCallback(writeRedFlag);
 
 
 
@@ -176,15 +175,54 @@ html(lang='en')
 
 
                         }
+                        function writeRedFlag() {
+                            outline = !{JSON.stringify(data['outline'])};
+                            monthCommitsDelta = !{JSON.stringify(data['monthCommitsDelta'])};
+                            // console.log("totalcommits: ", data['totalCommits']);
+                            var s = "<div><ul class=\"list-group\">";
+                            var str1 = `<li class="list-group-item list-group-item-action list-group-item-danger">${outline} percent team members have more commits than you in the past month</li>`;
+                            s += str1;
+
+                            var str3 = `<li class="list-group-item list-group-item-action list-group-item-danger"> The change of code commits from last month to this month is: ${monthCommitsDelta} </li>`;
+                            s += str3;
+
+                            s += "</ul></div>";
+                            console.log(s);
+                            document.getElementById("redflag").innerHTML += (s);
 
 
+                            lastMonthCommits = !{JSON.stringify(data['lastMonthCommits'])};
+                            lastMonthLineDelta = !{JSON.stringify(data['lastMonthLineDelta'])};
+                            lastMonthPulls = !{JSON.stringify(data['lastMonthPulls'])};
+                            var s = "<div><ul class=\"list-group\">";
+                            var str1 = `<li class="list-group-item list-group-item-action list-group-item-warning"> you have  ${lastMonthCommits} commits in the past month </li>`;
+                            s += str1;
+                            var str2 = `<li class="list-group-item list-group-item-action list-group-item-warning"> You have  ${lastMonthLineDelta} change of lines in the past month </li>`;
+                            s += str2;
+                            var str3 = `<li class="list-group-item list-group-item-action list-group-item-warning"> You have  ${lastMonthPulls} pull requests in the past month </li>`;
+                            s += str3;
+
+                            s += "</ul></div>";
+                            console.log(s);
+                            document.getElementById("highlight").innerHTML += (s);
+
+                        }
+
+                    div
+                        h4 Red Flags:
+                        .list-group
+                            #redflag
+
+                        h4 Highlights:
+                        .list-group
+                            #highlight
                     .content
                       .container-fluid
                         .row
                           .col-md-5
                             .card
                               .card-header
-                                h4.card-title User Commits in the Past 2 Months
+                                h4.card-title Team Commits in the Past 2 Months
                                 //p.card-category Last Campaign Performance
                               .card-body
                                   #commits
@@ -204,16 +242,12 @@ html(lang='en')
                                           h change of codes in each repo in the past week:
 
                         .row
-                            .col-md-5
-                                .card
-                                    .card-header
-                                        h4.card-title Change in Lines of codes in the Past 2 Months
-                                        //p.card-category Last Campaign Performance
-                                    .card-body
-                                        #pull_requests
-                                            h5 Pull Requests
-                                            #columnchart_pulls(style='width: 600px; height: 300px;')
-                                            h Pull request change in each repo in the past week:
+                            #pull_requests
+                                h5 Pull Requests
+                                #columnchart_pulls(style='width: 600px; height: 300px;')
+                                h Pull request change in each repo in the past week:
+                                //#drawPiePull
+
 
 
 

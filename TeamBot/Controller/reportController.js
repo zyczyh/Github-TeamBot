@@ -126,22 +126,14 @@ async function mngrReportDate(mngrName, date = new Date()) {
     // var biggerWeek =  'Thu Nov 07 2019 00:00:00 GMT-0500 (Eastern Standard Time)';
 
     var users = await db.listGithubNameInSameOrg(mngrName);
-    var lessThan5CommitUsers = "";
-    var totalCommits = 0;
+    var lessThan3CommitUsers = "";
     for (var userName of users) {
+        //
+        // if ( (typeof weekUserCommits[userName] == 'undefined')){
+        //     lessThan3CommitUsers+= userName +",  ";
+        //
+        // }
 
-        if ( (typeof weekUserCommits[userName] == 'undefined')){
-            lessThan5CommitUsers+= userName +",  ";
-
-        }
-
-        else{
-            if (weekUserCommits[userName]<5){
-                lessThan5CommitUsers+= userName;
-            }
-            // console.log()
-            totalCommits+= (weekUserCommits[userName]);
-        }
 
         date = new Date(standardDate);
         var userData = await userReportData(userName, date);
@@ -200,6 +192,17 @@ async function mngrReportDate(mngrName, date = new Date()) {
             }
         }
     }
+    for (var userName of users) {
+
+        if ((typeof weekUserCommits[userName] === 'undefined')) {
+            lessThan3CommitUsers += userName + ",  ";
+
+        }
+        else if ( weekUserCommits[userName] < 1){
+            lessThan3CommitUsers += userName + ",  ";
+        }
+    }
+    sortedWeekCommits = sortOnKeys(weekCommits, "Week", "Commits");
     return {
         'outline': outline,
         'weekCommits': sortOnKeys(weekCommits, "Week", "Commits"),
@@ -219,8 +222,8 @@ async function mngrReportDate(mngrName, date = new Date()) {
         'weekUserLines': sortOnKeys(weekUserLines, "User", "weekLines"),
         'weekUserPulls': sortOnKeys(weekUserPulls, "User", "weekPulls"),
 
-        'lessThan5CommitUsers': lessThan5CommitUsers,
-        'totalCommits': totalCommits
+        'lessThan3CommitUsers': lessThan3CommitUsers,
+        'totalCommits': sortedWeekCommits[sortedWeekCommits.length-1][1]
     }
 }
 
@@ -280,7 +283,7 @@ async function userReportData(userName, date = new Date()) {
     }
 
     return {
-        'outline': outline,
+        'outline': 100*(1-outline),
         'weekCommits': weekCommits,
         'weekLineDelta': weekLineDelta,
         'weekPulls': weekPulls,

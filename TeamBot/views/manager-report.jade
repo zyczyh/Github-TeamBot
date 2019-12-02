@@ -228,13 +228,13 @@ html(lang='en')
                         }
                         function writeRedFlag(){
                              totalCommits = !{JSON.stringify(data['totalCommits'])};
-                             lessThan5CommitUsers = !{JSON.stringify(data['lessThan5CommitUsers'])};
+                             lessThan3CommitUsers = !{JSON.stringify(data['lessThan3CommitUsers'])};
                              monthCommitsDelta = !{JSON.stringify(data['monthCommitsDelta'])};
                              // console.log("totalcommits: ", data['totalCommits']);
                              var s = "<div><ul class=\"list-group\">";
                              var str1 = `<li class="list-group-item list-group-item-action list-group-item-danger"> your team has only ${totalCommits} commits in the past week </li>`;
                              s += str1;
-                             var str2 = `<li class="list-group-item list-group-item-action list-group-item-danger"> These team members had less than 5 commits in the past week: ${lessThan5CommitUsers} </li>`;
+                             var str2 = `<li class="list-group-item list-group-item-action list-group-item-danger"> These team members had NO COMMITS in the past week: ${lessThan3CommitUsers} </li>`;
                              s += str2;
                              var str3 = `<li class="list-group-item list-group-item-action list-group-item-danger"> The change of code commits from last month to this month is: ${monthCommitsDelta} </li>`;
                              s += str3;
@@ -313,7 +313,7 @@ html(lang='en')
                                     .card
                                         .card-header
                                             h4.card-title Team Member Dynamics
-                                            //p.card-category Last Campaign Performance
+                                            p.card-category Below is your team's distribution of commits in the past week
                                         .card-body
                                             #drawPieCommit
 
