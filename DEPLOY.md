@@ -10,7 +10,7 @@ https://drive.google.com/file/d/1jBiNAFFLwdkrFCLvEJcPAbH-U8dfz00H/view?usp=shari
 ## Acceptance testing (40%)
 
 ### TA Account Credentials:
-login: **uc2Test**  
+login: **mngr1**  
 password: **1234qwer**  
 Organization: **510-test**  
 Token: **64c541d6d9a692b126ecb75067ee8d29258a6c86**  
