@@ -121,8 +121,28 @@ async function mngrReportDate(mngrName, date = new Date()) {
     var weekUserLines = {};
     var weekUserPulls = {};
 
+    // var lessThan5 = 1;
+    // var idleMember = 1;
+    // var biggerWeek =  'Thu Nov 07 2019 00:00:00 GMT-0500 (Eastern Standard Time)';
+
     var users = await db.listGithubNameInSameOrg(mngrName);
+    var lessThan5CommitUsers = "";
+    var totalCommits = 0;
     for (var userName of users) {
+
+        if ( (typeof weekUserCommits[userName] == 'undefined')){
+            lessThan5CommitUsers+= userName +",  ";
+
+        }
+
+        else{
+            if (weekUserCommits[userName]<5){
+                lessThan5CommitUsers+= userName;
+            }
+            // console.log()
+            totalCommits+= (weekUserCommits[userName]);
+        }
+
         date = new Date(standardDate);
         var userData = await userReportData(userName, date);
         if (userData['weekCommits'][date] === 0) {
@@ -192,16 +212,15 @@ async function mngrReportDate(mngrName, date = new Date()) {
         'monthLineDelta': monthLineDelta,
         'monthPullsDelta': monthPullsDelta,
         'weekCommitsByRepo': sortOnKeys(weekCommitsByRepo, "Repo", "weekCommits"),
-        // 'weekLinesByRepo': (weekLinesByRepo),
-        // 'weekPullsByRepo': (weekPullsByRepo),
-        // 'weekUserCommits': (weekUserCommits),
-        // 'weekUserLines': (weekUserLines),
-        // 'weekUserPulls': (weekUserPulls)
+
         'weekLinesByRepo': sortOnKeys(weekLinesByRepo, "Repo", "weekLines"),
         'weekPullsByRepo': sortOnKeys(weekPullsByRepo, "Repo", "weekPulls"),
         'weekUserCommits': sortOnKeys(weekUserCommits, "User", "weekCommits"),
         'weekUserLines': sortOnKeys(weekUserLines, "User", "weekLines"),
-        'weekUserPulls': sortOnKeys(weekUserPulls, "User", "weekPulls")
+        'weekUserPulls': sortOnKeys(weekUserPulls, "User", "weekPulls"),
+
+        'lessThan5CommitUsers': lessThan5CommitUsers,
+        'totalCommits': totalCommits
     }
 }
 

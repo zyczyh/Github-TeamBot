@@ -91,9 +91,20 @@ html(lang='en')
                     div
                         h4 Red Flags:
                         .list-group
-                            a.list-group-item.list-group-item-action.list-group-item-danger(href='#') 1. Your team has Less than 5 total commits in the past week.
-                            a.list-group-item.list-group-item-action.list-group-item-danger(href='#') 2. At least 1 team member has not made commits.
-                            a.list-group-item.list-group-item-action.list-group-item-danger(href='#') 3. Your team's commit this week is LESS than the commits at the week of ""
+                            #redflag
+
+                        h4 Highlights:
+                        .list-group
+                            #highlight
+
+                            //
+                            //
+                            //
+                            //totalCommits
+                            //    a.list-group-item.list-group-item-action.list-group-item-danger(href='#') 1. Your team has Less than 5 total commits in the past week.
+                            //
+                            //a.list-group-item.list-group-item-action.list-group-item-danger(href='#') 2. At least 1 team member has not made commits.
+                            //a.list-group-item.list-group-item-action.list-group-item-danger(href='#') 3. Your team's commit this week is LESS than the commits at the week of ""
 
 
 
@@ -107,11 +118,12 @@ html(lang='en')
                         google.charts.setOnLoadCallback(drawChartPull);
 
                         google.charts.load('current', {'packages': ['table']});
-                        // google.charts.setOnLoadCallback(drawTableCommit);
+                        google.charts.setOnLoadCallback(drawPieCommit);
                         // google.charts.setOnLoadCallback(drawTableLine);
                         // google.charts.setOnLoadCallback(drawTablePull);
                         google.charts.setOnLoadCallback(writeText);
                         google.charts.setOnLoadCallback(enterTeamMember);
+                        google.charts.setOnLoadCallback(writeRedFlag);
 
 
 
@@ -214,6 +226,53 @@ html(lang='en')
                             document.getElementById("member").innerHTML += (s);
 
                         }
+                        function writeRedFlag(){
+                             totalCommits = !{JSON.stringify(data['totalCommits'])};
+                             lessThan5CommitUsers = !{JSON.stringify(data['lessThan5CommitUsers'])};
+                             monthCommitsDelta = !{JSON.stringify(data['monthCommitsDelta'])};
+                             // console.log("totalcommits: ", data['totalCommits']);
+                             var s = "<div><ul class=\"list-group\">";
+                             var str1 = `<li class="list-group-item list-group-item-action list-group-item-danger"> your team has only ${totalCommits} commits in the past week </li>`;
+                             s += str1;
+                             var str2 = `<li class="list-group-item list-group-item-action list-group-item-danger"> These team members had less than 5 commits in the past week: ${lessThan5CommitUsers} </li>`;
+                             s += str2;
+                             var str3 = `<li class="list-group-item list-group-item-action list-group-item-danger"> The change of code commits from last month to this month is: ${monthCommitsDelta} </li>`;
+                             s += str3;
+
+                             s += "</ul></div>";
+                             console.log(s);
+                            document.getElementById("redflag").innerHTML += (s);
+
+
+                            lastMonthCommits = !{JSON.stringify(data['lastMonthCommits'])};
+                            lastMonthLineDelta = !{JSON.stringify(data['lastMonthLineDelta'])};
+                            lastMonthPulls = !{JSON.stringify(data['lastMonthPulls'])};
+                            var s = "<div><ul class=\"list-group\">";
+                            var str1 = `<li class="list-group-item list-group-item-action list-group-item-warning"> your team has  ${lastMonthCommits} commits in the past month </li>`;
+                            s += str1;
+                            var str2 = `<li class="list-group-item list-group-item-action list-group-item-warning"> your team has  ${lastMonthLineDelta} change of lines in the past month </li>`;
+                            s += str2;
+                            var str3 = `<li class="list-group-item list-group-item-action list-group-item-warning"> your team has  ${lastMonthPulls} pull requests in the past month </li>`;
+                            s += str3;
+
+                            s += "</ul></div>";
+                            console.log(s);
+                            document.getElementById("highlight").innerHTML += (s);
+
+                        }
+                        function drawPieCommit() {
+                            var data = google.visualization.arrayToDataTable(
+                                !{JSON.stringify(weekUserCommits)}
+                            );
+                            // Optional; add a title and set the width and height of the chart
+                            var options = {'title': '', 'width': 550, 'height': 400};
+                            // Display the chart inside the <div> element with id="piechart"
+                            var chart = new google.visualization.PieChart(document.getElementById('drawPieCommit'));
+                            chart.draw(data, options);
+                        }
+
+
+
                     .content
                         .container-fluid
                             .row
@@ -256,6 +315,8 @@ html(lang='en')
                                             h4.card-title Team Member Dynamics
                                             //p.card-category Last Campaign Performance
                                         .card-body
+                                            #drawPieCommit
+
 
                                             h Click here to go to each team member's page:
                                             #member
