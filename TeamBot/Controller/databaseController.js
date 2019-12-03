@@ -23,13 +23,6 @@ function test() {
 
 // test();
 
-async function f() {
-    var a = await countLessCommitUser('hwu23', '1', new Date());
-    console.log(a);
-}
-
-// f();
-
 function createConnection() {
     return mysql.createConnection({
         host: config.DB.host,

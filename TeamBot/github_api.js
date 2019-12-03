@@ -36,9 +36,9 @@ async function getReposInOrg(org_name, token)
 	});
 }
 
-async function getCommits(org_name, repo, user_name, since, token)
+async function getCommits(org_name, repo, user_name, since, until, token)
 {
-    let options = getDefaultOptions("/repos/"+org_name+"/"+repo+"/commits?author="+user_name+"&since="+since, "GET", token);
+    let options = getDefaultOptions("/repos/"+org_name+"/"+repo+"/commits?author="+user_name+"&since="+since+"&until="+until, "GET", token);
 	return new Promise(function(resolve, reject)
 	{
 		request(options, function (error, response, body) 

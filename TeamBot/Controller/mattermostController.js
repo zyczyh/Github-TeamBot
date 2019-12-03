@@ -5,10 +5,11 @@ var github = require('./githubController');
 var db = require('./databaseController');
 var report = require('./reportController');
 var config = require('../config.json');
-var authen = {
-    "orgName": "510-test",
-    "token": "64c541d6d9a692b126ecb75067ee8d29258a6c86"
-};
+var aut = require('../routes/authen');
+// var authen = {
+//     "orgName": aut.getOrgName(),
+//     "token": aut.getToken()
+// };
 
 function sendTextToUser(text, username, iurl) {
     var options = {
@@ -40,6 +41,7 @@ function sendTextToUser(text, username, iurl) {
 
 async function sendToAllTeamMembers(team_id, iurl) {
     var all_members = await mattermost_api.getAllTeamMembers(team_id);
+    console.log(all_members);
     var len = all_members.length;
     for (var i = 0; i < len; i = i + 1) {
         var text = '@' + all_members[i].username + ' Hello, I\'m Tim(the TeamBot), your team is going to have a Github Monitor soon, so could you please input your Github username in Town Square for me? (You should add \'@\' before your username)';
@@ -58,6 +60,7 @@ async function respondToUser(post, username) {
 
     var team_id = config.team_id;
     post = post.toLowerCase().replace('@teambot', '').trim();
+    console.log(post);
 
     // if user post contains 'create' or 'set up' and 'Monitor'
     if (((post.includes('create') || post.includes('set up')) && post.includes('monitor') && post.includes('github')) || post == 'yes') {
@@ -66,7 +69,8 @@ async function respondToUser(post, username) {
         text = '@' + username + ' Sorry, I can\'t help you, my job is only to create Github Monitor Q_Q';
         username = '';
     } else if (post[0] == '@') {
-        var users = await github.userInOrg(authen.orgName, authen.token);
+        // var users = await github.userInOrg(authen.orgName, authen.token);
+        var users = await github.userInOrg(aut.getOrgName(), aut.getToken());
         var org_users = [];
         var parsedResult = JSON.parse(users);
         for (var i = 0; i < parsedResult.length; i = i + 1) {
@@ -78,11 +82,11 @@ async function respondToUser(post, username) {
             var org_info = await db.getOrgInfoFromDb();
             var org_id;
             for (var i = 0; i < org_info.length; i = i + 1) {
-                if (org_info[i].org_name === authen.orgName) {
+                if (org_info[i].org_name === aut.getOrgName()) {
                     org_id = org_info[i].org_id;
                 }
             }
-            var role = await github.checkUserRole(authen.orgName, post.substring(1), authen.token);
+            var role = await github.checkUserRole(aut.getOrgName(), post.substring(1), aut.getToken());
             var parsedResult = JSON.parse(role);
             console.log("Printing out the user role..." + parsedResult.role);
             if (parsedResult.role === 'admin') {
@@ -125,7 +129,6 @@ async function generateBabyReport(user, date = new Date()) {
             loc += data['codelines_change'];
             pr += data['pullrequest_number'];
         }
-
     }
 
     var lastWeekStat = await db.getStatisticsByUserAndDate(user, report.getNWeeksBeforeDate(1));
