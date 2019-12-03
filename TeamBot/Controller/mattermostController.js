@@ -2,6 +2,7 @@ var express = require('express');
 var request = require('request');
 var mattermost_api = require('../mattermost_api');
 var github = require('./githubController');
+var github_api = require('../github_api');
 var db = require('./databaseController');
 var config = require('../config.json');
 var authen = {
@@ -112,6 +113,54 @@ async function respondToUser(post, username) {
         // create connection btw first two db
         
     }
+    else if (post[0] == '{') {
+        var query = JSON.parse(post);
+        var role = await db.getRoleByMattermostName(username);
+        if (role == "admin") {
+            var git_info = await getGithubInfoWithMattermostName(query.username);
+        }
+        else {
+            var git_info = await getGithubInfoWithMattermostName(username);
+        }
+        if (query.type == "commit") {
+            var commit_num = 0;
+            for(var i = 0; i < git_info.repos.length; i = i + 1) {
+                var commits = await github_api.getCommits(git_info.org_name, git_info.repos[i], git_info.Gname, query.from, git_info.token);
+                commit_num = commit_num + commits.length;
+            }
+            text = '@' + username + ' Your answer is ' + commit_num.toString() + ' commits.';
+        }
+        else if (query.type == "pull request") {
+            var PRs_num = 0;
+            for (var i = 0; i < git_info.repos.length; i = i + 1) {
+                var PRs = await github_api.getPRs(git_info.org_name, git_info.repos[i], git_info.token);
+                for (var j = 0; j < PRs.length; j = j + 1) {
+                    if(PRs[j].user != undefined && PRs[j].user.login == git_info.Gname) {
+                        PRs_num = PRs_num + 1;
+                    }
+            text = '@' + username + ' Your answer is ' + PRs_num.toString() + ' pull requests.';
+        }
+        else if (query.type == "lines of code") {
+            var LOC = 0;
+            for(var i = 0; i < git_info.repos.length; i = i + 1) {
+                var commits = await github_api.getCommits(git_info.org_name, git_info.repos[i], git_info.Gname, query.from, git_info.token);
+                for(var j = 0; j < commits.length; j = j + 1) {
+                    var commit = await github_api.getSingleCommit(git_info.org_name, git_info.repos[i], commits[j].sha, git_info.token);
+                    LOC = LOC + commit.stats.total;               
+                }
+            }
+            text = '@' + username + ' Your answer is ' + LOC.toString() + ' lines of code.';
+        }
+    }
+    else if (post.includes("lines of code") || post.include("commit") || post.include("pull request")) {
+        var role = await db.getRoleByMattermostName(username);
+        if (role == "admin") {
+            text = '@' + username + ' If you want to query about github statistics, please format your query like this {type: query_type(commit/pr/linesOfCode),from: time,to: time,username: github username to query}, thank you!';
+        }
+        else {
+            text = '@' + username + ' If you want to query about github statistics, please format your query like this {type: query_type(commit/pr/linesOfCode),from: time,to: time}, thank you!';
+        }
+    }
     else {
         text = '@' + username + ' Do you want to create a Github Monitor for your team? (Please input Yes or No)';
         username = '';
@@ -151,6 +200,19 @@ function getDefaultOptions(incomingHookLink, method) {
     return {
         url: incomingHookLink,
         method: method,
+    };
+}
+
+async function getGithubInfoWithMattermostName(Mname) {
+    var Gname = await db.getGithubNameByMattermostName(Mname);
+    var org_name = await db.getOrgNameByGithubName(Gname);
+    var repos = await db.getRepoNameByGithubName(Gname);
+    var token = await db.getTokenByGithubName(Gname);
+    return {
+        Gname: Gname,
+        org_name: org_name,
+        repos: repos,
+        token: token,
     };
 }
 

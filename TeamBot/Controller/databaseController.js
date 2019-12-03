@@ -262,7 +262,102 @@ async function getMattermostNameByGithubName(gName) {
             if (result.length !== 0) {
                 res(result[0]['mattermost_username']);
             } else {
-                res(null)
+                res(null);
+            }
+        });
+        connection.end();
+    });
+}
+
+async function getGithubNameByMattermostName(mName) {
+    // TODO test
+    var connection = createConnection();
+
+    var query = 'select github_username from Users where mattermost_username=?';
+
+    return new Promise(function (res, rej) {
+        connection.query(query, [mName], function (err, result, fields) {
+            if (err) throw err;
+            if (result.length !== 0) {
+                res(result[0]['github_username']);
+            } else {
+                res(null);
+            }
+        });
+        connection.end();
+    });
+}
+
+async function getOrgNameByGithubName(gName) {
+    // TODO test
+    var connection = createConnection();
+
+    var query = 'select org_name from Organization where org_id=(select org_id from Users where github_username=?)';
+
+    return new Promise(function (res, rej) {
+        connection.query(query, [gName], function (err, result, fields) {
+            if (err) throw err;
+            if (result.length !== 0) {
+                res(result[0]['org_name']);
+            } else {
+                res(null);
+            }
+        });
+        connection.end();
+    });
+}
+
+async function getRepoNameByGithubName(gName) {
+    // TODO test
+    var connection = createConnection();
+
+    var query = 'select repo_name from GithubStatistics where org_id=(select org_id from Users where github_username=?)';
+
+    return new Promise(function (res, rej) {
+        connection.query(query, [gName], function (err, result, fields) {
+            if (err) throw err;
+            if (result.length !== 0) {
+                res(result);
+            } else {
+                res(null);
+            }
+        });
+        connection.end();
+    });
+}
+
+async function getTokenByGithubName(gName) {
+    // TODO test
+    var connection = createConnection();
+
+    var query = 'select github_token from Organization where org_id=(select org_id from Users where github_username=?)';
+
+    return new Promise(function (res, rej) {
+        connection.query(query, [gName], function (err, result, fields) {
+            if (err) throw err;
+            if (result.length !== 0) {
+                res(result[0]['github_token']);
+            } else {
+                res(null);
+            }
+        });
+        connection.end();
+    });
+}
+
+async function getRoleByMattermostName(mName) {
+    // TODO test
+    var connection = createConnection();
+
+    var query = 'select user_role from Users where mattermost_username=?';
+
+    return new Promise(function (res, rej) {
+        connection.query(query, [mName], function (err, result, fields) {
+            if (err) throw err;
+            if (result.length !== 0) {
+                res(result[0]['user_role']);
+            } else {
+                res(null);
             }
         });
         connection.end();
@@ -338,3 +433,8 @@ module.exports.getMattermostNameByGithubName = getMattermostNameByGithubName;
 module.exports.listAllOrgId = listAllOrgId;
 module.exports.insertRecordIntoUsers = insertRecordIntoUsers;
 module.exports.insertRecordIntoOrganization = insertRecordIntoOrganization;
+module.exports.getGithubNameByMattermostName = getGithubNameByMattermostName;
+module.exports.getOrgNameByGithubName = getOrgNameByGithubName;
+module.exports.getRepoNameByGithubName = getRepoNameByGithubName;
+module.exports.getTokenByGithubName = getTokenByGithubName;
+module.exports.getRoleByMattermostName = getRoleByMattermostName;
