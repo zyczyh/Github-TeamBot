@@ -9,23 +9,27 @@ router.get('/:name/:date', async (req, res) => {
     var name = req.params.name;
     // var date = req.params.date;
 
-    var data =await report.userReportData(name);
+    var data = await report.userReportData(name);
     console.log("data in user-report: ", data);
 
     res.render('user-report',
-        {outline: data['outline'],
-        weekCommits: data['weekCommits'],
-        weekLineDelta: data['weekLineDelta'],
-        weekPulls: data['weekPulls'],
-        lastMonthCommits: data['lastMonthCommits'],
-        lastMonthLineDelta: data['lastMonthLineDelta'],
-        lastMonthPulls: data['lastMonthPulls'],
-        monthCommitsDelta: data['monthCommitsDelta'],
-        monthLineDelta: data['monthLineDelta'],
-        monthPullsDelta: data['monthPullsDelta'],
-            commitsByRepo: data['commitsByRepo'],
-            linesByRepo: data['linesByRepo'],
-            pullsByRepo: data['pullsByRepo']});
-  });
+        {
+            data:data,
+            outline: data['outline'],
+            weekCommits: report.sortOnKeys(data['weekCommits'], "Week", "Commits"),
+            weekLineDelta: report.sortOnKeys(data['weekLineDelta'], "Week", "LineDelta"),
+            weekPulls: report.sortOnKeys(data['weekPulls'], "Week", "Pulls"),
+            lastMonthCommits: data['lastMonthCommits'],
+            lastMonthLineDelta: data['lastMonthLineDelta'],
+            lastMonthPulls: data['lastMonthPulls'],
+            monthCommitsDelta: data['monthCommitsDelta'],
+            monthLineDelta: data['monthLineDelta'],
+            monthPullsDelta: data['monthPullsDelta'],
+            commitsByRepo: report.sortOnKeys(data['commitsByRepo'], "Repo", "Commits"),
+            linesByRepo: report.sortOnKeys(data['linesByRepo'], "Repo", "Lines"),
+            pullsByRepo: report.sortOnKeys(data['pullsByRepo'], "Repo", "Pulls")
+        });
+});
+
 
 module.exports = router;

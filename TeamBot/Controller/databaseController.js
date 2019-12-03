@@ -23,13 +23,6 @@ function test() {
 
 // test();
 
-async function f() {
-    var a = await countLessCommitUser('hwu23', '1', new Date());
-    console.log(a);
-}
-
-// f();
-
 function createConnection() {
     return mysql.createConnection({
         host: config.DB.host,
@@ -152,7 +145,7 @@ async function countLessCommitUser(userName, orgId, since) {
         connection.query(query, [orgId, since, since,since, since, userName], function (err, result, fields) {
             if (err) throw err;
             if (result.length !== 0) {
-                res(result);
+                res(result[0]['count(*)']);
             } else {
                 res(0)
             }

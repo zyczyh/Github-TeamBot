@@ -1,0 +1,56 @@
+---
+  - name: "Deploy TeamBot"
+    hosts: 127.0.0.1
+    connection: local
+    vars:
+      repoDir: "/tmp/App"
+
+    tasks:
+      - name: Install node.js
+        package:
+          name:
+            - git
+            - curl
+            - nodejs
+            - npm
+          state: latest
+        become: true
+        become_method: sudo
+        become_user: root
+
+      - name: Install "forever" node.js package globally
+        npm:
+          name: forever
+          global: yes
+          state: latest
+        become: true
+        become_method: sudo
+        become_user: root
+
+      - name: Pull/clone git repo into a destination
+        git:
+          repo: git@github.ncsu.edu:csc510-fall2019/CSC510-19.git
+          dest: "{{ repoDir }}"
+          clone: yes
+
+      - name: Install npm packages
+        npm:
+          path: "{{ repoDir }}/TeamBot"
+
+      - name: Run app
+        command: forever start ./bin/www
+        args:
+          chdir: "{{ repoDir }}/TeamBot"
+
+      - name: Check bash, openssl, openssh-client, openssh-server version
+        package:
+          name:
+            - bash
+            - openssl
+            - openssh-client
+            - openssh-server
+          state: latest
+        become: true
+        become_method: sudo
+        become_user: root
+      

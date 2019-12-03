@@ -1,0 +1,43 @@
+Started by user shuaige
+Running as SYSTEM
+Building in workspace /var/lib/jenkins/workspace/csc510-deploy
+[csc510-deploy] $ /bin/sh -xe /tmp/jenkins11074497208138480028.sh
++ /home/dhwuho/csc510/expt.sh
+BECOME password: 
+[WARNING]: provided hosts list is empty, only localhost is available. Note that the implicit localhost does not
+match 'all'
+
+
+PLAY [Deploy TeamBot] ******************************************************************************************
+
+TASK [Gathering Facts] *****************************************************************************************
+ok: [127.0.0.1]
+
+TASK [Install node.js] *****************************************************************************************
+ok: [127.0.0.1]
+
+TASK [Install "forever" node.js package globally] **************************************************************
+ok: [127.0.0.1]
+
+TASK [Pull/clone git repo into a destination] ******************************************************************
+ok: [127.0.0.1]
+
+TASK [Install npm packages] ************************************************************************************
+changed: [127.0.0.1]
+
+TASK [Run app] *************************************************************************************************
+changed: [127.0.0.1]
+
+TASK [Check bash, openssl, openssh-client, openssh-server version] *********************************************
+ok: [127.0.0.1]
+
+PLAY RECAP *****************************************************************************************************
+127.0.0.1                  : ok=7    changed=2    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0 
+
+[csc510-deploy] $ /bin/sh -xe /tmp/jenkins11727187023008118654.sh
++ /home/dhwuho/csc510/test.sh
++ node /tmp/App/TeamBot/selenium_test/useCase1.js
+All test cases pass.
++ node /tmp/App/TeamBot/selenium_test/test_mission_trigger.js
+All test cases pass.
+Finished: SUCCESS

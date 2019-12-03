@@ -3,6 +3,15 @@ var request = require('request');
 var db = require('./databaseController');
 var github_api = require('../github_api');
 
+async function testFetchData() {
+    for (var i = 0; i < 8; i++) {
+        var since = new Date();
+        since.setDate(since.getDate() - 7*i);
+        await fetchData(since);
+    }
+}
+
+// testFetchData();
 
 async function fetchData(curr_date=new Date()) {
     /**
@@ -23,7 +32,7 @@ async function fetchData(curr_date=new Date()) {
         for (var j = 0; j < users_info.length; j = j + 1) {
             for (var k = 0; k < repos_info.length; k = k + 1) {
                 //console.log(repos_info[0].name);
-                var commits_info = await github_api.getCommits(org_info[i].org_name, repos_info[k].name, users_info[j].github_username, since.toISOString(), org_info[i].github_token);
+                var commits_info = await github_api.getCommits(org_info[i].org_name, repos_info[k].name, users_info[j].github_username, since.toISOString(), curr_date.toISOString(), org_info[i].github_token);
                 var PRs_info = await github_api.getPRs(org_info[i].org_name, repos_info[k].name, org_info[i].github_token);
                 //console.log(commits_info);
                 //console.log(PRs_info);
@@ -32,7 +41,6 @@ async function fetchData(curr_date=new Date()) {
                 var commits_count = commits_info.length;
                 for (var q = 0; q < commits_info.length; q = q + 1) {
                     var commit = await github_api.getSingleCommit(org_info[i].org_name, repos_info[k].name, commits_info[q].sha, org_info[i].github_token);
-                    //console.log(commit);
                     lines_of_code = lines_of_code + commit.stats.total;
                 }
                 for (var p = 0; p < PRs_info.length; p = p + 1) {
