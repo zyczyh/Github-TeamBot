@@ -124,7 +124,7 @@ async function respondToUser(post, username) {
             var commit_num = 0;
             console.log(git_info);
             for(var i = 0; i < git_info.repos.length; i = i + 1) {
-                var commits = await github_api.getCommits(git_info.org_name, git_info.repos[i], git_info.Gname, query.from, query.to, git_info.token);
+                var commits = await github_api.getCommits(git_info.org_name, git_info.repos[i]['repo_name'], git_info.Gname, query.from, query.to, git_info.token);
                 console.log(commits);
                 commit_num = commit_num + commits.length;
             }
