@@ -45,9 +45,11 @@ https://csc510-19.herokuapp.com/test/mission-trigger to trigger the bot to send 
 If you are not the team manager, you can't query other team members' statistics (managers have different query format with other members).
 To get the full report that covers everything, simply @teambot and say "Send me my report".
 
-> Example command:@teambot {"type": "pull request", "from": "2019-11-01T10:26:00.996Z", "to": "2019-12-03T10:26:00.996Z", "username":  "mngr1"}
-> Example command: @teambot {"type": "commit", "from": "2019-11-01T10:26:00.996Z", "to": "2019-12-03T10:26:00.996Z", "username":  "mngr1"}
-> Example command: @teambot {"type": "lines of code", "from": "2019-11-01T10:26:00.996Z", "to": "2019-12-03T10:26:00.996Z", "username":  "mngr1"}
+> Example command:@teambot {"type": "pull request", "from": "2019-11-01T10:26:00.996Z", "to": "2019-12-03T10:26:00.996Z", "username":  "mngr1"}  
+
+> Example command: @teambot {"type": "commit", "from": "2019-11-01T10:26:00.996Z", "to": "2019-12-03T10:26:00.996Z", "username":  "mngr1"}  
+
+> Example command: @teambot {"type": "lines of code", "from": "2019-11-01T10:26:00.996Z", "to": "2019-12-03T10:26:00.996Z", "username":  "mngr1"}  
 
 #### Use Case 3: Getting Weekly Report As User
 Since team member’s Mattermost message is basically the same as managers, we will simply provide you a link to checkout user reports: [click_here](https://csc510-19.herokuapp.com/user-report/xliu74/2019-10-22) so that you don’t have to log out and relog in as a team member. 
