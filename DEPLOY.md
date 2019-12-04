@@ -41,14 +41,18 @@ https://csc510-19.herokuapp.com/test/mission-trigger to trigger the bot to send 
   
 3. For managers, your report shows not only the progress of the whole team but also how each team member is doing so that you can track their progress.
   
-4. You can @teambot and ask for the information you need (statistics of commits/lines of code/pull requests). If teambot can't understand your query, he will responds you a specific query format guiding you to correctly interact with him and get the information you need.  
-If you are not the team manager, you can't query other team members' statistics (managers have different query format with other members).
-To get the full report that covers everything, simply @teambot and say "Send me my report".
+4. You can @teambot and ask for the information you need (statistics of commits/lines of code/pull requests). If teambot can't understand your query, he will respond you a specific query format guiding you to correctly interact with him and get the information you need.  
+
+> Example command for the Manager:  @teambot {"type": "commit", "from": "2019-11-01", "to": "2019-12-03", "username":  "*username_of_any_member*"}
+
+If you are not the team manager, you can't query other team members' statistics.
+
+> Example command for Members:  @teambot {"type": "pr", "from": "2019-11-01", "to": "2019-12-03", "username":  "*your_own_username*"}
 
 > Example command: @teambot {"type": "commit", "from": "2019-11-01T10:26:00.996Z", "to": "2019-12-03T10:26:00.996Z", "username":  "mngr1"}
 
 #### Use Case 3: Getting Weekly Report As User
-Since team member’s Mattermost message is basically the same as managers, we will simply provide you a link to checkout user reports: [click_here](https://csc510-mattermost-19.herokuapp.com/user-report/cyuan7/2019-10-22) so that you don’t have to log out and relog in as a team member. 
+Since team member’s Mattermost command is pretty much the same as managers', we will simply provide you a link to checkout the reports: [click_here](https://csc510-mattermost-19.herokuapp.com/user-report/cyuan7/2019-10-22) so that you don’t have to log out and relog in as a team member. 
 Because we care about your privacy, only you and your manager are able to view your report. That being said, you cannot request to see others' report either.
 
 
