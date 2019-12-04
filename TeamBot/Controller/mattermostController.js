@@ -123,7 +123,8 @@ async function respondToUser(post, username) {
         if (query.type == "commit") {
             var commit_num = 0;
             for(var i = 0; i < git_info.repos.length; i = i + 1) {
-                var commits = await github_api.getCommits(git_info.org_name, git_info.repos[i], git_info.Gname, query.from, git_info.token);
+                var commits = await github_api.getCommits(git_info.org_name, git_info.repos[i], git_info.Gname, query.from, query.to, git_info.token);
+                console.log(commits);
                 commit_num = commit_num + commits.length;
             }
             text = '@' + username + ' Your answer is ' + commit_num.toString() + ' commits.';
@@ -143,7 +144,7 @@ async function respondToUser(post, username) {
         else if (query.type == "lines of code") {
             var LOC = 0;
             for(var i = 0; i < git_info.repos.length; i = i + 1) {
-                var commits = await github_api.getCommits(git_info.org_name, git_info.repos[i], git_info.Gname, query.from, git_info.token);
+                var commits = await github_api.getCommits(git_info.org_name, git_info.repos[i], git_info.Gname, query.from, query.to, git_info.token);
                 for(var j = 0; j < commits.length; j = j + 1) {
                     var commit = await github_api.getSingleCommit(git_info.org_name, git_info.repos[i], commits[j].sha, git_info.token);
                     LOC = LOC + commit.stats.total;               
