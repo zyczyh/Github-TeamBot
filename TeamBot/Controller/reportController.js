@@ -283,7 +283,7 @@ async function userReportData(userName, date = new Date()) {
     }
 
     return {
-        'outline': 100*(1-outline),
+        'outline': 100*outline,
         'weekCommits': weekCommits,
         'weekLineDelta': weekLineDelta,
         'weekPulls': weekPulls,
@@ -322,7 +322,7 @@ async function outlineByUser(userName, date) {
 
     var userNumLessThan = await db.countLessCommitUser(userName, orgId, date);
 
-    return 1 - userNumLessThan / (orgUserNum - 1);
+    return userNumLessThan / orgUserNum;
 }
 
 // End of helper functions

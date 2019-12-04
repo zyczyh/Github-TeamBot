@@ -125,14 +125,11 @@ async function countLessCommitUser(userName, orgId, since) {
     since.setDate(since.getDate() - 3);
 
     // TODO data_since and since_until meaning and edge case
-    var query = 'select count(*) from GithubStatistics '
-        + 'where org_id=? '
-        + 'and date_since<=? '
-        + 'and since_until>=? '
-        + 'and commits_number > (select sum(commits_number) from GithubStatistics where '
+    var query = 'select count(*) from (select * from GithubStatistics '
+        + 'where org_id=? and date_since<=? and since_until>=? group by user_id) as T '
+        + 'where commits_number > (select sum(commits_number) from GithubStatistics where '
         + 'date_since<=? and since_until>=? '
-        + 'and user_id=(select user_id from Users where github_username=?))'
-        + 'group by user_id';
+        + 'and user_id=(select user_id from Users where github_username=?))';
 
     // var query = 'select * from (select * from GithubStatistics '
     //     + 'where org_id=? and date_since<=? and since_until>=? group by user_id) as T '

@@ -133,6 +133,8 @@ async function respondToUser(post, username) {
                     if(PRs[j].user != undefined && PRs[j].user.login == git_info.Gname) {
                         PRs_num = PRs_num + 1;
                     }
+                }
+            }
             text = '@' + username + ' Your answer is ' + PRs_num.toString() + ' pull requests.';
         }
         else if (query.type == "lines of code") {
@@ -220,7 +222,9 @@ async function postReports(incomingHookLink, user, link) {
 
     var options = getDefaultOptions(incomingHookLink, 'POST');
 
-    var quickGlance = await generateBabyReport(user);
+    var tempName = await db.getGithubNameByMattermostName(user.slice(1));
+    console.log(tempName);
+    var quickGlance = await generateBabyReport(tempName);
 
     var data = {"channel": user, "text": quickGlance+" Your can view your weekly report <" + link + "|here>"};
 
