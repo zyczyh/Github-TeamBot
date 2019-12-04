@@ -20,8 +20,7 @@ Organization: **510-test**
 **Note: Please always mention the teambot first when you interact with it. Also, please always send your message in the public channel.**  
 
 #### Use Case 1: Creating a Monitor
-0. Open Mattermost [here](https://csc510-mattermost-19.herokuapp.com/
-)
+0. Open Mattermost [here](https://csc510-mattermost-19.herokuapp.com/), and login use username and psw provided above.  
 
 1. In the public channel Town Square, send a message to the teambot to initialize a monitor. Please mention the teambot first and include key words such as “create”, “set up”, “monitor”, “github”.  
 > Example command: @teambot create  
