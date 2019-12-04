@@ -444,4 +444,4 @@ module.exports.getOrgNameByGithubName = getOrgNameByGithubName;
 module.exports.getRepoNameByGithubName = getRepoNameByGithubName;
 module.exports.getTokenByGithubName = getTokenByGithubName;
 module.exports.getRoleByMattermostName = getRoleByMattermostName;
-module.exports.getToken = getToekn;
+module.exports.getToken = getToken;
