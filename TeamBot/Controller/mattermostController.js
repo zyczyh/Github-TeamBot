@@ -94,7 +94,7 @@ async function respondToUser(post, username) {
             var parsedResult = JSON.parse(role);
             console.log("Printing out the user role..." + parsedResult.role);
             if (parsedResult.role === 'admin') {
-                db.insertRecordIntoUsers([1, username, post.substring(1), 'manager']);
+                db.insertRecordIntoUsers([1, username, post.substring(1), 'admin']);
             } else {
                 db.insertRecordIntoUsers([1, username, post.substring(1), 'member']);
             }
