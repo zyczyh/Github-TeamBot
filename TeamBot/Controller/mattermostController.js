@@ -149,7 +149,7 @@ async function respondToUser(post, username) {
             text = '@' + username + ' Your answer is ' + LOC.toString() + ' lines of code.';
         }
     }
-    else if (post.includes("lines of code") || post.include("commit") || post.include("pull request")) {
+    else if (post.includes("lines of code") || post.includes("commit") || post.includes("pull request")) {
         var role = await db.getRoleByMattermostName(username);
         if (role == "admin") {
             text = '@' + username + ' If you want to query about github statistics, please format your query like this {type: query_type(commit/pr/linesOfCode),from: time,to: time,username: github username to query}, thank you!';
