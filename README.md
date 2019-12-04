@@ -22,3 +22,4 @@ Team number: 19
 - [BOT](./BOT.md)
 - [PROCESS](./PROCESS.md)
 - [DEPLOY](./DEPLOY.md)
+- [REPORT](./REPORT.md)
