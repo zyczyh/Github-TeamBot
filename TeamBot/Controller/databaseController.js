@@ -155,7 +155,7 @@ async function getStatisticsByUserAndDate(userName, date) {
     var connection = createConnection();
 
     var query = 'select * from GithubStatistics '
-        + 'where user_id=(select user_id from Users where github_username=?) and '
+        + 'where user_id=(select user_id from Users where github_username=? limit 1) and '
         + 'date_since<=? and '
         + 'since_until>=?';
 
