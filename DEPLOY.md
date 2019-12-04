@@ -19,40 +19,38 @@ Organization: **510-test**
 ### Deploy Milestone Acceptance Test Instructions for TAs
 **Note: Please always mention the teambot first when you interact with it. Also, please always send your message in the public channel.**  
 
-#### Application:
-https://csc510-mattermost-19.herokuapp.com/
-
 #### Use Case 1: Creating a Monitor
+0. Open Mattermost [here](https://csc510-mattermost-19.herokuapp.com/
+)
+
 1. In the public channel Town Square, send a message to the teambot to initialize a monitor. Please mention the teambot first and include key words such as “create”, “set up”, “monitor”, “github”.  
 > Example command: @teambot create  
 
 2. The teambot then will reply to confirm your request to create the monitor. Simply type “yes”.  
 > Example command: @teambot yes  
 
-3. You should receive a direct message from the teambot now with an authentication link. Click the link and fill out the organization name and token. Go ahead and submit it.  
+3. You should receive a direct message from the teambot now with an authentication link. Click the link and fill out the organization name and token. Go ahead and submit it.(Notice: token first!)  
 In order to verify your identify, the teambot will send you another message asking for your github username. Reply with your username beginning with a “@” in the public Town Square. The teambot will respond to indicate whether the username you provided is valid.  
-> Example command: @teambot @your_github_username  
+> Example command: @teambot @cyuan7 
 
 #### Use Case 2: Getting Weekly Report As Manager
 1. The weekly report has been scheduled to be sent out on a weekly basis(Every Friday ). For test purpose, we have set up a simulator that triggers the task of sending reports to all members upon clicking the "submit" button. Go to 
 https://csc510-19.herokuapp.com/test/mission-trigger to trigger the bot to send weekly reports to all users.
   
-2. Back to Mattermost. You will receive a direct message. The message includes a 'baby report', which gives a glance of your report of the current week and a link to a more detailed and interactable weekly report.
+2. Back to Mattermost. You will receive a direct message. The message includes a 'baby report', which gives a glance of your report of the current week and a **link** to a more detailed and interactable weekly report.
   
 3. For managers, your report shows not only the progress of the whole team but also how each team member is doing so that you can track their progress.
   
-4. You can @teambot and ask for the information you need (statistics of commits/lines of code/pull requests). If teambot can't understand your query, he will respond you a specific query format guiding you to correctly interact with him and get the information you need.  
+4. You can @teambot and ask for the information you need (statistics of commits/lines of code/pull requests). If teambot can't understand your query, he will responds you a specific query format guiding you to correctly interact with him and get the information you need.  
+If you are not the team manager, you can't query other team members' statistics (managers have different query format with other members).
+To get the full report that covers everything, simply @teambot and say "Send me my report".
 
-> Example command for the Manager:  @teambot {"type": "commit", "from": "2019-11-01", "to": "2019-12-03", "username":  "*username_of_any_member*"}
-
-If you are not the team manager, you can't query other team members' statistics.
-
-> Example command for Members:  @teambot {"type": "pr", "from": "2019-11-01", "to": "2019-12-03", "username":  "*your_own_username*"}
-
+> Example command:@teambot {"type": "pull request", "from": "2019-11-01T10:26:00.996Z", "to": "2019-12-03T10:26:00.996Z", "username":  "mngr1"}
 > Example command: @teambot {"type": "commit", "from": "2019-11-01T10:26:00.996Z", "to": "2019-12-03T10:26:00.996Z", "username":  "mngr1"}
+> Example command: @teambot {"type": "lines of code", "from": "2019-11-01T10:26:00.996Z", "to": "2019-12-03T10:26:00.996Z", "username":  "mngr1"}
 
 #### Use Case 3: Getting Weekly Report As User
-Since team member’s Mattermost command is pretty much the same as managers', we will simply provide you a link to checkout the reports: [click_here](https://csc510-mattermost-19.herokuapp.com/user-report/cyuan7/2019-10-22) so that you don’t have to log out and relog in as a team member. 
+Since team member’s Mattermost message is basically the same as managers, we will simply provide you a link to checkout user reports: [click_here](https://csc510-19.herokuapp.com/user-report/xliu74/2019-10-22) so that you don’t have to log out and relog in as a team member. 
 Because we care about your privacy, only you and your manager are able to view your report. That being said, you cannot request to see others' report either.
 
 
