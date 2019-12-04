@@ -6,7 +6,7 @@ var github_api = require('../github_api');
 var db = require('./databaseController');
 var report = require('./reportController');
 var config = require('../config.json');
-var authen = {
+var aut = {
     "orgName": "",
     "token": ""
 };
