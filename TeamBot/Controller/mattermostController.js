@@ -6,11 +6,10 @@ var github_api = require('../github_api');
 var db = require('./databaseController');
 var report = require('./reportController');
 var config = require('../config.json');
-var aut = require('../routes/authen');
-// var authen = {
-//     "orgName": aut.getOrgName(),
-//     "token": aut.getToken()
-// };
+var authen = {
+    "orgName": "",
+    "token": ""
+};
 
 function sendTextToUser(text, username, iurl) {
     var options = {
@@ -58,6 +57,10 @@ async function respondToUser(post, username) {
     var iurl = config.incoming_webhook_url;
     var authen_link = config.teambot_url + '/authen';
     var text = '';
+    var temp = await db.getToken();
+
+    aut.orgName = temp['org_name'];
+    aut.token = temp['github_token'];
 
     var team_id = config.team_id;
     post = post.toLowerCase().replace('@teambot', '').trim();
@@ -71,7 +74,7 @@ async function respondToUser(post, username) {
         username = '';
     } else if (post[0] == '@') {
         // var users = await github.userInOrg(authen.orgName, authen.token);
-        var users = await github.userInOrg(aut.getOrgName(), aut.getToken());
+        var users = await github.userInOrg(aut.orgName, aut.token);
         var org_users = [];
         var parsedResult = JSON.parse(users);
         for (var i = 0; i < parsedResult.length; i = i + 1) {
@@ -83,11 +86,11 @@ async function respondToUser(post, username) {
             var org_info = await db.getOrgInfoFromDb();
             var org_id;
             for (var i = 0; i < org_info.length; i = i + 1) {
-                if (org_info[i].org_name === aut.getOrgName()) {
+                if (org_info[i].org_name === aut.orgName) {
                     org_id = org_info[i].org_id;
                 }
             }
-            var role = await github.checkUserRole(aut.getOrgName(), post.substring(1), aut.getToken());
+            var role = await github.checkUserRole(aut.orgName, post.substring(1), aut.token);
             var parsedResult = JSON.parse(role);
             console.log("Printing out the user role..." + parsedResult.role);
             if (parsedResult.role === 'admin') {

@@ -409,6 +409,22 @@ async function insertRecordIntoOrganization(record) {
     });
 }
 
+async function getToken() {
+    var connection = createConnection();
+    var query = 'SELECT * FROM Organization';
+    return new Promise(function (resolve, reject) {
+        connection.query(query, function (err, result, fields) {
+            if (err) {
+                console.log(err);
+                reject(err);
+                return;
+            }
+            resolve(result[0]);
+        });
+        connection.end();
+    });
+}
+
 module.exports.getOrgInfoFromDb = getOrgInfoFromDb;
 module.exports.getUserInfoByOrgFromDb = getUserInfoByOrgFromDb;
 module.exports.insertRecordIntoGithubStatistics = insertRecordIntoGithubStatistics;
@@ -428,3 +444,4 @@ module.exports.getOrgNameByGithubName = getOrgNameByGithubName;
 module.exports.getRepoNameByGithubName = getRepoNameByGithubName;
 module.exports.getTokenByGithubName = getTokenByGithubName;
 module.exports.getRoleByMattermostName = getRoleByMattermostName;
+module.exports.getToken = getToekn;
