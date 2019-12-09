@@ -28,26 +28,43 @@ If successfully verified:
   
 #### Sending out weekly reports 
 
-Every Friday, you'll get a direct message summarizing your activities of the week from Teambot: <br />
-![report](https://media.github.ncsu.edu/user/14814/files/59fc8680-1aa1-11ea-9da2-60e2da222779) <br />
-Clicking the link gets you the full report. The group manager gets a reoprt of the whole group: <br />
-![charts](https://media.github.ncsu.edu/user/14814/files/16efe280-1aa4-11ea-834c-a536fd3886a5) <br />
-![diagrams](https://media.github.ncsu.edu/user/14814/files/430b6380-1aa4-11ea-9021-6c6448072096) <br />
-![diagrams](https://media.github.ncsu.edu/user/14814/files/4bfc3500-1aa4-11ea-8bca-500fc36741ee =250*400) <br />
-There's a section where the manager can click on a group member's username and view his or her individual report: <br />
-![individual](https://media.github.ncsu.edu/user/14814/files/6fbf7b00-1aa4-11ea-9395-4113a56a5479 =250*100) <br />
-A group member's report looks similar to a manager's, but it doens't show up any information of others, as we did take privacy into consideration. <br />
-![individual](https://media.github.ncsu.edu/user/14814/files/bc0abb00-1aa4-11ea-9a01-cab622d50314) <br />
+Every Friday, you'll get a direct message summarizing your activities of the week from Teambot:  
+  
+![report](https://media.github.ncsu.edu/user/14814/files/59fc8680-1aa1-11ea-9da2-60e2da222779)  
+  
+Clicking the link gets you the full report. The group manager gets a reoprt of the whole group:  
+  
+![charts](https://media.github.ncsu.edu/user/14814/files/16efe280-1aa4-11ea-834c-a536fd3886a5)  
+  
+![diagrams](https://media.github.ncsu.edu/user/14814/files/430b6380-1aa4-11ea-9021-6c6448072096)  
+  
+![diagrams](https://media.github.ncsu.edu/user/14814/files/4bfc3500-1aa4-11ea-8bca-500fc36741ee)  
+  
+There's a section where the manager can click on a group member's username and view his or her individual report:  
+  
+![individual](https://media.github.ncsu.edu/user/14814/files/6fbf7b00-1aa4-11ea-9395-4113a56a5479)  
+  
+A group member's report looks similar to a manager's, but it doens't show up any information of others, as we did take privacy into consideration.  
+  
+![individual](https://media.github.ncsu.edu/user/14814/files/bc0abb00-1aa4-11ea-9a01-cab622d50314)  
+  
 
 #### Short answers for your query
 
-Teambot can answer your questions with respect to your Github activities directly so that ou don't have to look up a piece of information from the complete report. <br />
-There's no need to remember the exact query format because Teambot will remind you of that. <br />
-![query](https://media.github.ncsu.edu/user/14814/files/bb732400-1aa6-11ea-858f-73d2f5a5a6ce) <br />
-The example query below asks for the number of commits of the user @mngr1 within the period 11/01/2019 - 12/03/2019. <br />
-![commit](https://media.github.ncsu.edu/user/14814/files/db571780-1aa7-11ea-88cf-46005934cf04) <br />
-Then you get a brief answer: <br />
-![commit](https://media.github.ncsu.edu/user/14814/files/b662a480-1aa7-11ea-99f8-ee77de056532) <br />
+Teambot can answer your questions with respect to your Github activities directly so that ou don't have to look up a piece of information from the complete report.  
+  
+There's no need to remember the exact query format because Teambot will remind you of that.  
+  
+![query](https://media.github.ncsu.edu/user/14814/files/bb732400-1aa6-11ea-858f-73d2f5a5a6ce)  
+  
+The example query below asks for the number of commits of the user @mngr1 within the period 11/01/2019 - 12/03/2019.  
+  
+![commit](https://media.github.ncsu.edu/user/14814/files/db571780-1aa7-11ea-88cf-46005934cf04)  
+  
+Then you get a brief answer:  
+  
+![commit](https://media.github.ncsu.edu/user/14814/files/b662a480-1aa7-11ea-99f8-ee77de056532)  
+  
 
 ### Our reflection on the development process and project
 
