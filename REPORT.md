@@ -36,13 +36,12 @@ Clicking the link gets you the full report. The group manager gets a reoprt of t
   
 ![charts](https://media.github.ncsu.edu/user/14814/files/16efe280-1aa4-11ea-834c-a536fd3886a5)  
   
-<img src="https://media.github.ncsu.edu/user/14814/files/c760e500-1aaa-11ea-8916-b2a79db581d3" width="250">  
+<img src="https://media.github.ncsu.edu/user/14814/files/c760e500-1aaa-11ea-8916-b2a79db581d3" width="450">  
   
-![diagrams](https://media.github.ncsu.edu/user/14814/files/4bfc3500-1aa4-11ea-8bca-500fc36741ee)  
   
 There's a section where the manager can click on a group member's username and view his or her individual report:  
   
-![individual](https://media.github.ncsu.edu/user/14814/files/6fbf7b00-1aa4-11ea-9395-4113a56a5479)  
+<img src="https://media.github.ncsu.edu/user/14814/files/64bc1900-1aab-11ea-9fad-b64b0ec820e6" width="400">  
   
 A group member's report looks similar to a manager's, but it doens't show up any information of others, as we did take privacy into consideration.  
   
