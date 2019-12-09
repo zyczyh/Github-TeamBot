@@ -6,16 +6,26 @@ Please find our video presentation here: https://drive.google.com/file/d/1EDWxml
 Our Teambot is a group progress tracker that monitors group members' activities on Github and presents the statistics on a weekly basis. By simply interacting with Teambot on Mattermost, we can create the tracker and receive weekly updates reporting our pull requests, number of commits, change of lines of code, and etc. Teambot is definitely beneficial for group communication and management as it saves us time from organizing meetings to report progress individually and it motivates group members to participate more actively as well.
 ### Primary features and screenshots
 #### Monitor initialization
-In the public channel Town Square, post a message that includes a keyword such as "create", "monitor", etc. <br />
-![create](https://media.github.ncsu.edu/user/14814/files/48b17b00-1a9d-11ea-8a80-a2095c32c75d) <br />
-Getting a link that asks for basic info: <br />
-![authen](https://media.github.ncsu.edu/user/14814/files/d9895600-1a9f-11ea-9a9b-ccf76dd4673b) <br />
-Verifying your identity by providing your Github username: <br />
-![id](https://media.github.ncsu.edu/user/14814/files/bd39e900-1aa0-11ea-81f9-1c37092496b2) <br />
-Response for invalid username: <br />
-![invalid](https://media.github.ncsu.edu/user/14814/files/a3000b00-1aa0-11ea-8eb4-cd49b5118b21) <br />
-If successfully verified: <br />
-![valid](https://media.github.ncsu.edu/user/14814/files/a6939200-1aa0-11ea-9e4e-5c0b765839db) <br />
+In the public channel Town Square, post a message that includes a keyword such as "create", "monitor", etc.  
+  
+![create](https://media.github.ncsu.edu/user/14814/files/48b17b00-1a9d-11ea-8a80-a2095c32c75d)  
+  
+Getting a link that asks for basic info:  
+  
+![authen](https://media.github.ncsu.edu/user/14814/files/d9895600-1a9f-11ea-9a9b-ccf76dd4673b)  
+  
+Verifying your identity by providing your Github username:  
+  
+![id](https://media.github.ncsu.edu/user/14814/files/bd39e900-1aa0-11ea-81f9-1c37092496b2)  
+  
+Response for invalid username:  
+  
+![invalid](https://media.github.ncsu.edu/user/14814/files/a3000b00-1aa0-11ea-8eb4-cd49b5118b21)  
+  
+If successfully verified:  
+  
+![valid](https://media.github.ncsu.edu/user/14814/files/a6939200-1aa0-11ea-9e4e-5c0b765839db)  
+  
 #### Sending out weekly reports 
 
 Every Friday, you'll get a direct message summarizing your activities of the week from Teambot: <br />
