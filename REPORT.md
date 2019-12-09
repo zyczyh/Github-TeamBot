@@ -36,7 +36,7 @@ Clicking the link gets you the full report. The group manager gets a reoprt of t
   
 ![charts](https://media.github.ncsu.edu/user/14814/files/16efe280-1aa4-11ea-834c-a536fd3886a5)  
   
-<img src="https://media.github.ncsu.edu/user/14814/files/430b6380-1aa4-11ea-9021-6c6448072096" width="450">
+<img src="https://media.github.ncsu.edu/user/14814/files/430b6380-1aa4-11ea-9021-6c6448072096">
   
 <img src="https://media.github.ncsu.edu/user/14814/files/c760e500-1aaa-11ea-8916-b2a79db581d3" width="450">  
   
