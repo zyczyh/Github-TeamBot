@@ -69,8 +69,12 @@ Then you get a brief answer:
 
 ### Our reflection on the development process and project
 
-### Limitations and future work
+### Limitations and future work  
+
+As Dr. Parnin suggested, although we took privacy into consideration and provides different links to each group member's report page, what we neglected is that the link URL is easy to guess. If someone can substitute his or her usernmae by others' in the URL and get to view the page, then it is pointless to have this feature. What we could do to avoid this problem is to make the link auto-generated and only effective for 24 hours. There are plenty of one-time URL generator out there and we definitely can grab one and integrate it into our software.  
+
+Another thing we can work on in the future is to further optimize the Mattermost interaction. We would like to get rid of some inconvience in the current interaction. It is not very intuitive that users have to post requesting messages in the public channel while receving messages privately. We thought about setting up slash commands to solve this problem but it turns out we didn't have time to do this. We absolutely want to finish this off as slash commands work so well in both public and private channels. Besides, we are going to add a few more interactive components as well. Having interactive button or drop-down list in the dialogue can certainly make our interface more organized and user-friendly.    
 
 ## Peer Evaluation
-The 360 peer evaluation form has been submitted individually.
+The 360 peer evaluation form has been submitted individually. We appreciate everyone's hard work throughout the semester.
 
