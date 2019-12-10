@@ -52,7 +52,7 @@ A group member's report looks similar to a manager's, but it doens't show up any
 
 #### Short answers for your query
 
-Teambot can answer your questions with respect to your Github activities directly so that ou don't have to look up a piece of information from the complete report.  
+Teambot can answer your questions with respect to your Github activities directly so that you don't have to look up a piece of information from the complete report.  
   
 There's no need to remember the exact query format because Teambot will remind you of that.  
   
