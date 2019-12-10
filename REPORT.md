@@ -67,7 +67,11 @@ Then you get a brief answer:
 ![commit](https://media.github.ncsu.edu/user/14814/files/b662a480-1aa7-11ea-99f8-ee77de056532)  
   
 
-### Our reflection on the development process and project
+### Our reflection on the development process and project  
+
+It would be better if we spent more time discussing how we'd like the fundamental structure to be implemented in the first place. We had one group member wrote up the skeleton of our express app without talking about how exactly this should be like. It worked without any problem at first, but we realized what went wrong later on while doing the integration test. It turns out the person who wrote up the skeleton prefers a different coding convention which indeed brought up some issues. Although the issues were relatively minor, it did cost us some time to detect and fix them since it is hard to trace back to the root issue as everything else was built on top of it.  
+  
+We should've also let someone who didn't participate in this project to try it on. We could ask opinions from both our peers in this class and someone who doesn't know software engineering at all. Developers and users can have very different perspective. They might notice something that we couldn't realize for the first time they try our application. Had we ever did this, we'd totally do a better job on handling corner cases and thus improving user experience.  
 
 ### Limitations and future work  
 
