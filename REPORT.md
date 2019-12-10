@@ -32,7 +32,9 @@ Every Friday, you'll get a direct message summarizing your activities of the wee
   
 ![report](https://media.github.ncsu.edu/user/14814/files/59fc8680-1aa1-11ea-9da2-60e2da222779)  
   
-Clicking the link gets you the full report. The group manager gets a reoprt of the whole group:  
+Clicking the link gets you the full report. The group manager gets a reoprt of the whole group.  
+  
+Whoever has made zero progress last week will show up in the Red Flag section:  
   
 ![charts](https://media.github.ncsu.edu/user/14814/files/16efe280-1aa4-11ea-834c-a536fd3886a5)  
   
