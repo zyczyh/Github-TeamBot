@@ -1,6 +1,6 @@
 {
   "host": "https://csc510-19.herokuapp.com/",
-  "admin_token": "bdpdtwed8fyw3q1riqjj8xxbqa",
+  "admin_token": "i7gwpdfzyp868kzyyw5b4bf1hh",
   "bot_token": "a5rfwdmgr7dnxx66hr17dkswqc",
   "incoming_webhook_url": "https://csc510-mattermost-19.herokuapp.com/hooks/fga3hs4q33bgxnhwkm9a78ep5o",
   "team_id": "mxgxnws7k3ya5m3trbsxshh6cc",
